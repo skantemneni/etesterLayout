@@ -9,3 +9,10 @@ body {
 }
 
 
+/* The following got added with Angular Material */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* The above got added with Angular Material */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

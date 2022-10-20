@@ -11,6 +11,11 @@ import { FooterComponent } from './components/layout/hg/footer/footer.component'
 import { PrivacyPolicyComponent } from './components/layout/hg/privacy-policy/privacy-policy.component';
 import { HolygrailgridComponent } from './components/layout/holygrailgrid/holygrailgrid.component';
 import { HolygrailflexComponent } from './components/layout/holygrailflex/holygrailflex.component';
+import { MaterialUIModule } from '../material.module';
+
+/* BrowserAnimationsModule gets added when you add Andular Materials */
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,10 @@ import { HolygrailflexComponent } from './components/layout/holygrailflex/holygr
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialUIModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [HolygrailgridComponent]
