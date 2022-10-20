@@ -29,7 +29,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/grid_container_styles.scss"
+              "src/grid_container_styles.scss",
+              "src/flex_container_styles.scss"
             ],
             "scripts": []
           },

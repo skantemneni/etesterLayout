@@ -1,0 +1,81 @@
+.flex-container {
+  /* just to visualize the box better */
+  /* border: 3px solid red; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 4px;
+  /* not 100vh cause the border below will make create a overflow scroll bar effect.  if so subtract (top-border height and bottom-border-height) */
+  height: calc(100vh - 0px);
+}
+
+.flex-container > app-header {
+  color: white;
+  font-size: 14px;
+  grid-area: header;
+  text-align: center;
+  background-color: #FA7D44;
+  flex: 0 0 65px;
+}
+
+.flex-container > app-footer {
+  grid-area: footer;
+  background-color: #2BB961;
+  color: white;
+  text-align: center;
+  padding: 25px 0;
+  /* For some reason fixed size on footer is not working.  May be because, out of teh 3 flex items (header, footer and container-main-class) container-main-class has a padding...? */
+  /* so, defaulting to auto */
+  /* flex: 0 0 65px; */
+  flex: 0 0 auto;
+}
+
+.flex-container > .flex-container-main {
+  /* This controls how much space the "main area" takes up.  Considering header and footer are */
+  flex: 1;
+
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  flex-direction: row;
+}
+
+.flex-container > .flex-container-main > app-nav {
+  flex: 0 0 200px;
+  /* margin-left: 0.2rem; */
+  background-color: #2A92BF;
+}
+
+.flex-container > .flex-container-main > app-aside {
+  flex: 0 0 200px;
+  /* margin-left: 0.2rem; */
+  background-color: #2A92BF;
+}
+
+.flex-container > .flex-container-main > app-main,
+.flex-container > .flex-container-main > app-privacy-policy {
+  flex: 1;
+  background-color: #F4CE46;
+}
+
+
+
+@media (max-width: 768px) {
+  .flex-container > .flex-container-main {
+    flex-direction: column;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .flex-container > .flex-container-main > app-nav,
+  .flex-container > .flex-container-main > app-aside {
+    /* 12em is the width of the columns */
+    flex: 0 0 auto;
+  }
+
+
+}
+
+
+
