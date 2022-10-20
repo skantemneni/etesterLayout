@@ -12,6 +12,8 @@ import { PrivacyPolicyComponent } from './components/layout/hg/privacy-policy/pr
 import { HolygrailgridComponent } from './components/layout/holygrailgrid/holygrailgrid.component';
 import { HolygrailflexComponent } from './components/layout/holygrailflex/holygrailflex.component';
 import { MaterialUIModule } from '../material.module';
+/*Import*/
+import { MathjaxModule } from "mathjax-angular";
 
 /* BrowserAnimationsModule gets added when you add Andular Materials */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,7 +36,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialUIModule,
-    NgbModule
+    NgbModule,
+    MathjaxModule.forRoot(/*Optional Config*/
+      {
+        "config": {
+          "loader": {
+            "load": ["output/svg", "[tex]/require", "[tex]/ams"]
+          },
+          "tex": {
+            "inlineMath": [["$", "$"]],
+            "packages": ["base", "require", "ams"]
+          },
+          "svg": { "fontCache": "global" }
+        },
+        "src": "https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/startup.js"
+      }
+    )
   ],
   providers: [],
   bootstrap: [HolygrailgridComponent]
