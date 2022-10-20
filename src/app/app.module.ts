@@ -29,6 +29,6 @@ import { HolygrailflexComponent } from './components/layout/holygrailflex/holygr
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [HolygrailflexComponent]
+  bootstrap: [HolygrailgridComponent]
 })
 export class AppModule { }
