@@ -54,6 +54,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     )
   ],
   providers: [],
-  bootstrap: [HolygrailgridComponent]
+  bootstrap: [HolygrailflexComponent]
 })
 export class AppModule { }

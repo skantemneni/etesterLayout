@@ -1,3 +1,41 @@
 <header>
-  <h2>Angular Holy Grill Layout with CSS Grid</h2>
+  <mat-toolbar color="primary">
+    <span routerLink="/">eTester Main</span>
+    <span class="header-spacer"></span>
+    <button mat-raised-button color="primary"
+            >
+      <mat-icon>grade</mat-icon>
+      Grade
+    </button>
+    <button mat-raised-button color="primary"
+            >
+      Un-grade
+    </button>
+    <button mat-raised-button color="primary"
+            >
+      Continue
+    </button>
+    <button mat-raised-button color="primary"
+            >
+      <mat-icon>start</mat-icon>
+      Restart
+    </button>
+    <span class="header-spacer"></span>
+    <button mat-raised-button color="accent"
+            >
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+
+    <span class="header-spacer"></span>
+
+    <button *ngIf="isLoggedIn" mat-icon-button color="white" >
+      <span>{{loggedInUserName}}&nbsp;</span>
+      <mat-icon>logout</mat-icon>
+    </button>
+    <button *ngIf="!isLoggedIn" mat-icon-button color="white" >
+      <span>Login&nbsp;</span><mat-icon>login</mat-icon>
+    </button>
+
+  </mat-toolbar>
 </header>
