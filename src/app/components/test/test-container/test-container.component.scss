@@ -1,0 +1,80 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../../../theme-etester.scss';
+@import '@angular/material/theming';
+
+
+/* Declare the theme of choice we want to use */
+/**********************************************/
+$theme: $blue-theme;
+/**********************************************/
+
+
+$color-config: mat.get-color-config($theme);
+
+// get the chosen palette : primary, accent, warn
+$primary-palette: map.get($color-config, 'primary');
+$accent-palette: map.get($color-config, 'accent');
+
+$primaryColor: mat.get-color-from-palette($primary-palette);
+$primaryColorDark: mat.get-color-from-palette($primary-palette, 600);
+$primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
+$accentColor: mat.get-color-from-palette($accent-palette);
+
+$summaryPanelColor: $primaryColorLight;
+$questionIndexPanelColor: $primaryColorLight;
+$questionPanelColor: $primaryColorLight;
+
+
+
+
+:host {
+  flex: 1;
+  background-color: $primaryColorDark;
+}
+
+.test-container-main {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 4px;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.test-container-main > app-testsummary {
+  flex: 0 0 200px;
+  margin-left: 0.2rem;
+  background-color: $summaryPanelColor;
+}
+
+
+.test-container-main > app-test-answer-panel {
+  flex: 0 0 200px;
+  background-color: $questionIndexPanelColor;
+  margin-right: 0.2rem;
+}
+
+
+.test-container-main > app-testview {
+  flex: 1 1 auto;
+  background-color: $questionPanelColor;
+}
+
+
+
+@media (max-width: 768px) {
+  .test-container-main {
+    flex-direction: column;
+    row-gap:6px;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .test-container-main > app-testsummary,
+  .test-container-main > app-test-answer-panel {
+    /* 12em is the width of the columns */
+    flex: 0 0 auto;
+  }
+}

@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../../../theme-etester.scss';
+@import '@angular/material/theming';
+
+
+/* Declare the theme of choice we want to use */
+/**********************************************/
+$theme: $blue-theme;
+/**********************************************/
+
+$color-config: mat.get-color-config($theme);
+
+.panel-background-color-theme {
+  @include angular-material-theme($color-config);
+}
+
+
+.logo {
+  height: 100%
+}
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-icon-button {
+  width: auto;
+  height: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-left: 10px;
+  border-style: solid;
+}

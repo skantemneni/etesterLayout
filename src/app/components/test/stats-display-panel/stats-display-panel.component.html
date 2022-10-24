@@ -1,0 +1,22 @@
+<div class="stats-display-panel">
+  <table style="width:100%">
+    <tr>
+      <th colspan="3" class="mat-header-cell header-row">{{displayableHeading}}</th>
+    </tr>
+    <tr>
+      <th class="mat-header-cell">Answered:</th>
+      <td class="mat-cell">{{answeredCount}}/{{totalQuestionCount}}</td>
+      <td class="mat-cell">({{ (answeredCount/totalQuestionCount) | percent:'.1' }})</td>
+    </tr>
+    <tr>
+      <th class="mat-header-cell">Score:</th>
+      <td class="mat-cell">{{correctPoints}}/{{totalPointCount}}</td>
+      <td class="mat-cell">({{ (correctPoints/totalPointCount) | percent:'.1' }})</td>
+    </tr>
+    <tr>
+      <th class="mat-header-cell">Status:</th>
+      <td colspan="2" class="mat-cell">Failed</td>
+    </tr>
+  </table>
+</div>
+

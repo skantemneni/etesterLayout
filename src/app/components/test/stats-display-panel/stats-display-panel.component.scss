@@ -1,0 +1,22 @@
+.stats-display-panel {
+  width: 180px;
+}
+
+
+th.mat-header-cell {
+  text-align: left;
+}
+
+th.header-row {
+  background-color: dimgrey;
+  font-weight: normal;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .stats-display-panel {
+    width: 150px;
+  }
+}
+
+

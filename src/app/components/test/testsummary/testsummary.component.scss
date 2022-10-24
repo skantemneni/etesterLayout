@@ -1,0 +1,38 @@
+.test-summary {
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+}
+.test-summary-total,
+.test-summary-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-panel-header,
+.answer-panel-header {
+  border: 0;
+  font: inherit;
+  font-size: smaller;
+  font-weight: bolder;
+  display: block;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.section-stats-display-panel > div,
+.section-stats-display-panel > div > div {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .section-stats-display-panel > div,
+  .section-stats-display-panel > div > div {
+    display: flex;
+    gap: 10px;
+  }
+}

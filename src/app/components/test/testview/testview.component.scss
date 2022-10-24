@@ -1,0 +1,90 @@
+@media (min-width: 768px) {
+  .scroll {
+    padding: 25px;
+    background-color: inherit;
+    /* Why do I need to subtract 194?  Its like this.... */
+    /* Header = 65, Footer = 65, Red Border on body 3px (x2) on top and bottom, Container grid-gap of 4px (x2) Padding on scroll panel 25px (x2).  Total =  65 + 65 + 6 + 8 + 50 = 194px */
+    /* Got rid of red border.  So, now, Header = 65, Footer = 65, Container grid-gap of 4px (x2) Padding on scroll panel 25px (x2).  Total =  65 + 65 + 8 + 50 = 188px */
+    /* Padding is moved within main content.  So now, Header = 65, Footer = 65, Container grid-gap of 4px (x2).  Total =  65 + 65 + 8 = 138px */
+    max-height: calc(100vh - 146px);
+    overflow-y: auto; /* Add the ability to scroll */
+  }
+}
+
+
+.etest-accordion {
+  display: block;
+  max-width: 800px;
+}
+
+.etest-accordion-item {
+  display: block;
+  border: solid 1px #ccc;
+}
+
+.etest-accordion-item + .etest-accordion-item {
+  border-top: none;
+}
+
+.etest-accordion-item-header {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.etest-accordion-item-description {
+  font-size: 0.85em;
+  color: #999;
+}
+
+.etest-accordion-item-header,
+.etest-accordion-item-body {
+  padding: 16px;
+}
+
+.etest-accordion-item-header:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.etest-accordion-item:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.etest-accordion-item:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+
+
+.test-heading, .test-segment-heading {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.test-status {
+  background-color: #aaa;
+  color: darkgreen;
+  font-size: large;
+  font-style: italic;
+}
+
+.test-metadata {
+  padding: 0 30px 0 0px;
+}
+
+.test-segment-heading {
+  font-size: large;
+  font-weight: bold;
+}
+
+
+
+.smooth-out-obscene-text-sizes {
+}
+
+.smooth-out-obscene-text-sizes h1 {
+  font-size: large;
+}

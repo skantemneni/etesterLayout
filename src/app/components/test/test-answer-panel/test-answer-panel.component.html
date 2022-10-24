@@ -1,0 +1,27 @@
+<div class="answer-panel">
+  <div>
+    <!-- Adding a line just to give some spacing.  Btw, the spans need to be display=block for teh spacing to happen -->
+    <span class="answer-panel-header">Answer Panel</span>
+  </div>
+  <div class="test-section-answer-panel">
+    <div *ngIf="test">
+      <div *ngFor="let testsegment of test.testsegments; let segmentindex = index;">
+        <div *ngFor="let testsection of testsegment.testsections; let sectionindex = index;">
+          <app-section-answer-panel #testsectionAnswerPanelRendering
+                                    (answerPanelQuestionButtonClicked)="answerItemClicked($event)"
+                                    [testsegmentIndex]="segmentindex"
+                                    [testsegmentName]="testsegment.name"
+                                    [testsectionIndex]="sectionindex"
+                                    [testsectionName]="testsection.name"
+                                    [testsection]="testsection"
+                                    [testsectionResponse]="getInitialTestsectionResponseForTestsection(testsegment.idTestsegment, testsection.idTestsection)"
+                                    [segmentsectionindex]="sectionindex"
+                                    [idTestsegment]="testsegment.idTestsegment"
+                                    [idTest]="test.idTest"
+                                    class="answer-panel-section">
+          </app-section-answer-panel>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

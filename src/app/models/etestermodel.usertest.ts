@@ -1,0 +1,30 @@
+export interface Usertest {
+  idUsertest: string;
+  idProvider: number;
+  idProfile?: number;
+  profileName?: string;
+  profilesegmentName?: string;
+  idTest: string;
+  testType: string;
+  idUser: number;
+  autoGrade: number;
+  autoPublishResults: number;
+  userType: number;
+  name: string;
+  description: string;
+  testAssignmentDate: string;
+  testCompletionDate?: string;
+  testReassignmentDate?: string;
+  testStatus: string;
+  testArchived?: string;
+  active?: string;
+  administeredOffline?: number;
+  isReportAvailableToViewByStudent?: number;
+  associatedUserName?: string;
+  associatedFirstName?: string;
+  associatedLastName?: string;
+  timeInMinutes?: number;
+  questionCount?: number;
+  examtrackDescription?: string;
+  organizationName?: string;
+}

@@ -1,0 +1,36 @@
+.answer-panel {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.answer-panel-header {
+  border: 0;
+  font: inherit;
+  font-size: smaller;
+  font-weight: bolder;
+  display: block;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.answer-panel-section {
+
+}
+
+.answer-panel > .test-section-answer-panel > div,
+.answer-panel > .test-section-answer-panel > div > div {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .answer-panel > .test-section-answer-panel > div,
+  .answer-panel > .test-section-answer-panel > div > div {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+  }
+}

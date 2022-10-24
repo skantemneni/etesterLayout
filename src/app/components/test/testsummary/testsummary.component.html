@@ -1,0 +1,42 @@
+<div class="test-summary">
+
+  <div class="test-summary-total">
+    <div>
+      <!-- Adding a line just to give some spacing.  Btw, the spans need to be display=block for teh spacing to happen -->
+      <span class="summary-panel-header">{{displayableTestName}}</span>
+    </div>
+    <app-stats-display-panel class="test-stats-display-panel"
+                             #testStatsDisplayPanel
+                             [displayableHeading]="'Test Stats:'"
+                             [totalQuestionCount]="totalQuestionCount"
+                             [totalPointCount]="totalPointCount"
+                             [responseDetails]="responseDetails"
+                             [idTest]="test?.idTest">
+    </app-stats-display-panel>
+  </div>
+
+  <div class="test-summary-details">
+    <div>
+      <!-- Adding a line just to give some spacing -->
+      <span class="answer-panel-header">Details</span>
+    </div>
+    <div class="section-stats-display-panel">
+      <div *ngIf="test">
+        <div *ngFor="let testsegment of test.testsegments; let segmentindex = index;">
+          <div *ngFor="let testsection of testsegment.testsections; let sectionindex = index;">
+            <app-stats-display-panel #sectionStatsDisplayPanel
+                                     [displayableHeading]="getFormattedSectionHeading(segmentindex, sectionindex, testsegment.name, testsection.name)"
+                                     [totalQuestionCount]="testsection.questionCount"
+                                     [totalPointCount]="testsection.pointCount"
+                                     [responseDetails]="getTestsectionResponseDetailsForTestsection(testsegment.idTestsegment, testsection.idTestsection)"
+                                     [idTest]="test.idTest"
+                                     [idTestsegment]="testsegment.idTestsegment"
+                                     [idTestsection]="testsection.idTestsection">
+            </app-stats-display-panel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

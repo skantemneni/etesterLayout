@@ -1,0 +1,60 @@
+<main>
+  <div class="scroll">
+
+
+
+    <div class="test-heading" [attr.idTest]="test.idTest">{{test.name}}</div>
+    <div>
+      <span class="test-metadata">Provider: {{test.idProvider}}</span>
+      <span class="test-metadata">Channel: {{test.idChannel}}</span>
+      <span class="test-metadata">Exam Track: {{test.examtrack}}</span>
+    </div>
+    <div>Description: {{test.description}}</div>
+    <div class="test-status">{{testwithresponse.testStatus}}</div>
+    <hr />
+
+
+    <h3>Test Subjects</h3>
+
+    <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
+    <div *ngIf="testsegments">
+      <div *ngFor="let testsegment of testsegments; let shivaindex = index;">
+        <span style="display: none;" #shivatestsegment>{{testsegment.idTestsegment}}</span>
+      </div>
+    </div>
+    <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
+    <!-- Do this If you don't want to wrap each section into an accordian panel  -->
+    <!--
+    <div *ngFor="let testsegment of testsegments; let testsegmentindex = index;">
+        <app-testsegment #testsegmentRendering [testsegment]="testsegment" [testsegmentindex]="testsegmentindex" [instantGradeMode]="false"></app-testsegment>
+    </div>
+      -->
+    <!-- Wrapping in mat-accordion ensures only one Test segment is open at any given time.  May not be what I want. -->
+    <!--
+    -->
+    <mat-accordion #matAccordion multi>
+      <div *ngFor="let testsegment of testsegments; let testsegmentindex = index;">
+
+        <mat-expansion-panel #expansionPanel [attr.idtestsegment]="testsegment.idTestsegment">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{testsegmentindex + 1}}.) {{testsegment.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-testsegment #testsegmentRendering
+                           (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
+                           [testsegment]="testsegment"
+                           [testsegmentindex]="testsegmentindex"
+                           [testsegmentResponse]="getInitialTestsegmentResponseForTestsegment(testsegment)"
+                           [testStatus]="testStatus"
+                           [instantGradeMode]="false">
+          </app-testsegment>
+        </mat-expansion-panel>
+
+      </div>
+    </mat-accordion>
+
+  </div>
+</main>

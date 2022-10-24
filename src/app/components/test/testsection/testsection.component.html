@@ -1,0 +1,33 @@
+<div>
+  <div>Description: {{testsection?.section?.description}}</div>
+  <div>
+    <span class="test-metadata">Time To Answer: {{testsection?.timeToAnswer}}</span>
+    <span class="test-metadata">Question Count: {{testsection?.questionCount}}</span>
+    <span class="test-metadata">Point Count: {{testsection?.pointCount}}</span>
+    <span class="test-metadata">Instructions Name: {{testsection?.instructionsName}}</span>
+    <span class="test-metadata">Report Subject: {{testsection?.reportSubject}}</span>
+    <span class="test-metadata">Points Per Question: {{testsection?.pointsPerQuestion}}</span>
+    <span class="test-metadata">Negative Points Per Question: {{testsection?.negativePointsPerQuestion}}</span>
+  </div>
+
+  <div [innerHTML]="testsection?.section?.text" class="smooth-out-obscene-text-sizes"></div>
+
+
+  <h4>Questions:</h4>
+  <div [attr.idquestion]="question?.idQuestion" class="sesi" #questionAnswerBlock *ngFor="let question of testsection?.section?.questions?.slice(0, 2); let sectionquestionindex = index;">
+    <app-question #questionRendering
+                  (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
+                  [attr.id]="'question-' + question.idQuestion"
+                  [question]="question"
+                  [questionResponse]="getInitialQuestionResponseForQuestion(question)"
+                  [sectionquestionindex]="sectionquestionindex"
+                  [defaultQuestionInstructions]="testsection?.section?.questionInstructions"
+                  [testStatus]="testStatus"
+                  [instantGradeMode]="false"
+                  [pointsPerQuestion]="pointsPerQuestion"
+                  [negativePointsPerQuestion]="negativePointsPerQuestion"
+                  [unansweredPointsPerQuestion]="unansweredPointsPerQuestion"
+                  >
+    </app-question>
+  </div>
+</div>

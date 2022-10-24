@@ -30,7 +30,9 @@
   flex: 0 0 auto;
 }
 
-.flex-container > .flex-container-main {
+/* Note the reference to app-test-container here. in .flex-container > .flex-container-main > app-test-container.  Looks like there is no way to avoid it */
+.flex-container > .flex-container-main,
+.flex-container > .flex-container-main > app-test-container {
   /* This controls how much space the "main area" takes up.  Considering header and footer are */
   flex: 1;
   display: flex;

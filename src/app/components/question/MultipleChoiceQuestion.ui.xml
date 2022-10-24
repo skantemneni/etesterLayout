@@ -1,0 +1,83 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:question="urn:import:com.rf.web.mvp.widgets.common.question"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+<ui:style >
+.panel {
+	width: 100%;
+	height: 100%;
+}
+.showAnswerLink-style {
+	margin-top: 30px;
+	margin-left: 25px;
+	width: literal("calc(100% - 40px)");
+}
+</ui:style>
+
+
+
+<g:SimplePanel addStyleNames="{style.panel}">
+<g:HTMLPanel>
+
+	<div class="default-question-answer-block default-question-answer-block-border" ui:field="questionAnswerBlock">
+		<div class="default-question-block">
+			<g:HTMLPanel styleName="default-question-heading-block">
+				<g:HTML ui:field="questionIndex" styleName="default-question-index"></g:HTML>
+				<g:HTML ui:field="questionBanner" styleName="default-question-banner">Select from the Answer Choices</g:HTML>
+				<g:HTML ui:field="questionTimer" styleName="default-question-timer" addStyleNames="default2-hidden"></g:HTML>
+			</g:HTMLPanel>
+			<g:HTMLPanel ui:field="questionHTMLPanel" styleName="default-question-details">
+				<g:HTML ui:field="questionHeading" styleName="default-question-heading"></g:HTML>
+				<g:HTMLPanel ui:field="questionsetTextHTMLPanel" styleName="yui3-cssbase default-question-text"></g:HTMLPanel>
+
+				<g:HTML ui:field="questionPrecontext" styleName="yui3-cssbase default-question-text"></g:HTML>
+				
+				<g:HTMLPanel ui:field="questionTextHTMLPanel" styleName="yui3-cssbase default-question-text"></g:HTMLPanel>
+
+				<g:HTML ui:field="questionPostcontext" styleName="yui3-cssbase default-question-text"></g:HTML>
+				
+				<g:HTML ui:field="questionInstructions" styleName="default-question-instructions"></g:HTML>
+				
+<!-- 				
+				<g:FlowPanel ui:field="showAnswerLink" addStyleNames="{style.showAnswerLink-style}">
+				    <g:FocusPanel ui:field="questionExplanationHeaderFocusPanel">
+					    <g:FlowPanel>
+							<g:Label addStyleNames="{style.solution-header}">Explanation...</g:Label>
+							<g:Label ui:field="questionExplanationHeaderFlowPanelImage" addStyleNames="{style.solution-header}">\u25BA</g:Label>
+					    </g:FlowPanel>
+				    </g:FocusPanel>
+		 			<g:DisclosurePanel ui:field="questionExplanationDisclosurePanel">
+						<g:HTMLPanel addStyleNames="yui3-cssbase {style.solution-detail}" ui:field="questionExplanationHTMLPanel"></g:HTMLPanel>
+					</g:DisclosurePanel>
+				</g:FlowPanel>
+ -->
+			</g:HTMLPanel>
+		</div>
+		<!-- Answer Panel -->
+		<div>
+			<g:FlowPanel styleName="default-answer-list-block" ui:field="answerListPanel">
+			</g:FlowPanel>
+		</div>
+
+		<!-- Explanation Panel -->
+		<question:ShowExplanationWidget title="Show Explanation..." ui:field="showAnswerLink"/>
+
+	</div>
+		
+	
+
+	<g:Label ui:field="resultsBox"></g:Label>
+
+	
+</g:HTMLPanel>
+<!-- 
+<g:FlowPanel>
+	<g:Label ui:field="title" addStyleNames="{style.studentlevelTitle}"></g:Label>
+	<g:HTML styleName="{style.divider}" />
+	<g:Label ui:field="description" addStyleNames="{style.studentlevelDescription}"></g:Label>
+	<g:HTML styleName="{style.divider}" />
+	<g:Label ui:field="skillcount" addStyleNames="{style.studentlevelSkillcount}"></g:Label>
+</g:FlowPanel>
+ -->
+</g:SimplePanel>
+</ui:UiBinder>

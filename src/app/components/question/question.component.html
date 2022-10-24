@@ -1,0 +1,66 @@
+  <div class="default-question-answer-block default-question-answer-block-border"
+     [class]="questionStatusHighlightClass">
+
+  <!--
+    <button mat-raised-button color="primary"
+          (click)="rerenderMath()">
+      Re-Render
+    </button>
+  -->
+  <div class="default-question-block">
+    <div class="default-question-heading-block">
+      <span class="default-question-index">
+        {{sectionquestionindex + 1}}
+      </span>
+      <span class="default-question-banner">
+        {{question?.banner || "Select from the Answer Choices"}}
+      </span>
+      <span #questionTimer class="default-question-timer default2-hidden">
+      </span>
+    </div>
+    <div #questionHTMLPanel styleName="default-question-details">
+      <span *ngIf="hasQuestionHeading" [innerHTML]="questionHeading" styleName="default-question-heading"></span>
+
+      <ng-template [ngIf]="hasQuestionsetText">
+        <div class="yui3-cssbase default-question-text">
+          <span>{{ questionsetText }}</span>
+        </div>
+      </ng-template>
+
+      <span *ngIf="hasQuestionPrecontext()" [innerHTML]="questionPrecontext" class="yui3-cssbase default-question-text"></span>
+      <div #questionTextDiv *ngFor="let questionLineText of questionTextArray; index as i; first as isFirst">
+        <span [innerHTML]="questionLineText" class="yui3-cssbase default-question-text"></span>
+      </div>
+
+      <span *ngIf="hasQuestionPostcontext()" [innerHTML]="questionPostcontext" class="yui3-cssbase default-question-text"></span>
+
+      <span *ngIf="hasQuestionInstructions()" [innerHTML]="questionInstructions" class="default-question-instructions"></span>
+
+    </div>
+  </div>
+  <!-- Answer Panel -->
+  <div>
+    <div class="default-answer-list-block" #answerListPanel></div>
+
+
+  </div>
+
+  <h6><b>Answer Choices</b></h6>
+  <div *ngFor="let answer of question?.answers; let questionanswerindex = index;"
+       (click)="onAnswerClicked($event, questionanswerindex)"
+       [class.default-answer-block-selected]="isAnswerSelected(questionanswerindex)">
+    <!-- [class.default-answer-block-selected]="SelectedAnswerIndex == questionanswerindex"> -->
+    <app-answer [answer]="answer" [questionanswerindex]="questionanswerindex"></app-answer>
+  </div>
+
+
+  <!-- Explanation Panel
+  <question:ShowExplanationWidget title="Show Explanation..." ui:field="showAnswerLink" />
+
+    -->
+
+</div>
+
+
+
+  <!--   <g:Label ui:field="resultsBox"></g:Label> -->

@@ -1,0 +1,20 @@
+<<div>
+  <div>Description: {{testsegment?.description}}</div>
+  <div>
+    <span class="test-metadata">Time To Answer: {{testsegment?.timeToAnswer}}</span>
+    <span class="test-metadata">Question Count: {{testsegment?.questionCount}}</span>
+    <span class="test-metadata">Point Count: {{testsegment?.pointCount}}</span>
+  </div>
+
+  <h4>Test Units</h4>
+  <div *ngFor="let testsection of testsegment?.testsections; let segmentsectionindex = index;">
+    <app-testsection #testsectionRendering
+                     (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
+                     [testsection]="testsection"
+                     [testsectionResponse]="getInitialTestsectionResponseForTestsection(testsection)"
+                     [segmentsectionindex]="segmentsectionindex"
+                     [testStatus]="testStatus"
+                     [instantGradeMode]="instantGradeMode">
+    </app-testsection>
+  </div>
+</div>

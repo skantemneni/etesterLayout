@@ -1,0 +1,45 @@
+<header class="panel-background-color-theme">
+  <mat-toolbar color="primary">
+    <img routerLink="/" class="logo" src="assets/logoETESTER.svg">
+    <span class="header-spacer"></span>
+    <button routerLink="/test/5108" mat-raised-button color="primary">
+      <mat-icon>cloud_download</mat-icon>
+      &nbsp;Fetch
+    </button>
+    <span class="header-spacer"></span>
+    <button mat-raised-button color="primary" (click)="onTestGradeClicked($event)">
+      <mat-icon>score</mat-icon>&nbsp;
+      <mat-icon>grade</mat-icon>&nbsp;
+      Grade
+    </button>
+    <button mat-raised-button color="primary" (click)="onTestUngradeClicked($event)">
+      Un-grade
+    </button>
+    <button mat-raised-button color="primary" (click)="onTestContinueClicked($event)">
+      <mat-icon>play_circle_outline</mat-icon>&nbsp;
+      Continue
+    </button>
+    <button mat-raised-button color="primary" (click)="onTestRestartClicked($event)">
+      <mat-icon>replay</mat-icon>&nbsp;
+      Restart
+    </button>
+    <span class="header-spacer"></span>
+
+    <button mat-raised-button color="accent" (click)="onTestSaveClicked($event)">
+      <mat-icon>cloud_upload</mat-icon>&nbsp;
+      <mat-icon>save</mat-icon>&nbsp;
+      Save
+    </button>
+
+    <span class="header-spacer"></span>
+
+    <button *ngIf="isLoggedIn" mat-icon-button color="white" (click)="onLogoutClicked()">
+      <span>{{loggedInUserName}}&nbsp;</span>
+      <mat-icon>logout</mat-icon>
+    </button>
+    <button *ngIf="!isLoggedIn" mat-icon-button color="white" (click)="onLoginClicked()">
+      <span>Login&nbsp;</span><mat-icon>login</mat-icon>
+    </button>
+
+  </mat-toolbar>
+</header>

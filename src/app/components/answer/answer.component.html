@@ -1,0 +1,8 @@
+<div class="default-answer-block" #answerBlockFocusPanel>
+  <span #answerIndexAccuracyLabel styleName="{style.default-answer-accuracy-label}"></span>
+  <span #answerindex class="default-answer-index" (click)="onIndexClicked($event)">
+    {{ questionanswerindex + 1 }}
+  </span>
+  <span #answerHtmlPanel [innerHTML]="answer?.text" class="default-answer-text"></span>
+</div>
+

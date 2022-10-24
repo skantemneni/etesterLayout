@@ -30,6 +30,8 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
+              "src/theme-etester.scss",
+              "src/assets/TopicSection.css",
               "src/grid_container_styles.scss",
               "src/flex_container_styles.scss"
             ],

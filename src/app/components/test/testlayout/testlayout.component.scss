@@ -1,0 +1,54 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../../../theme-etester.scss';
+@import '@angular/material/theming';
+
+
+/* Declare the theme of choice we want to use */
+/**********************************************/
+$theme: $blue-theme;
+/**********************************************/
+
+
+$color-config: mat.get-color-config($theme);
+
+// get the chosen palette : primary, accent, warn
+$primary-palette: map.get($color-config, 'primary');
+$accent-palette: map.get($color-config, 'accent');
+
+$primaryColor: mat.get-color-from-palette($primary-palette);
+$primaryColorDark: mat.get-color-from-palette($primary-palette, 600);
+$primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
+$accentColor: mat.get-color-from-palette($accent-palette);
+
+
+.test-container {
+  /* just to visualize the box better */
+  /* border: 3px solid red; */
+  display: flex;
+  background-color: $primaryColorDark;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  row-gap: 4px;
+  /* not 100vh cause the border below will make create a overflow scroll bar effect.  if so subtract (top-border height and bottom-border-height) */
+  height: calc(100vh - 0px);
+}
+
+.test-container > app-test-header {
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  background-color: $accentColor;
+  flex: 0 0 auto;
+}
+
+.test-container > app-test-footer {
+  background-color: $primaryColorDark;
+  color: $primaryColorLight;
+  text-align: center;
+  padding: 3px 10px;
+  /* For some reason fixed size on footer is not working.  May be because, out of teh 3 flex items (header, footer and container-main-class) container-main-class has a padding...? */
+  /* so, defaulting to auto */
+  /* flex: 0 0 65px; */
+  flex: 0 0 auto;
+}

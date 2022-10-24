@@ -1,0 +1,14 @@
+<div class="answer-panel-container">
+  <div>{{testsegmentIndex + 1}}.{{testsectionIndex + 1}}.) {{testsegmentName}} - {{testsectionName}}</div>
+  <div class="answer-panel">
+    <div *ngFor="let question of testsection.section?.questions; let sectionquestionindex = index;">
+      <div (click)="answerItemClicked($event)"
+           [id]="question.idQuestion"
+           class="answer-panel-button"
+           [class]="getQuestionStatusHighlightClass(sectionquestionindex, question.idQuestion)"
+           >
+        {{sectionquestionindex + 1}}
+      </div>
+    </div>
+  </div>
+</div>

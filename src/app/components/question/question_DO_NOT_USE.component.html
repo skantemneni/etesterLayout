@@ -1,0 +1,32 @@
+<cdk-accordion-item 
+                    #accordionItem="cdkAccordionItem"
+                    class="etest-accordion-item"
+                    role="button"
+                    tabindex="0"
+                    [expanded]="true"
+                    [attr.id]="'accordion-header-' + questionindex"
+                    [attr.aria-expanded]="accordionItem.expanded"
+                    [attr.aria-controls]="'accordion-body-' + questionindex">
+  <div [attr.idQuestion]="question?.idQuestion" class="etest-accordion-item-header" (click)="accordionItem.toggle()">
+    {{questionindex + 1}}.) {{question?.banner}}{{question?.questionType}}{{question?.questionOrder}}
+    <span class="etest-accordion-item-description">
+      Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+    </span>
+  </div>
+  <div class="etest-accordion-item-body"
+       role="region"
+       [style.display]="accordionItem.expanded ? '' : 'none'"
+       [attr.id]="'accordion-body-' + questionindex"
+       [attr.aria-labelledby]="'accordion-header-' + questionindex">
+    <div [innerHTML]="question?.text"></div>
+    <!-- <div [innerHTML]="question?.addlInfo"></div>-->
+    <h6><b>Answer Choices</b></h6>
+    <div *ngFor="let answer of question?.answers" [attr.idAnswer]="answer.idAnswer">
+      <!--<div><i>seq: {{answer.seq}}</i></div>-->
+      <!--<div><i>correct: {{answer.correct}}</i></div>-->
+      <div [innerHTML]="answer.text"></div>
+      <div [innerHTML]="answer.addlInfo"></div>
+    </div>
+  </div>
+
+</cdk-accordion-item>

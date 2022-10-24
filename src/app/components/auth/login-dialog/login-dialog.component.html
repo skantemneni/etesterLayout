@@ -1,0 +1,65 @@
+<h1 mat-dialog-title color="primary">Login to eTester!!</h1>
+
+<div class="login-container">
+
+  <div class="error-message-container">
+    <span>{{loginErrorMessage}}</span>
+  </div>
+  <div *ngIf="loginForm">
+    <form [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput
+               formControlName="username">
+        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+          Please fill in the <strong>Username</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password"
+               formControlName="password">
+        <mat-error type="password" *ngIf="loginForm.get('password')?.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength') && !loginForm.get('password')?.hasError('required')">
+          Minimum length <strong>8 char</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email"
+               placeholder="Ex. pat@example.com" required>
+        <mat-hint>Errors appear instantly!</mat-hint>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field><br />
+
+      <br>
+
+      <mat-dialog-actions align="end">
+        <button mat-button id="submit_button" mat-raised-button color="primary" type="submit" [disabled]="!isFormValid()">
+          Login
+        </button>
+        <span>&nbsp;&nbsp;</span>
+        <!-- Note that on Cancel Button, the attribute type="button" is REQUIRED.  Otherwise Form Submit happens on Calcel action -->
+        <!-- 'https://stackoverflow.com/questions/60749281/how-to-prevent-form-from-submitting-on-cancelled-angular-material-dialog' -->
+        <button mat-button type="button" class="mat-focus-indicator mat-raised-button mat-button-base mat-raised" (click)="onCancelClicked()">
+          Close!
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+</div>
