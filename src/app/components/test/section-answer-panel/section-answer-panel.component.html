@@ -1,5 +1,5 @@
 <div class="answer-panel-container">
-  <div>{{testsegmentIndex + 1}}.{{testsectionIndex + 1}}.) {{testsegmentName}} - {{testsectionName}}</div>
+  <div class="answer-panel-header">{{testsegmentIndex + 1}}.{{testsectionIndex + 1}}.) {{testsegmentName}} - {{testsectionName}}</div>
   <div class="answer-panel">
     <div *ngFor="let question of testsection.section?.questions; let sectionquestionindex = index;">
       <div (click)="answerItemClicked($event)"

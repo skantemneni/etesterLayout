@@ -4,23 +4,32 @@
   padding: 10px;
 }
 
+.answer-panel-header {
+    font-size:small;
+    font-weight:bolder;
+}
+
 .answer-panel {
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   line-height: 15px;
-  padding: 10px;
+  padding: 6px;
+  background-color: white;
+  border-radius: 10px;
+  justify-content: space-between;
+  border-style: ridge;
+  border-width: 6px;
 }
 
 .answer-panel-button {
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   border-style: solid;
   border-color: black;
-  border-radius: 15px;
+  border-radius: 4px;
   border-width: thin;
   font-size: small;
-  padding: 4px;
   margin: 4px;
   text-align: center;
 }

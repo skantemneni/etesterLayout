@@ -33,7 +33,7 @@ export class EtesterdbService {
 
 /*  username: string = "sesi2";
   password: string = "test";
-*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2NjY4NDUxMX0.cS6Iqi01JrWB7bFCNu2xewtfpWQWEwA8ktH2E6Dtl2ckNuysHFqyETkAFYsb5lnBofy6DOi3NLPmhkj5hlzVbw';
+*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2Njg2NDU3M30.jY150PVFwvmE1FEAX8N6wRle2n2UiXTOxzUktFGYl8oI6d6qO5QUD6cSLKErmpAAIU8E54BJGAoNsQPjwGgrkg';
   authToken: string = this.default_authToken;
 
   private HTTP_OPTIONS = {};
