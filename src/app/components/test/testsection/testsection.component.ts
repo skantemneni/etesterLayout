@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { Testsection, QuestionResponse, TestsectionResponse, ITestsectionResponse, ResponseDetails, Question } from '../../../models/etestermodel';
 import * as TestConstants from '../../../models/TestConstants';
-import { QuestionComponent } from '../../question/question.component';
+import { QuestionComponent } from '../../../qa/components/question/question.component';
 import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
 
 @Component({

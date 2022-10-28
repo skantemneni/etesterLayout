@@ -22,7 +22,7 @@ $primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
 $accentColor: mat.get-color-from-palette($accent-palette);
 
 
-.test-container {
+.test-layout {
   /* just to visualize the box better */
   /* border: 3px solid red; */
   display: flex;
@@ -34,7 +34,7 @@ $accentColor: mat.get-color-from-palette($accent-palette);
   height: calc(100vh - 0px);
 }
 
-.test-container > app-test-header {
+.test-layout > app-test-header {
   color: white;
   font-size: 14px;
   text-align: center;
@@ -42,7 +42,7 @@ $accentColor: mat.get-color-from-palette($accent-palette);
   flex: 0 0 auto;
 }
 
-.test-container > app-test-footer {
+.test-layout > app-test-footer {
   background-color: $primaryColorDark;
   color: $primaryColorLight;
   text-align: center;
