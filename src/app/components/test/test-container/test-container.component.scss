@@ -17,7 +17,7 @@ $primary-palette: map.get($color-config, 'primary');
 $accent-palette: map.get($color-config, 'accent');
 
 $primaryColor: mat.get-color-from-palette($primary-palette);
-$primaryColorDark: mat.get-color-from-palette($primary-palette, 600);
+$primaryColorDark: mat.get-color-from-palette($primary-palette, 900);
 $primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
 $accentColor: mat.get-color-from-palette($accent-palette);
 
@@ -36,7 +36,7 @@ $questionPanelColor: $primaryColorLight;
 .test-container-main {
   display: flex;
   flex-wrap: nowrap;
-  column-gap: 4px;
+  column-gap: 0.5%;
   flex-direction: row;
   height: 100%;
   width: 100%;
@@ -44,8 +44,12 @@ $questionPanelColor: $primaryColorLight;
 
 .test-container-main > app-testsummary {
   flex: 0 0 200px;
-  margin-left: 0.2rem;
   background-color: $summaryPanelColor;
+  margin-left: 0.2rem;
+  border-radius: 0 10px 5px 0;
+  border-width: 4px;
+  border-style: ridge;
+  border-color: $primaryColorLight;
 }
 
 
@@ -53,12 +57,20 @@ $questionPanelColor: $primaryColorLight;
   flex: 0 0 200px;
   background-color: $questionIndexPanelColor;
   margin-right: 0.2rem;
+  border-radius: 10px 0 0 5px;
+  border-width: 4px;
+  border-style: ridge;
+  border-color: $primaryColorLight;
 }
 
 
 .test-container-main > app-testview {
   flex: 1 1 auto;
   background-color: $questionPanelColor;
+  border-radius: 10px 10px 5px 5px;
+  border-width: 4px;
+  border-style: ridge;
+  border-color: $primaryColorLight;
 }
 
 

@@ -17,7 +17,7 @@ $primary-palette: map.get($color-config, 'primary');
 $accent-palette: map.get($color-config, 'accent');
 
 $primaryColor: mat.get-color-from-palette($primary-palette);
-$primaryColorDark: mat.get-color-from-palette($primary-palette, 600);
+$primaryColorDark: mat.get-color-from-palette($primary-palette, 900);
 $primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
 $accentColor: mat.get-color-from-palette($accent-palette);
 
@@ -29,7 +29,7 @@ $accentColor: mat.get-color-from-palette($accent-palette);
   background-color: $primaryColorDark;
   flex-direction: column;
   flex-wrap: nowrap;
-  row-gap: 4px;
+  row-gap: 1%;
   /* not 100vh cause the border below will make create a overflow scroll bar effect.  if so subtract (top-border height and bottom-border-height) */
   height: calc(100vh - 0px);
 }
@@ -40,15 +40,25 @@ $accentColor: mat.get-color-from-palette($accent-palette);
   text-align: center;
   background-color: $accentColor;
   flex: 0 0 auto;
+  border-radius: 0px 0px 10px 10px;
+  border-width: 4px;
+  border-style: ridge;
+  border-color: $primaryColor;
 }
 
 .test-layout > app-test-footer {
-  background-color: $primaryColorDark;
-  color: $primaryColorLight;
+  background-color: $accentColor;
+  color: $primaryColorDark;
   text-align: center;
   padding: 3px 10px;
   /* For some reason fixed size on footer is not working.  May be because, out of teh 3 flex items (header, footer and container-main-class) container-main-class has a padding...? */
   /* so, defaulting to auto */
   /* flex: 0 0 65px; */
   flex: 0 0 auto;
+  border-radius: 10px 10px 0px 0px;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-width: 4px 4px 0px 4px;
+  border-style: ridge;
+  border-color: $primaryColor;
 }
