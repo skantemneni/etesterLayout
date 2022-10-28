@@ -1,18 +1,20 @@
+/*
 @use 'sass:map';
 @use '@angular/material' as mat;
 @import '../../../../theme-etester.scss';
-@import '@angular/material/theming';
-
+// @import '@angular/material/theming';
+*/
 
 /* Declare the theme of choice we want to use */
 /**********************************************/
-$theme: $blue-theme;
+// $theme: $blue-theme;
 /**********************************************/
 
-$color-config: mat.get-color-config($theme);
+// $color-config: mat.get-color-config($theme);
 
 .panel-background-color-theme {
-  @include angular-material-theme($color-config);
+//  @include angular-material-theme($color-config);
+
 }
 
 

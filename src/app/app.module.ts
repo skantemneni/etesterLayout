@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { MaterialUIModule } from '../material.module';
 import { LoginDialogComponent } from './components/auth/login-dialog/login-dialog.component';
 import { LogoutDialogComponent } from './components/auth/logout-dialog/logout-dialog.component';
-import { GlobalService } from './services//global.service';
+import { GlobalService } from './services/global.service';
 import { LoginService } from './components/auth/services/login.service';
 
 /* BrowserAnimationsModule gets added when you add Andular Materials */

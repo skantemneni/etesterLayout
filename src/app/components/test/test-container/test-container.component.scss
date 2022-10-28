@@ -1,15 +1,16 @@
+/*
 @use 'sass:map';
 @use '@angular/material' as mat;
 @import '../../../../theme-etester.scss';
-@import '@angular/material/theming';
-
+*/
 
 /* Declare the theme of choice we want to use */
 /**********************************************/
-$theme: $blue-theme;
+// $theme: $blue-theme;
 /**********************************************/
 
 
+/*
 $color-config: mat.get-color-config($theme);
 
 // get the chosen palette : primary, accent, warn
@@ -21,10 +22,15 @@ $primaryColorDark: mat.get-color-from-palette($primary-palette, 900);
 $primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
 $accentColor: mat.get-color-from-palette($accent-palette);
 
+*/
+$primaryColor: #b3e5fc;
+$primaryColorDark: #01579b;
+$primaryColorLight: #e1f5fe;
+$accentColor: #90caf9;
+
 $summaryPanelColor: $primaryColorLight;
 $questionIndexPanelColor: $primaryColorLight;
 $questionPanelColor: $primaryColorLight;
-
 
 
 

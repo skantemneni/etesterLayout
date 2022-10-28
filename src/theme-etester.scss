@@ -5,13 +5,14 @@
 /* Choosing color palette: https://m1.material.io/style/color.html#color-color-palette */
 
 
-$my-app-primary: mat-palette($mat-orange, 100, 50, 300);
-$my-app-accent: mat-palette($mat-deep-orange, 200, 100, 500);
+$my-app-primary: mat-palette($mat-light-blue, 100, 50, 300);
+$my-app-accent: mat-palette($mat-blue, 200, 100, 500);
 $my-app-warn: mat-palette($mat-red, 400, 200, 600);
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 @include angular-material-theme($my-app-theme);
 
 
+/*
 
 $orange-primary: mat-palette($mat-orange, 100, 50, 300);
 $orange-accent: mat-palette($mat-deep-orange, 200, 100, 500);
@@ -56,3 +57,5 @@ $brown-theme: mat-light-theme($brown-primary, $brown-accent, $brown-warn);
 .brown-alternate-theme {
   @include angular-material-theme($brown-theme);
 }
+
+*/
