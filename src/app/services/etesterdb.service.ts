@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { TestResponse, Testwithresponse } from '../models/etestermodel';
-import { LoggedinUser } from '../models/etesteruser';
+import { LoggedinUser } from '../auth/model/etesteruser';
 import { Usertest } from '../models/etestermodel.usertest';
 // import { DataSource } from '@angular/cdk/table';
 

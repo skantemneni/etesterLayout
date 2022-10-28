@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { LoggedinUser } from '../../../models/etesteruser';
-import { EtesterdbService } from '../../../services/etesterdb.service';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component';
+import { LoggedinUser } from '../model/etesteruser';
+import { EtesterdbService } from '../../services/etesterdb.service';
+import { LoginDialogComponent } from '../components/login-dialog/login-dialog.component';
+import { LogoutDialogComponent } from '../components/logout-dialog/logout-dialog.component';
 import { LoginDialogData, LoginEvent } from '../model/login-data';
 
 @Injectable({

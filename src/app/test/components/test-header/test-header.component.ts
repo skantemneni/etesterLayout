@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import * as TestConstants from '../../../models/TestConstants';
 import * as ApplicationConstants from '../../../models/ApplicationConstants';
-import { LoginService } from '../../auth/services/login.service';
-import { LoginEvent } from '../../auth/model/login-data';
+import { LoginService } from '../../../auth/services/login.service';
+import { LoginEvent } from '../../../auth/model/login-data';
 
 @Component({
   selector: 'app-test-header',

@@ -8,10 +8,7 @@ import { TestModule } from './test/test.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialUIModule } from '../material.module';
-import { LoginDialogComponent } from './components/auth/login-dialog/login-dialog.component';
-import { LogoutDialogComponent } from './components/auth/logout-dialog/logout-dialog.component';
 import { GlobalService } from './services/global.service';
-import { LoginService } from './components/auth/services/login.service';
 
 /* BrowserAnimationsModule gets added when you add Andular Materials */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,8 +18,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 @NgModule({
   declarations: [
     AppComponent,
-    LoginDialogComponent,
-    LogoutDialogComponent,
     PageNotFoundComponent,
 ],
   imports: [
@@ -36,7 +31,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     NgbModule,
     AppRoutingModule,
   ],
-  providers: [EtesterdbService, GlobalService, LoginService],
+  providers: [EtesterdbService, GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

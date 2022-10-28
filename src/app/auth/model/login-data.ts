@@ -1,4 +1,4 @@
-import { LoggedinUser } from "../../../models/etesteruser";
+import { LoggedinUser } from "./etesteruser";
 
 export interface LoginDialogData {
   username: string;

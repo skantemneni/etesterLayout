@@ -4,7 +4,7 @@ import { Testwithresponse, Test, Testsegment, Testsection, Section, Question, An
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as TestConstants from '../../../models/TestConstants';
-import { TestsegmentComponent } from '../../test/testsegment/testsegment.component';
+import { TestsegmentComponent } from '../testsegment/testsegment.component';
 import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 
