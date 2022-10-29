@@ -6,7 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { TestResponse, Testwithresponse } from '../models/etestermodel';
 import { LoggedinUser } from '../auth/model/etesteruser';
 import { Usertest } from '../models/etestermodel.usertest';
-// import { DataSource } from '@angular/cdk/table';
+import { IAuthenticatable } from '../auth/model/auth.interface';
+import { IDataServer } from './data.interface';
 
 // We have several eTester Controllers supporting this functionality. I am segmenting this URL paths by controller/function
 
@@ -15,8 +16,8 @@ const etesterdbBaseUrl: string = 'http://localhost:8081/';
 
 // Login & Register URL's (EtesterLoginController)
 const etesterdbLoginControllerBaseUrl: string = etesterdbBaseUrl + 'logincontroller/';
-const etesterdbLoginUrl: string = etesterdbLoginControllerBaseUrl + 'login';
-const userDetailsUrl: string = etesterdbLoginControllerBaseUrl + 'currentuserdetails';
+// const etesterdbLoginUrl: string = etesterdbLoginControllerBaseUrl + 'login';
+// const userDetailsUrl: string = etesterdbLoginControllerBaseUrl + 'currentuserdetails';
 
 // Usertest (EtesterUsertestController)
 const etesterdbUsertestControllerBaseUrl: string = etesterdbBaseUrl + 'data/usertest/';
@@ -29,28 +30,37 @@ const usertestPathSave: string = etesterdbUsertestControllerBaseUrl + 'usertestr
 @Injectable({
   providedIn: 'root'
 })
-export class EtesterdbService {
+export class EtesterdbService implements IAuthenticatable, IDataServer {
 
 /*  username: string = "sesi2";
   password: string = "test";
-*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2NzAzMzQ5NX0.lsYo9pYRaG1VyzcRVY5jtVmPZese7ugMIiXesQuzcPKns-jfW4C6mT9Zym0KSadhZmK8xv7amOofJ0GWmXxFvw';
+*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2NzEzMDM0Mn0.Rc0-MHMdZhGjTt0QZmS9up7OT0o0yEsi_GY7oBzDU1pH_vDPiWKCAVKUKilqMuWIskN3lCoDJLS-CGUCCvRjow';
   authToken: string = this.default_authToken;
 
   private HTTP_OPTIONS = {};
 
   constructor(private httpClient: HttpClient) {
-    this.resetLogin();
+    this.resetAuthCode();
   }
 
-  public setAuthCode(authCode: string) {
+  public getAuthCode() {
+    return this.authToken;
+  }
+  public setAuthCode(authCode: string): boolean {
+    console.log(`EtesterdbService.setAuthCode called with: ${authCode}`);
     this.authToken = authCode;
+    console.log(`EtesterdbService.setAuthCode this.authToken: ${this.authToken}`);
     this.HTTP_OPTIONS = this.getHttpOptionsForAuthCode(this.authToken);
-  }
+    console.log(`EtesterdbService.setAuthCode this.getAuthCode: ${this.getAuthCode()}`);
 
-  public resetLogin() {
+    return true;
+  }
+  public resetAuthCode (): boolean {
     this.authToken = this.default_authToken;
     this.HTTP_OPTIONS = this.getHttpOptionsForAuthCode(this.authToken);
+    return true;
   }
+
 
   private getHttpOptionsForAuthCode(authCode: string) {
     return {
@@ -65,6 +75,7 @@ export class EtesterdbService {
     };
   }
 
+  /*
   loginSyncAndGetToken(username: string, password: string) {
     const completeLoginUrl: string = etesterdbLoginUrl + '?username=' + username.trim() + '&password=' + password.trim();
     let authCode: string | null = null;
@@ -75,7 +86,7 @@ export class EtesterdbService {
     return this.httpClient.get<LoggedinUser>(userDetailsUrl, this.getHttpOptionsForAuthCode(authCode));
   }
 
-
+*/
 
 
   /**
@@ -91,6 +102,7 @@ export class EtesterdbService {
    * @param userTestId - usertestId is the id of the testinstance associated with the user
    */
   getUserTestData(userTestId: string): Observable<Testwithresponse> {
+    console.log(`EtesterdbService.getUserTestData this.getAuthCode: ${this.getAuthCode()}`);
     return this.httpClient.get<Testwithresponse>(usertestPathLoad + userTestId, this.HTTP_OPTIONS);
   }
 

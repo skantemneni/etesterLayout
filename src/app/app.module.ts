@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EtesterdbService } from './services/etesterdb.service';
@@ -14,6 +14,9 @@ import { GlobalService } from './services/global.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { IAuthenticatable } from './auth/model/auth.interface';
+
+export const AuthenticatableDataServer = new InjectionToken('AuthenticatableDataServer');
 
 @NgModule({
   declarations: [
@@ -31,7 +34,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     NgbModule,
     AppRoutingModule,
   ],
-  providers: [EtesterdbService, GlobalService],
+  providers: [{ provide: AuthenticatableDataServer, useClass: EtesterdbService }, GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

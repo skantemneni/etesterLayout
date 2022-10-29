@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AuthenticatableDataServer } from '../../../app.module';
 import { Test, TestResponse, Testwithresponse } from '../../../models/etestermodel';
 import * as TestConstants from '../../../models/TestConstants';
 import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
-import { EtesterdbService } from '../../../services/etesterdb.service';
+import { IDataServer } from '../../../services/data.interface';
 import { TestviewComponent } from '../testview/testview.component';
 
 @Component({
@@ -47,7 +48,9 @@ export class TestContainerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private etesterdbService: EtesterdbService) { }
+    @Inject(AuthenticatableDataServer) private dataServer: IDataServer
+//    , private etesterdbService: EtesterdbService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -66,7 +69,7 @@ export class TestContainerComponent implements OnInit {
    */
   getData(usertestId: string) {
     // Using a service here to get to the data from the etester database
-    this.etesterdbService.getUserTestData(usertestId).subscribe(
+    this.dataServer.getUserTestData(usertestId).subscribe(
       (testwithresponse: Testwithresponse) => {
         this.testwithresponse = testwithresponse;
         this.test = this.testwithresponse.test;

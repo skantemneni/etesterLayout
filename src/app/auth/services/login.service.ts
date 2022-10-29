@@ -1,105 +1,46 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoggedinUser } from '../model/etesteruser';
-import { EtesterdbService } from '../../services/etesterdb.service';
-import { LoginDialogComponent } from '../components/login-dialog/login-dialog.component';
-import { LogoutDialogComponent } from '../components/logout-dialog/logout-dialog.component';
-import { LoginDialogData, LoginEvent } from '../model/login-data';
+import { ILoginService } from '../model/auth.interface';
+
+
+// Core eTester URL (base path)
+const etesterdbBaseUrl: string = 'http://localhost:8081/';
+
+// Login & Register URL's (EtesterLoginController)
+const etesterdbLoginControllerBaseUrl: string = etesterdbBaseUrl + 'logincontroller/';
+const etesterdbLoginUrl: string = etesterdbLoginControllerBaseUrl + 'login';
+const userDetailsUrl: string = etesterdbLoginControllerBaseUrl + 'currentuserdetails';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LoginService implements ILoginService {
 
-  constructor(public dialog: MatDialog, private etesterdbService: EtesterdbService) { }
+  constructor(private httpClient: HttpClient) { }
 
-  loginData: LoginDialogData = { username: '', password: '', email: '', authToken: '' };
-  
-  private _loggedinUser: LoggedinUser | undefined;
-  // Getter method 
-  // of Student class
-  public get loggedinUser(): LoggedinUser | undefined {
-    return this._loggedinUser;
-  }
-  // Setter method to set the semester number
-  public set loggedinUser(loggedinUser: LoggedinUser| undefined) {
-    this._loggedinUser = loggedinUser;
-  }
-
-
-  defaultNotLoggedInEventData: LoginEvent = {
-    username: '',
-    email: '',
-    authToken: '',
-    isLoggedIn: false
+  private getHttpOptionsForAuthCode(authCode: string) {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, PUT, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+        'Authorization': authCode
+      })
+    };
   }
 
-  loginBehaviorSubject = new BehaviorSubject(this.defaultNotLoggedInEventData);
-
-
-  // Login Button clicked.  Open the Login Dialog and let it handle the Login process.
-  // Perform subsequent act
-  openLoginDialog() {
-    // use any previously saved login data to seed the login popup
-    const dialogRef = this.dialog.open(LoginDialogComponent,
-      {
-        width: 'auto',
-        maxWidth: '450px',
-        data: this.loginData
-      }
-    ).afterClosed().subscribe((returnData: LoginDialogData) => {
-      // You don't get any return data if the user clicks the escape button or clicks outside the login dialog. 
-      if (!returnData) {
-        return;
-      }
-      // save login data on this.loginData - so we can use it as inputs to logi dialog as needed
-      this.loginData = returnData;
-
-      let { username, password, email, authToken, loggedinUser } = returnData;
-
-      if (authToken && authToken.trim().length > 0 && loggedinUser) {
-        // save successful login data on this.etesterdbService - so we can use it as needed
-//        console.log(`LoginService.openLoginDialog.afterClosed(): AuthToken: ${authToken}`);
-//        console.log(`LoginService.openLoginDialog.afterClosed(): loggedinUser: ${JSON.stringify(loggedinUser)}`);
-        this.etesterdbService.setAuthCode(authToken);
-        this.loggedinUser = loggedinUser;
-
-        // now create the loggedin event response object;
-        let loggedInEvent = {
-          username: username,
-          email: email,
-          authToken: authToken,
-          loggedinUser: loggedinUser,
-          isLoggedIn: true
-        }
-        this.loginBehaviorSubject.next(loggedInEvent);
-      } else {
-        //        console.log(`AuthToken: Whoopsydaisy`);
-      }
-    });
-
-  }
-  openLogoutDialog() {
-    const dialogRef = this.dialog.open(LogoutDialogComponent,
-      {
-        width: 'auto',
-        maxWidth: '450px',
-      }
-    );
-    dialogRef.afterClosed().subscribe(close => {
-      if (close) {
-        this.loginData.authToken = '';
-        this.loggedinUser = undefined;
-//        this.appHeaderComponent.isLoggedIn = false;
-        this.etesterdbService.resetLogin();
-        // finally email the login data in the "loginBehaviorSubject"
-        this.loginBehaviorSubject.next(this.defaultNotLoggedInEventData);
-      } else {
-      }
-    });
+  loginSyncAndGetToken(username: string, password: string) {
+    const completeLoginUrl: string = etesterdbLoginUrl + '?username=' + username.trim() + '&password=' + password.trim();
+    let authCode: string | null = null;
+    return this.httpClient.post<any>(completeLoginUrl, { username: username, password: password }, { observe: 'response' });
   }
 
-
+  getUserDetails(username: string, authCode: string) {
+    return this.httpClient.get<LoggedinUser>(userDetailsUrl, this.getHttpOptionsForAuthCode(authCode));
+  }
 
 }

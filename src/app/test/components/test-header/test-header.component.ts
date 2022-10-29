@@ -3,6 +3,7 @@ import * as TestConstants from '../../../models/TestConstants';
 import * as ApplicationConstants from '../../../models/ApplicationConstants';
 import { LoginService } from '../../../auth/services/login.service';
 import { LoginEvent } from '../../../auth/model/login-data';
+import { LoginUIService } from '../../../auth/services/loginUI.service';
 
 @Component({
   selector: 'app-test-header',
@@ -19,12 +20,12 @@ export class TestHeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   /* constructor */
-  constructor(private loginService: LoginService) { }
+  constructor(private loginUIService: LoginUIService) { }
 
 
   ngOnInit(): void {
     // Call to retrieve data
-    this.loginService.loginBehaviorSubject.subscribe((loginEvent: LoginEvent) => {
+    this.loginUIService.loginBehaviorSubject.subscribe((loginEvent: LoginEvent) => {
       console.log("AppComponent.ngOnInit.loginService.loginBehaviorSubject.subscribe got", JSON.stringify(loginEvent));
       if (loginEvent.isLoggedIn) {
         this.isLoggedIn = true;
@@ -62,11 +63,11 @@ export class TestHeaderComponent implements OnInit {
   }
 
   onLoginClicked() {
-    this.loginService.openLoginDialog();
+    this.loginUIService.openLoginDialog();
   }
 
   onLogoutClicked(): void {
-    this.loginService.openLogoutDialog();
+    this.loginUIService.openLogoutDialog();
   }
 
 

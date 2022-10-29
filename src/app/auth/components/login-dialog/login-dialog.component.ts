@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoggedinUser } from '../../model/etesteruser';
 
-import { EtesterdbService } from '../../../services/etesterdb.service';
 import { LoginDialogData } from '../../model/login-data';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login-dialog',
@@ -21,7 +21,7 @@ export class LoginDialogComponent implements OnInit {
   nativeElement: HTMLElement | null = null;
 
   constructor(
-    private etesterdbService: EtesterdbService,
+    private loginService: LoginService,
 //    element: ElementRef,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<LoginDialogComponent>,
@@ -82,11 +82,11 @@ export class LoginDialogComponent implements OnInit {
     console.log(`onSubmit: password : ${this.loginForm?.value.password}`);
     console.log(`onSubmit: email : ${this.loginForm?.value.email}`);
     */
-    this.etesterdbService.loginSyncAndGetToken(this.loginForm?.value.username, this.loginForm?.value.password).subscribe(
+    this.loginService.loginSyncAndGetToken(this.loginForm?.value.username, this.loginForm?.value.password).subscribe(
       (resp) => {
         let authCode = resp.headers.get('Authorization');
         if (authCode) {
-          this.etesterdbService.getUserDetails(this.loginForm?.value.username, authCode).subscribe(
+          this.loginService.getUserDetails(this.loginForm?.value.username, authCode).subscribe(
             (loggedinUser: LoggedinUser) => {
               let returnData: LoginDialogData = {
                 username: this.loginForm?.value.username,
