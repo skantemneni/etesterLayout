@@ -1,0 +1,13 @@
+// $primaryColorDark is teh same value used in the test-container-component scss
+$primaryColorDark: #e1f5fe;
+$primaryColorLight: white;
+
+.test-section-student-instructions-text {
+  background-color: #e1f5fe;
+  border-radius: 10px;
+  padding: 10px 20px;
+  width: 96%;
+}
+.smooth-out-obscene-text-sizes > h1 {
+  font-size: large;
+}

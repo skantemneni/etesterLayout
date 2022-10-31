@@ -1,20 +1,47 @@
 <main>
   <div class="scroll">
 
+    <div class="test-metadata-container">
 
+      <div class="test-metadata-heading" [attr.idTest]="test.idTest">{{test.name}}</div>
 
-    <div class="test-heading" [attr.idTest]="test.idTest">{{test.name}}</div>
-    <div>
-      <span class="test-metadata">Provider: {{test.idProvider}}</span>
-      <span class="test-metadata">Channel: {{test.idChannel}}</span>
-      <span class="test-metadata">Exam Track: {{test.examtrack}}</span>
+      <div class="test-metadata-details-container">
+        <div class="test-metadata">
+          <div class="label">Provider:</div>
+          <div class="value">{{test.idProvider}}</div>
+        </div>
+        <div class="test-metadata">
+          <div class="label">Channel:</div>
+          <div class="value">{{test.idChannel}}</div>
+        </div>
+        <div class="test-metadata">
+          <div class="label">Exam Track:</div>
+          <div class="value">{{test.examtrack}}</div>
+        </div>
+      </div>
+
+      <div class="test-metadata-details-container">
+        <div class="test-metadata">
+          <div class="label">Description:</div>
+          <div class="value">{{test.description}}</div>
+        </div>
+      </div>
+
+      <div class="test-metadata-status-panel">
+        <div [class.selected]="testwithresponse.testStatus == 'assigned'">Assigned</div>
+        <div [class.selected]="testwithresponse.testStatus == 'started'">Started</div>
+        <div [class.selected]="testwithresponse.testStatus == 'submitted'">Submitted</div>
+        <div [class.selected]="testwithresponse.testStatus == 'corrections'">Scored/Corrections</div>
+        <div [class.selected]="testwithresponse.testStatus == 'completed'">Finished</div>
+        <div [class.selected]="testwithresponse.testStatus == 'archived'">Archived</div>
+      </div>
+
     </div>
-    <div>Description: {{test.description}}</div>
-    <div class="test-status">{{testwithresponse.testStatus}}</div>
-    <hr />
+
+    <hr class="assign-meaningful-class-here"/>
 
 
-    <h3>Test Subjects</h3>
+    <div class="test-segments-header">Test Subjects</div>
 
     <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
     <div *ngIf="testsegments">
@@ -35,10 +62,10 @@
     <mat-accordion #matAccordion multi>
       <div *ngFor="let testsegment of testsegments; let testsegmentindex = index;">
 
-        <mat-expansion-panel #expansionPanel [attr.idtestsegment]="testsegment.idTestsegment">
+        <mat-expansion-panel class="expansion-panel" expanded="true" #expansionPanel [attr.idtestsegment]="testsegment.idTestsegment">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{testsegmentindex + 1}}.) {{testsegment.name}}
+              <span class="expansion-panel-header-title">{{testsegmentindex + 1}}.) {{testsegment.name}}</span>
             </mat-panel-title>
             <mat-panel-description>
             </mat-panel-description>

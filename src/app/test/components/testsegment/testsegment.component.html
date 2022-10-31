@@ -1,12 +1,34 @@
-<<div>
-  <div>Description: {{testsegment?.description}}</div>
-  <div>
-    <span class="test-metadata">Time To Answer: {{testsegment?.timeToAnswer}}</span>
-    <span class="test-metadata">Question Count: {{testsegment?.questionCount}}</span>
-    <span class="test-metadata">Point Count: {{testsegment?.pointCount}}</span>
+<div>
+
+  <div class="test-metadata-container">
+
+    <div class="test-metadata">
+      <div class="label">Description:</div>
+      <div class="value">{{testsegment?.description}}</div>
+    </div>
+
+    <div class="test-metadata-details">
+      <div class="test-metadata">
+        <div class="label">Time To Answer:</div>
+        <div class="value">{{testsegment?.timeToAnswer}} minutes</div>
+      </div>
+      <div class="test-metadata">
+        <div class="label">Total Questions: </div>
+        <div class="value">{{testsegment?.questionCount}}</div>
+      </div>
+      <div class="test-metadata">
+        <div class="label">Maximum Marks: </div>
+        <div class="value">{{testsegment?.pointCount}}</div>
+      </div>
+    </div>
   </div>
 
-  <h4>Test Units</h4>
+
+  <hr class="assign-meaningful-class-here" />
+
+
+  <div class="test-sections-header">Test Sections</div>
+
   <div *ngFor="let testsection of testsegment?.testsections; let segmentsectionindex = index;">
     <app-testsection #testsectionRendering
                      (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"

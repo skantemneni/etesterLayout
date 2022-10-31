@@ -1,0 +1,47 @@
+// $primaryColorDark is teh same value used in the test-container-component scss
+$primaryColorDark: #01579b;
+$primaryColorLight: white;
+
+.test-metadata-container {
+  display: flex;
+  row-gap: 5px;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.test-metadata-heading {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.test-metadata-details {
+  display: flex;
+  column-gap: 40px;
+  flex-wrap: wrap;
+}
+
+.test-metadata {
+  min-width: 180px;
+  display: inline-block;
+}
+
+.test-metadata > .label {
+  color: $primaryColorDark;
+  margin-right: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.test-metadata > .value {
+  color: black;
+  display: inline-block;
+}
+
+
+// Title for the test-segments accordian Panel
+.test-sections-header {
+  font-size: large;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+

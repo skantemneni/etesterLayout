@@ -3,6 +3,8 @@ import { IResponseDetails, Question, QuestionResponse, ResponseDetails } from '.
 import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
 import * as TestConstants from '../../../models/TestConstants';
 import { GlobalService } from '../../../services/global.service';
+import { ITestActions } from './testactions.interface';
+import { IQuestion } from './question.interface';
 
 @Component({
   selector: 'app-question',
@@ -10,7 +12,7 @@ import { GlobalService } from '../../../services/global.service';
   styleUrls: ['./question.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuestionComponent implements OnInit, OnChanges {
+export class QuestionComponent implements ITestActions, IQuestion, OnInit, OnChanges {
 
   @Output() testQuestionAnsweredEvent = new EventEmitter<TestQuestionAnsweredEvent>();
 
@@ -32,7 +34,7 @@ export class QuestionComponent implements OnInit, OnChanges {
   @Input() sectionquestionindex: number = 0;
   @Input() defaultQuestionInstructions?: string;
   @Input() instantGradeMode: boolean = false;
-  @Input() testStatus = "testStatus";
+  @Input() testStatus = TestConstants.TEST_STATUS_ASSIGNED;
 
 
   /**
@@ -41,6 +43,7 @@ export class QuestionComponent implements OnInit, OnChanges {
   @Input() pointsPerQuestion: number = 0;
   @Input() negativePointsPerQuestion: number = 0;
   @Input() unansweredPointsPerQuestion: number = 0;
+
   /**
    * Points Score for this question.
    * Closely related to the Inputs above. 
@@ -177,8 +180,7 @@ export class QuestionComponent implements OnInit, OnChanges {
     public gs: GlobalService,
     private element: ElementRef,
     private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
+  ) { }
 
   /**
    * We are having issues when we render a test as a result of a "fetch" operation from the Menu.
@@ -232,26 +234,73 @@ export class QuestionComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    this.isMultipleAnswers = (this.question?.multipleAnswers != null && this.question?.multipleAnswers);
-    this.questionHeading = (this.question?.heading != null && this.question?.heading.trim().length > 0) ? this.question?.heading.trim() : null;
-    this.questionsetText = (this.question?.idQuestionset != null && this.question?.questionsetText != null) ? this.question?.questionsetText : null;
-    this.questionPrecontext = (this.question?.textPrecontext != null && this.question?.textPrecontext.trim().length > 0) ? this.question?.textPrecontext.trim() : null;
-    this.questionPostcontext = (this.question?.textPostcontext != null && this.question?.textPostcontext.trim().length > 0) ? this.question?.textPostcontext.trim() : null;
-    if (this.question?.text != null && this.question?.text.trim().length > 0) {
+    // 1.) Render the Question, if there is one.  Also render any defaultQuestionInstructions, if the question itself does not have any.
+    if (this.question) this.renderQuestion(this.question, this.defaultQuestionInstructions);
+
+    // 2.) Render the Question Response, if there is one
+    if (this.questionResponse) this.renderQuestionResponse(this.questionResponse);
+
+    // 3.) Render the Question Statuses, if there is one
+    if (this.questionResponse && this.questionResponse.questionStatus) {
+      this.renderQuestionStatus(this.questionResponse.questionStatus);
+    }
+
+    // 4.) lock the question if necessary
+    if (this.testStatus == TestConstants.TEST_STATUS_ASSIGNED || this.testStatus == TestConstants.TEST_STATUS_STARTED) {
+      // block teh answers if necessary - this only happens if we have gone through a grading exercise and changes statuses from "corrections" or "archived" back to "started"
+      this.ungradeTest();
+    } else {
+      this.locked = true;
+    }
+
+  }
+
+  /**
+   * Method declared in IQuestion. Uses the Question parameter to set the various attributes used in rendring the HTML template.
+   * In that sense, this "method" only sets the various render parameters.  The associated HTML template and any associated CSS classes do the actual rendering.
+   * @param questionLocal
+   * @param defaultQuestionInstructionsLocal
+   */
+  public renderQuestion(questionLocal: Question, defaultQuestionInstructionsLocal?: string): void {
+    this.isMultipleAnswers = (questionLocal.multipleAnswers != null && questionLocal.multipleAnswers);
+    this.questionHeading = (questionLocal.heading != null && questionLocal.heading.trim().length > 0) ? questionLocal.heading.trim() : null;
+    this.questionsetText = (questionLocal.idQuestionset != null && questionLocal.questionsetText != null) ? questionLocal.questionsetText : null;
+    this.questionPrecontext = (questionLocal.textPrecontext != null && questionLocal.textPrecontext.trim().length > 0) ? questionLocal.textPrecontext.trim() : null;
+    this.questionPostcontext = (questionLocal.textPostcontext != null && questionLocal.textPostcontext.trim().length > 0) ? questionLocal.textPostcontext.trim() : null;
+    if (questionLocal.text != null && questionLocal.text.trim().length > 0) {
       //      console.log(`Question Text: ${this.question?.text}`)
-      this.questionTextArray = this.question?.text.split(QuestionComponent.QUESTION_LINE_DELIMITER);
+      this.questionTextArray = questionLocal.text.split(QuestionComponent.QUESTION_LINE_DELIMITER);
     } else {
       //      console.log(`Question HAD NO Text: ${this.question}`)
       this.questionTextArray = [];
     }
-    if (this.question?.instructions && this.question?.instructions.trim().length > 0) {
-      this.questionInstructions = this.question?.instructions.trim();
-    } else if (this.defaultQuestionInstructions && this.defaultQuestionInstructions.trim().length > 0) {
-      this.questionInstructions = this.defaultQuestionInstructions.trim();
+    if (questionLocal.instructions && questionLocal.instructions.trim().length > 0) {
+      this.questionInstructions = questionLocal.instructions.trim();
+    } else if (defaultQuestionInstructionsLocal && defaultQuestionInstructionsLocal.trim().length > 0) {
+      this.questionInstructions = defaultQuestionInstructionsLocal.trim();
     } else {
       this.questionInstructions = QuestionComponent.MULTIPLE_CHOICE_QUESTION_TYPE_DEFAULT_INSTRUCTIONS;
     }
+  }
 
+  /**
+   * Method declared in IQuestion. Uses a serialized-string parameter to set the responses on teh question.
+   * For this questionType (multiple-choice), this boils down to setting "selected" setting on various answer choices that will be visually rendered with CSS classes
+   * @param questionResponseLocal
+   */
+  public renderQuestionResponse(questionResponseLocal: QuestionResponse): void {
+    if (questionResponseLocal.serializedAnswerResponses != null && questionResponseLocal.serializedAnswerResponses.trim().length > 0) {
+      this.renderQuestionResponseString(questionResponseLocal.serializedAnswerResponses.trim());
+    }
+  }
+
+
+  /**
+   * Method declared in IQuestion. Uses a serialized-string parameter to set the responses on teh question.
+   * For this questionType (multiple-choice), this boils down to setting "selected" setting on various answer choices that will be visually rendered with CSS classes
+   * @param responseStringLocal
+   */
+  private renderQuestionResponseString(responseStringLocal: string): void {
     // And finally set any Previously stored responses
     // Notice the sequence this happens in:
     // 1.) Deserialize and Set the indexes that show answer selections 
@@ -259,9 +308,9 @@ export class QuestionComponent implements OnInit, OnChanges {
     this.SelectedAnswerIndexSet = new Set<number>();
 
     console.log(`QuestionComponent.questionResponse: ${JSON.stringify(this.questionResponse)}`);
-    if (this.questionResponse && this.questionResponse.serializedAnswerResponses != null && this.questionResponse.serializedAnswerResponses.trim().length > 0) {
-      let answerArray = this.questionResponse.serializedAnswerResponses.trim().split(TestConstants.QUESTION_RESPONSE_CHOICE_SEPERATOR);
-//      console.log(`answerArray[]: ${answerArray}`)
+    if (responseStringLocal) {
+      let answerArray = responseStringLocal.split(TestConstants.QUESTION_RESPONSE_CHOICE_SEPERATOR);
+      //      console.log(`answerArray[]: ${answerArray}`)
       if (this.isMultipleAnswers) {
         for (let index = 0; index < answerArray.length; index++) {
           if (answerArray[index] == "1") {
@@ -278,54 +327,51 @@ export class QuestionComponent implements OnInit, OnChanges {
         }
       }
     }
-    // 2.) Set the Question Statuses
-    if (this.questionResponse && this.questionResponse.questionStatus) {
-
-      /*   None of this junk works.  Will use brute force.
-            this.questionStatus = this.questionResponse.questionStatus as TestConstants.QuestionStatus;
-            let typedClassString: string = this.questionResponse.questionStatus as keyof typeof TestConstants.QuestionStatusHighlightClass;
-            this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass[typedClassString];
-            this.questionStatusHighlightClass = this.questionResponse.questionStatus as TestConstants.QuestionStatusHighlightClass;
-      */
-      switch (this.questionResponse.questionStatus) {
-        case "CORRECT":
-          this.questionStatus = TestConstants.QuestionStatus.CORRECT;
-          this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.CORRECT;
-          this.QuestionIsAnsweredCorrectly = true;
-          break;
-        case "WRONG":
-          this.questionStatus = TestConstants.QuestionStatus.WRONG;
-          this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.WRONG;
-          this.QuestionIsAnsweredCorrectly = false;
-          break;
-        case "ANSWERED":
-          this.questionStatus = TestConstants.QuestionStatus.ANSWERED;
-          this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.ANSWERED;
-          // I would like to leave this.QuestionIsAnsweredCorrectly = null.  However, considering that is the default value,
-          // and all I am chaging is something that would render as a CSS class property, Change Detection WILL NOT KICK.
-          // I am setting "this.QuestionIsAnsweredCorrectly = false" for now, for questions that are in "answered" state.
-          // Dees not seem tobe hurting...
-          this.QuestionIsAnsweredCorrectly = false;
-          break;
-        case "NOT_ANSWERED":
-          this.questionStatus = TestConstants.QuestionStatus.NOT_ANSWERED;
-          this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.NOT_ANSWERED;
-          this.QuestionIsAnsweredCorrectly = null;
-          break;
-        default:
-          break;
-      }
-    }
-
-    // lock the question if necessary
-    if (this.testStatus == TestConstants.TEST_STATUS_ASSIGNED || this.testStatus == TestConstants.TEST_STATUS_STARTED) {
-      // block teh answers if necessary - this only happens if we have gone through a grading exercise and changes statuses from "corrections" or "archived" back to "started"
-      this.ungradeTest();
-    } else {
-      this.locked = true;
-    }
 
   }
+
+
+  /**
+   * Method declared in IQuestion. Uses a string parameter to set the visual rendering on the Question.
+   * @param status
+   */
+  public renderQuestionStatus(status: string): void {
+    /*   None of this junk works.  Will use brute force.
+          this.questionStatus = this.questionResponse.questionStatus as TestConstants.QuestionStatus;
+          let typedClassString: string = this.questionResponse.questionStatus as keyof typeof TestConstants.QuestionStatusHighlightClass;
+          this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass[typedClassString];
+          this.questionStatusHighlightClass = this.questionResponse.questionStatus as TestConstants.QuestionStatusHighlightClass;
+    */
+    switch (status) {
+      case "CORRECT":
+        this.questionStatus = TestConstants.QuestionStatus.CORRECT;
+        this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.CORRECT;
+        this.QuestionIsAnsweredCorrectly = true;
+        break;
+      case "WRONG":
+        this.questionStatus = TestConstants.QuestionStatus.WRONG;
+        this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.WRONG;
+        this.QuestionIsAnsweredCorrectly = false;
+        break;
+      case "ANSWERED":
+        this.questionStatus = TestConstants.QuestionStatus.ANSWERED;
+        this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.ANSWERED;
+        // I would like to leave this.QuestionIsAnsweredCorrectly = null.  However, considering that is the default value,
+        // and all I am chaging is something that would render as a CSS class property, Change Detection WILL NOT KICK.
+        // I am setting "this.QuestionIsAnsweredCorrectly = false" for now, for questions that are in "answered" state.
+        // Dees not seem tobe hurting...
+        this.QuestionIsAnsweredCorrectly = false;
+        break;
+      case "NOT_ANSWERED":
+        this.questionStatus = TestConstants.QuestionStatus.NOT_ANSWERED;
+        this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.NOT_ANSWERED;
+        this.QuestionIsAnsweredCorrectly = null;
+        break;
+      default:
+        break;
+    }
+  }
+
 
   /**
    * I may not need these methods created specifically for *ngIfs.  Refactor.
@@ -435,7 +481,7 @@ export class QuestionComponent implements OnInit, OnChanges {
   /**
    * This Test Method - at an indivisual question level - displays results and locks the question.
    */
-  private gradeTest() {
+  public gradeTest() {
     this.gradeQuestion();
     this.renderResults();
     this.lockQuestion();
@@ -445,7 +491,7 @@ export class QuestionComponent implements OnInit, OnChanges {
    * This Test Method - at an indivisual question level - resets arswer-selection and unlocks the test.
    * *** Just as a precaution, this only does the deed if do so if the TestQuestion is in a previously locked state. ***
    */
-  private restartTest() {
+  public restartTest() {
     // Simpley return if question is not locked (meaning the test has not been graded)
     if (!this.locked) {
       return;
@@ -463,7 +509,7 @@ export class QuestionComponent implements OnInit, OnChanges {
     * This Test Method - at an indivisual question level - unlocks the test question and tries to restore its previous answered/unanswered display state without corrections. 
     * *** Just as a precaution, this only does the deed if the TestQuestion is in a previously locked state. ***
     */
-  private ungradeTest() {
+  public ungradeTest() {
     // Simpley return if question is not locked (meaning the test has not been graded)
 /*    if (!this.locked) {
       return;
@@ -478,7 +524,7 @@ export class QuestionComponent implements OnInit, OnChanges {
     * This Test Method - at an indivisual question level - simply unlocks the test question.  And keeps the displayed result. 
     * *** Just as a precaution, this only does the deed if do so if the TestQuestion is in a previously locked state. ***
     */
-  private continueTest() {
+  public continueTest() {
     // Simply return if question is not locked (meaning the test has not been graded)
     if (!this.locked) {
       return;
@@ -492,13 +538,13 @@ export class QuestionComponent implements OnInit, OnChanges {
    * Method that performs the atomic action of "Locking" the test question.
    * just set the locked status to true.  That status is used by the clicked event to determine response to click.
    */
-  private lockQuestion = () => this.locked = true;
+  lockQuestion = () => this.locked = true;
 
   /**
    * Method that performs the atomic action of "UnLocking" the test question.
    * just set the locked status to false.  That status is used by the clicked event to determine response to click.
    */
-  private unlockQuestion = () => this.locked = false;
+  unlockQuestion = () => this.locked = false;
 
 
   /**
@@ -506,7 +552,7 @@ export class QuestionComponent implements OnInit, OnChanges {
    * This function displays results of grading.  
    * Questions can display CORRECT, WRONG, NOT_ANSWERED.  
    */
-  private renderResults(): void {
+  renderResults(): void {
     console.log(`QuestionComponent.Question Status:  ${this.questionStatus}`);
     if (this.QuestionIsAnsweredCorrectly == null) {
       this.questionStatus = TestConstants.QuestionStatus.NOT_ANSWERED;
@@ -525,7 +571,7 @@ export class QuestionComponent implements OnInit, OnChanges {
    * This function masks results of grading.  
    * Questions can display CORRECT, WRONG, NOT_ANSWERED.  
    */
-  private maskResults(): void {
+  maskResults(): void {
     if (this.QuestionIsAnsweredCorrectly == null) {
       console.log(`QuestionComponent.maskResults: ${this.question?.idQuestion} is being marked as NOT ANSWERED`);
       this.questionStatus = TestConstants.QuestionStatus.NOT_ANSWERED;
@@ -545,7 +591,7 @@ export class QuestionComponent implements OnInit, OnChanges {
    * @param event
    * @param clickedquestionanswerindex
    */
-  private gradeQuestion(): void {
+  public gradeQuestion(): void {
     // Again, this happens differently based on whether the questions is marked multiple "correct answers".
     if (this.isMultipleAnswers) {
       if (this.SelectedAnswerIndexSet.size > 0) {

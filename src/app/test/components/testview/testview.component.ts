@@ -306,5 +306,4 @@ export class TestviewComponent implements OnInit, AfterViewInit {
     //    console.log(`TestView: TestQuestionAnsweredEvent.answerItemClicked: ${JSON.stringify(event)}`);
     this.testQuestionAnsweredEvent.emit(event);
   }
-
 }

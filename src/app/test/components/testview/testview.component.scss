@@ -1,3 +1,8 @@
+// $primaryColorDark is teh same value used in the test-container-component scss
+$primaryColorDark: #01579b;
+$primaryColorLight: #e1f5fe;
+
+
 @media (min-width: 768px) {
   .scroll {
     padding: 25px;
@@ -10,81 +15,78 @@
     overflow-y: auto; /* Add the ability to scroll */
   }
 }
-
-
-.etest-accordion {
-  display: block;
-  max-width: 800px;
-}
-
-.etest-accordion-item {
-  display: block;
-  border: solid 1px #ccc;
-}
-
-.etest-accordion-item + .etest-accordion-item {
-  border-top: none;
-}
-
-.etest-accordion-item-header {
+.test-metadata-container {
   display: flex;
-  align-content: center;
-  justify-content: space-between;
+  row-gap: 5px;
+  flex-direction: column;
 }
 
-.etest-accordion-item-description {
-  font-size: 0.85em;
-  color: #999;
-}
-
-.etest-accordion-item-header,
-.etest-accordion-item-body {
-  padding: 16px;
-}
-
-.etest-accordion-item-header:hover {
-  cursor: pointer;
-  background-color: #eee;
-}
-
-.etest-accordion-item:first-child {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-.etest-accordion-item:last-child {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-
-
-.test-heading, .test-segment-heading {
+.test-metadata-heading {
   font-size: xx-large;
   font-weight: bold;
 }
 
-.test-status {
-  background-color: #aaa;
-  color: darkgreen;
-  font-size: large;
-  font-style: italic;
+.test-metadata-details-container {
+  display: flex;
+  column-gap: 40px;
+  flex-wrap: wrap;
 }
 
 .test-metadata {
-  padding: 0 30px 0 0px;
+  min-width: 180px;
+  display: inline-block;
 }
-
-.test-segment-heading {
-  font-size: large;
+.test-metadata > .label {
+  color: $primaryColorDark;
+  margin-right: 10px;
   font-weight: bold;
+  display: inline-block;
+}
+.test-metadata > .value {
+  color: black;
+  display: inline-block;
 }
 
 
 
-.smooth-out-obscene-text-sizes {
+.test-metadata-status-panel {
+  display: flex;
+  flex-wrap:wrap;
+  align-items:center;
+  column-gap: 30px;
+  background-color: #aaa;
+  color: $primaryColorLight;
+  padding: 0px 10px;
+  font-size: small;
 }
 
-.smooth-out-obscene-text-sizes h1 {
+.test-metadata-status-panel > .selected {
+  font-style: italic;
+  color: $primaryColorDark;
+  font-weight: bold;
   font-size: large;
 }
+
+
+// Title for the test-segments accordian Panel
+.test-segments-header {
+  font-size: x-large;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+// padding and spacing within and between expansion-panels
+.expansion-panel {
+  padding: 5px 0;
+  margin-bottom: 5px;
+}
+
+// Title displayed in EACH Expansion Panel
+.expansion-panel-header-title {
+  font-size: large;
+  font-style: normal;
+  font-weight: bold;
+  color: $primaryColorDark;
+}
+
+
