@@ -1,9 +1,11 @@
-// $primaryColorDark is teh same value used in the test-container-component scss
-$primaryColorDark: #e1f5fe;
-$primaryColorLight: white;
+// Use Theme colors
+@use 'assets/styles/themecolor' as themecolor;
+
+// Declare color variables from theme
+$primaryColorLight: themecolor.$primaryColorLight;
 
 .test-section-student-instructions-text {
-  background-color: #e1f5fe;
+  background-color: $primaryColorLight;
   border-radius: 10px;
   padding: 10px 20px;
   width: 96%;
