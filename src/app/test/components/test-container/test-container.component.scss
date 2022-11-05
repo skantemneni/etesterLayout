@@ -23,14 +23,19 @@ $primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
 $accentColor: mat.get-color-from-palette($accent-palette);
 
 */
-$primaryColor: #b3e5fc;
-$primaryColorDark: #01579b;
-$primaryColorLight: #e1f5fe;
-$accentColor: #90caf9;
 
-$summaryPanelColor: $primaryColorLight;
-$questionIndexPanelColor: $primaryColorLight;
-$questionPanelColor: $primaryColorLight;
+// Use Theme colors
+@use 'assets/styles/themecolor' as themecolor;
+
+// Declare color variables from theme
+$primaryColor: themecolor.$primaryColor;
+$primaryColorDark: themecolor.$primaryColorDark;
+$primaryColorLight: themecolor.$primaryColorLight;
+$accentColor: themecolor.$accentColor;
+
+$summaryPanelColor: themecolor.$primaryColorLight;
+$questionIndexPanelColor: themecolor.$primaryColorLight;
+$questionPanelColor: themecolor.$primaryColorLight;
 
 
 
@@ -55,7 +60,7 @@ $questionPanelColor: $primaryColorLight;
   border-radius: 0 10px 5px 0;
   border-width: 4px;
   border-style: ridge;
-  border-color: $primaryColorLight;
+  border-color: $summaryPanelColor;
 }
 
 
@@ -66,7 +71,7 @@ $questionPanelColor: $primaryColorLight;
   border-radius: 10px 0 0 5px;
   border-width: 4px;
   border-style: ridge;
-  border-color: $primaryColorLight;
+  border-color: $questionIndexPanelColor;
 }
 
 
@@ -76,7 +81,7 @@ $questionPanelColor: $primaryColorLight;
   border-radius: 10px 10px 5px 5px;
   border-width: 4px;
   border-style: ridge;
-  border-color: $primaryColorLight;
+  border-color: $questionPanelColor;
 }
 
 

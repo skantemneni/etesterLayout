@@ -1,0 +1,6 @@
+@use './bluetheme' as primarytheme;
+
+$primaryColor: primarytheme.$primaryColor;
+$primaryColorDark: primarytheme.$primaryColorDark;
+$primaryColorLight: primarytheme.$primaryColorLight;
+$accentColor: primarytheme.$accentColor;

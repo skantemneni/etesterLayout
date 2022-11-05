@@ -1,6 +1,11 @@
-// $primaryColorDark is teh same value used in the test-container-component scss
-$primaryColorDark: #01579b;
-$primaryColorLight: white;
+// Use Theme colors
+@use 'assets/styles/themecolor' as themecolor;
+
+// Declare color variables from theme
+$primaryColorDark: themecolor.$primaryColorDark;
+$summaryPanelColor: themecolor.$primaryColorLight;
+$questionIndexPanelColor: themecolor.$primaryColorLight;
+$questionPanelColor: themecolor.$primaryColorLight;
 
 .test-metadata-container {
   display: flex;

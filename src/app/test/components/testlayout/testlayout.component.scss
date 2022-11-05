@@ -24,10 +24,12 @@ $primaryColorLight: mat.get-color-from-palette($primary-palette, 50);
 $accentColor: mat.get-color-from-palette($accent-palette);
 
 */
-$primaryColor: #b3e5fc;
-$primaryColorDark: #01579b;
-$primaryColorLight: #e1f5fe;
-$accentColor: #90caf9;
+@use 'assets/styles/themecolor' as themecolor;
+
+$primaryColor: themecolor.$primaryColor;
+$primaryColorDark: themecolor.$primaryColorDark;
+$primaryColorLight: themecolor.$primaryColorLight;
+$accentColor: themecolor.$accentColor;
 
 
 .test-layout {
