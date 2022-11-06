@@ -1,9 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
-import { Question, QuestionResponse, Testsection, TestsectionResponse } from '../../../models/etestermodel';
-import { AnswerPanelQuestionButtonClickedEvent } from '../../../models/TestConstants';
-import * as TestConstants from '../../../models/TestConstants';
-import { AfterContentInit } from '@angular/core';
-import { OnChanges } from '@angular/core';
+import { Question, QuestionResponse, Testsection, TestsectionResponse } from '@app/models/etestermodel';
+import { AnswerPanelQuestionButtonClickedEvent } from '@app/models/TestConstants';
+import * as TestConstants from '@app/models/TestConstants';
 
 @Component({
   selector: 'app-section-answer-panel',

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QAModule } from '../qa/qa.module';
+import { QAModule } from '@qa/qa.module';
 // import { AuthModule } from '../auth/auth.module';
-import { MaterialUIModule } from '../../material.module';
+import { MaterialUIModule } from '@app/material.module';
 import { TestsegmentComponent } from './components/testsegment/testsegment.component';
 import { TestsectionComponent } from './components/testsection/testsection.component';
 import { SectionAnswerPanelComponent } from './components/section-answer-panel/section-answer-panel.component';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoggedinUser } from '../model/etesteruser';
-import { ILoginService } from '../model/auth.interface';
+import { LoggedinUser } from '@auth/model/etesteruser';
+import { ILoginService } from '@auth/model/auth.interface';
 
 
 // Core eTester URL (base path)

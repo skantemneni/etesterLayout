@@ -1,11 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, QueryList, ViewChildren, Output, EventEmitter, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { EtesterdbService } from '../../../services/etesterdb.service';
+import { EtesterdbService } from '@app/services/etesterdb.service';
 import { Testwithresponse, Test, Testsegment, Testsection, Section, Question, Answer, TestsegmentResponse, ITestResponse, ResponseDetails, TestResponse } from '../../../models/etestermodel';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as TestConstants from '../../../models/TestConstants';
-import { TestsegmentComponent } from '../testsegment/testsegment.component';
-import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
+import * as TestConstants from '@app/models/TestConstants';
+import { TestsegmentComponent } from '@test/components/testsegment/testsegment.component';
+import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 
 /**

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { ITestsegmentResponse, ResponseDetails, Testsection, TestsectionResponse, Testsegment, TestsegmentResponse } from '../../../models/etestermodel';
-import { TestsectionComponent } from '../testsection/testsection.component';
-import * as TestConstants from '../../../models/TestConstants';
-import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
+import { TestsectionComponent } from '@test/components/testsection/testsection.component';
+import * as TestConstants from '@app/models/TestConstants';
+import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
 
 @Component({
   selector: 'app-testsegment',

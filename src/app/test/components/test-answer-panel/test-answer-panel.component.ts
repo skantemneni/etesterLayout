@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
-import { Test, TestResponse, TestsectionResponse, Testsegment, TestsegmentResponse, Testwithresponse } from '../../../models/etestermodel';
-import { AnswerPanelQuestionButtonClickedEvent } from '../../../models/TestConstants';
-import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
-import { SectionAnswerPanelComponent } from '../section-answer-panel/section-answer-panel.component';
+import { Test, TestResponse, TestsectionResponse, Testsegment, TestsegmentResponse, Testwithresponse } from '@app/models/etestermodel';
+import { AnswerPanelQuestionButtonClickedEvent } from '@app/models/TestConstants';
+import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
+import { SectionAnswerPanelComponent } from '@test/components/section-answer-panel/section-answer-panel.component';
 
 @Component({
   selector: 'app-test-answer-panel',

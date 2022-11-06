@@ -3,10 +3,9 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 //import { Response } from `@angular/http`;
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { TestResponse, Testwithresponse } from '../models/etestermodel';
-import { LoggedinUser } from '../auth/model/etesteruser';
-import { Usertest } from '../models/etestermodel.usertest';
-import { IAuthenticatable } from '../auth/model/auth.interface';
+import { TestResponse, Testwithresponse } from '@app/models/etestermodel';
+import { Usertest } from '@app/models/etestermodel.usertest';
+import { IAuthenticatable } from '@auth/model/auth.interface';
 import { IDataServer } from './data.interface';
 
 // We have several eTester Controllers supporting this functionality. I am segmenting this URL paths by controller/function
@@ -34,7 +33,7 @@ export class EtesterdbService implements IAuthenticatable, IDataServer {
 
 /*  username: string = "sesi2";
   password: string = "test";
-*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2NzczMzQzOX0.Ck-PNfGGNYTWeUFwVcT_qiJOlcU2ODev0e4QVXOv5jOrdNN-twGBNtvYzzc3yobrCPi0gLFMtVVc-XV64chixg';
+*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2NzgyMTI1OX0.6bBc_t-lLnU49hlxcHVChB_f9FOekEtvZz2QI6QoxDOM74WTs88OCAJZBbGtsgPZdwkwCBdovFXXWbZ6sW-Heg';
   authToken: string = this.default_authToken;
 
   private HTTP_OPTIONS = {};

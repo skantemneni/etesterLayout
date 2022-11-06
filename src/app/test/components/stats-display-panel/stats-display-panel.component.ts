@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ResponseDetails } from '../../../models/etestermodel';
+import { ResponseDetails } from '@app/models/etestermodel';
 
 @Component({
   selector: 'app-stats-display-panel',

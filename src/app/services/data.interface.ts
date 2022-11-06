@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
-import { TestResponse, Testwithresponse } from "../models/etestermodel";
-import { Usertest } from "../models/etestermodel.usertest";
+import { TestResponse, Testwithresponse } from "@app/models/etestermodel";
+import { Usertest } from "@app/models/etestermodel.usertest";
 
 export interface IDataServer {
   /**

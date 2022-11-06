@@ -1,4 +1,4 @@
-import { Question, QuestionResponse } from "../../../models/etestermodel";
+import { Question, QuestionResponse } from "@app/models/etestermodel";
 
 export interface IQuestion {
 

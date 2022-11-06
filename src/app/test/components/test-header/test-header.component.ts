@@ -1,11 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
-import * as TestConstants from '../../../models/TestConstants';
+import * as TestConstants from '@app/models/TestConstants';
 // import * as ApplicationConstants from '../../../models/ApplicationConstants';
-import { LoginEvent } from '../../../auth/model/login-data';
-import { LoginUIService } from '../../../auth/services/loginUI.service';
-import { IAuthenticatable, ILoginUIService } from '../../../auth/model/auth.interface';
-import { ILoginUIServiceToken } from '../../../app.module';
-import { AuthenticatableDataServerToken } from '../../../app.module';
+import { LoginEvent } from '@auth/model/login-data';
+import { IAuthenticatable, ILoginUIService } from '@auth/model/auth.interface';
+import { ILoginUIServiceToken } from '@app/app.module';
+import { AuthenticatableDataServerToken } from '@app/app.module';
 
 @Component({
   selector: 'app-test-header',

@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LoggedinUser } from '../../model/etesteruser';
-
-import { LoginDialogData } from '../../model/login-data';
-import { LoginService } from '../../services/login.service';
+import { LoggedinUser } from '@auth/model/etesteruser';
+import { LoginDialogData } from '@auth/model/login-data';
+import { LoginService } from '@auth/services/login.service';
 
 @Component({
   selector: 'app-login-dialog',

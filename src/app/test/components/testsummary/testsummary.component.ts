@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ResponseDetails, Test, TestResponse, TestsectionResponse, TestsegmentResponse, Testwithresponse } from '../../../models/etestermodel';
-import { StatsDisplayPanelComponent } from '../stats-display-panel/stats-display-panel.component';
+import { ResponseDetails, Test, TestResponse, TestsectionResponse, TestsegmentResponse, Testwithresponse } from '@app/models/etestermodel';
+import { StatsDisplayPanelComponent } from '@test/components/stats-display-panel/stats-display-panel.component';
 
 @Component({
   selector: 'app-testsummary',

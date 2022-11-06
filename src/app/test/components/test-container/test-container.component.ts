@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthenticatableDataServerToken } from '../../../app.module';
-import { Test, TestResponse, Testwithresponse } from '../../../models/etestermodel';
-import * as TestConstants from '../../../models/TestConstants';
-import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
-import { IDataServer } from '../../../services/data.interface';
-import { TestviewComponent } from '../testview/testview.component';
+import { AuthenticatableDataServerToken } from '@app/app.module';
+import { Test, TestResponse, Testwithresponse } from '@app/models/etestermodel';
+import * as TestConstants from '@app/models/TestConstants';
+import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
+import { IDataServer } from '@app/services/data.interface';
+import { TestviewComponent } from '@test/components/testview/testview.component';
 
 @Component({
   selector: 'app-test-container',

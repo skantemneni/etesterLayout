@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { LoginDialogComponent } from '../components/login-dialog/login-dialog.component';
-import { LogoutDialogComponent } from '../components/logout-dialog/logout-dialog.component';
-import { LoginDialogData, LoginEvent } from '../model/login-data';
-import { ILoginUIService } from '../model/auth.interface';
+import { LoginDialogComponent } from '@auth/components/login-dialog/login-dialog.component';
+import { LogoutDialogComponent } from '@auth/components/logout-dialog/logout-dialog.component';
+import { LoginDialogData, LoginEvent } from '@auth/model/login-data';
+import { ILoginUIService } from '@auth/model/auth.interface';
 
 
 

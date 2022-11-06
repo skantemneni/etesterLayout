@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { IResponseDetails, Question, QuestionResponse, ResponseDetails } from '../../../models/etestermodel';
-import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
-import * as TestConstants from '../../../models/TestConstants';
-import { GlobalService } from '../../../services/global.service';
+import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
+import * as TestConstants from '@app/models/TestConstants';
+import { GlobalService } from '@app/services/global.service';
 import { ITestActions } from './testactions.interface';
 import { IQuestion } from './question.interface';
 
