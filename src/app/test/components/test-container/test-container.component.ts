@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthenticatableDataServer } from '../../../app.module';
+import { AuthenticatableDataServerToken } from '../../../app.module';
 import { Test, TestResponse, Testwithresponse } from '../../../models/etestermodel';
 import * as TestConstants from '../../../models/TestConstants';
 import { TestQuestionAnsweredEvent } from '../../../models/TestConstants';
@@ -48,7 +48,7 @@ export class TestContainerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    @Inject(AuthenticatableDataServer) private dataServer: IDataServer
+    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
 //    , private etesterdbService: EtesterdbService
   ) { }
 

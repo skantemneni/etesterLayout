@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoggedinUser } from '../../model/etesteruser';
@@ -13,23 +13,25 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginDialogComponent implements OnInit {
 
-  loginErrorMessage = "";
-
-  loginForm: FormGroup | null = null;
-
-  // Child component
-  nativeElement: HTMLElement | null = null;
-
+  /**
+   * LoginDialog, once it receives all the "Injected" dependencies, will manage its own lifecycle.  It manages its own UI, Open, Close and Login (submit) Events.
+   * 
+   * @param loginService - The Service that provides the critical access to the Login HTTP methods and endpoints.
+   * @param formBuilder - Helps build and render Forms based UI and a 2-way binding of form controls and conponent variables
+   * @param dialogRef - MatDialogRef:  Dialog class where the "Login Component (this)" will be rendered in a popup fashion.
+   * @param data - LoginDialogData:  Most interesting.  This is optionally a set of data passed to the dialog to "seed" with initial values.  Normally, this is empty on teh first attempt.  However can contain residual values from the previous popup workflow.
+   */
   constructor(
     private loginService: LoginService,
-//    element: ElementRef,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<LoginDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LoginDialogData
-  ) {
-/*    this.nativeElement = element.nativeElement;
-    console.log(`login component nativeElement = ${this.nativeElement}`);
-*/  }
+  ) { }
+
+
+  loginErrorMessage = "";
+
+  loginForm: FormGroup | null = null;
 
   ngOnInit(): void {
     this.buildForm();

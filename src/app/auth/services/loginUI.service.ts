@@ -1,39 +1,24 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { LoggedinUser } from '../model/etesteruser';
 import { LoginDialogComponent } from '../components/login-dialog/login-dialog.component';
 import { LogoutDialogComponent } from '../components/logout-dialog/logout-dialog.component';
 import { LoginDialogData, LoginEvent } from '../model/login-data';
-import { IAuthenticatable } from '../model/auth.interface';
-import { AuthenticatableDataServer } from '../../app.module';
+import { ILoginUIService } from '../model/auth.interface';
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginUIService {
+export class LoginUIService implements ILoginUIService {
 
   constructor(
-    public dialog: MatDialog,
-    @Inject(AuthenticatableDataServer) private authenticatable: IAuthenticatable
+    public dialog: MatDialog
   ) { }
 
   loginData: LoginDialogData = { username: '', password: '', email: '', authToken: '' };
   
-  private _loggedinUser: LoggedinUser | undefined;
-  // Getter method 
-  // of Student class
-  public get loggedinUser(): LoggedinUser | undefined {
-    return this._loggedinUser;
-  }
-  // Setter method to set the semester number
-  public set loggedinUser(loggedinUser: LoggedinUser| undefined) {
-    this._loggedinUser = loggedinUser;
-  }
-
-
   defaultNotLoggedInEventData: LoginEvent = {
     username: '',
     email: '',
@@ -41,26 +26,30 @@ export class LoginUIService {
     isLoggedIn: false
   }
 
-  loginBehaviorSubject = new BehaviorSubject(this.defaultNotLoggedInEventData);
+  // This variable is defined in the Interface.  Do not change its name.
+  loginBehaviorSubject: BehaviorSubject<LoginEvent> = new BehaviorSubject(this.defaultNotLoggedInEventData);
 
 
   // Login Button clicked.  Open the Login Dialog and let it handle the Login process.
   // Perform subsequent act
-  openLoginDialog() {
+  /**
+   * Note that this component keeps a copy of the "previously entered" login dialog values.  That way the next time the LoginDialog is opened, it is seeded with that information. 
+   */
+  onLoginInvokeAction(): void {
     // use any previously saved login data to seed the login popup
     const dialogRef = this.dialog.open(LoginDialogComponent,
       {
         width: 'auto',
         maxWidth: '450px',
-        data: this.loginData
+        data: this.loginData /* pass the previous values to the dialog */
       }
     ).afterClosed().subscribe((returnData: LoginDialogData) => {
       // You don't get any return data if the user clicks the escape button or clicks outside the login dialog. 
       if (!returnData) {
         return;
       }
-      // save login data on this.loginData - so we can use it as inputs to logi dialog as needed
-      this.loginData = returnData;
+      // save login data on this.loginData - so we can use it as inputs to login dialog as needed
+      this.loginData = returnData;  
 
       let { username, password, email, authToken, loggedinUser } = returnData;
 
@@ -68,8 +57,8 @@ export class LoginUIService {
         // save successful login data on this.etesterdbService - so we can use it as needed
 //        console.log(`LoginService.openLoginDialog.afterClosed(): AuthToken: ${authToken}`);
 //        console.log(`LoginService.openLoginDialog.afterClosed(): loggedinUser: ${JSON.stringify(loggedinUser)}`);
-        this.authenticatable.setAuthCode(authToken);
-        this.loggedinUser = loggedinUser;
+//        this.authenticatable.setAuthCode(authToken);
+//        this.loggedinUser = loggedinUser;
 
         // now create the loggedin event response object;
         let loggedInEvent = {
@@ -86,7 +75,12 @@ export class LoginUIService {
     });
 
   }
-  openLogoutDialog() {
+
+
+  /**
+   * Open the logout dialog.
+   */
+  onLogoutInvokeAction(): void {
     const dialogRef = this.dialog.open(LogoutDialogComponent,
       {
         width: 'auto',
@@ -95,11 +89,8 @@ export class LoginUIService {
     );
     dialogRef.afterClosed().subscribe(close => {
       if (close) {
-        this.loginData.authToken = '';
-        this.loggedinUser = undefined;
-//        this.appHeaderComponent.isLoggedIn = false;
-        this.authenticatable.resetAuthCode();
-        // finally email the login data in the "loginBehaviorSubject"
+        // Blank out the Auth Code on Data HTTP services - referred to here with a "Authenticatable" interface.
+        // finally set the bahavior subject with the defaultNotLoggedInEventData.
         this.loginBehaviorSubject.next(this.defaultNotLoggedInEventData);
       } else {
       }

@@ -20,5 +20,6 @@ import { LoginService } from './services/login.service';
     MaterialUIModule
   ],
   providers: [LoginService],
+  exports: []
 })
 export class AuthModule { }

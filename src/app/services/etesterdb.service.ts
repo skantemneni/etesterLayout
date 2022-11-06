@@ -34,7 +34,7 @@ export class EtesterdbService implements IAuthenticatable, IDataServer {
 
 /*  username: string = "sesi2";
   password: string = "test";
-*/  default_authToken: string = 'Bearer ';
+*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2NzczMzQzOX0.Ck-PNfGGNYTWeUFwVcT_qiJOlcU2ODev0e4QVXOv5jOrdNN-twGBNtvYzzc3yobrCPi0gLFMtVVc-XV64chixg';
   authToken: string = this.default_authToken;
 
   private HTTP_OPTIONS = {};
@@ -74,20 +74,6 @@ export class EtesterdbService implements IAuthenticatable, IDataServer {
       })
     };
   }
-
-  /*
-  loginSyncAndGetToken(username: string, password: string) {
-    const completeLoginUrl: string = etesterdbLoginUrl + '?username=' + username.trim() + '&password=' + password.trim();
-    let authCode: string | null = null;
-    return this.httpClient.post<any>(completeLoginUrl, { username: username, password: password }, { observe: 'response' });
-  }
-
-  getUserDetails(username: string, authCode: string) {
-    return this.httpClient.get<LoggedinUser>(userDetailsUrl, this.getHttpOptionsForAuthCode(authCode));
-  }
-
-*/
-
 
   /**
    * Usertest Controller Stuff

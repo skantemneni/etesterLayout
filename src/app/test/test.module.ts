@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QAModule } from '../qa/qa.module';
-import { AuthModule } from '../auth/auth.module';
+// import { AuthModule } from '../auth/auth.module';
 import { MaterialUIModule } from '../../material.module';
 import { TestsegmentComponent } from './components/testsegment/testsegment.component';
 import { TestsectionComponent } from './components/testsection/testsection.component';
@@ -19,6 +19,11 @@ import { InnerHtmlRendererComponent } from './util/components/inner-html-rendere
 import { TestRoutingModule } from './test-routing.module';
 
 
+/*
+ * Note that although AuthModule is being used from the "Header" component that is currently part of the Test Module, we are
+ * including Auth Module in App Module and NOT here in the test module so we can refactor as needed.
+ *
+ */
 
 @NgModule({
   declarations: [
@@ -39,7 +44,7 @@ import { TestRoutingModule } from './test-routing.module';
     CommonModule,
     MaterialUIModule,
     QAModule,
-    AuthModule,
+//    AuthModule,
     TestRoutingModule
   ]
 })

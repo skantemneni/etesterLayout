@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
 import * as TestConstants from '../../../models/TestConstants';
-import * as ApplicationConstants from '../../../models/ApplicationConstants';
-import { LoginService } from '../../../auth/services/login.service';
+// import * as ApplicationConstants from '../../../models/ApplicationConstants';
 import { LoginEvent } from '../../../auth/model/login-data';
 import { LoginUIService } from '../../../auth/services/loginUI.service';
+import { IAuthenticatable, ILoginUIService } from '../../../auth/model/auth.interface';
+import { ILoginUIServiceToken } from '../../../app.module';
+import { AuthenticatableDataServerToken } from '../../../app.module';
 
 @Component({
   selector: 'app-test-header',
@@ -11,6 +13,19 @@ import { LoginUIService } from '../../../auth/services/loginUI.service';
   styleUrls: ['./test-header.component.scss']
 })
 export class TestHeaderComponent implements OnInit {
+  /**
+   * Constructor.
+   * TestHeaderComponent does 2 things.  1.) It takes teh responsibility of invoking the "Log-in/out" flow. 2.) Emits Events fro all other actions.
+   * "Log-in/out" is handled via 
+   * 
+   * @param loginUIService
+   */
+  constructor(
+    @Inject(ILoginUIServiceToken) private loginUIService: ILoginUIService,
+    @Inject(AuthenticatableDataServerToken) private authenticatable: IAuthenticatable
+    ) { }
+
+
 
   /* Inputs and Outputs */
   @Output() testAction = new EventEmitter<TestConstants.TestActions>();
@@ -19,18 +34,16 @@ export class TestHeaderComponent implements OnInit {
   loggedInUserName: string = "";
   isLoggedIn: boolean = false;
 
-  /* constructor */
-  constructor(private loginUIService: LoginUIService) { }
-
-
   ngOnInit(): void {
     // Call to retrieve data
     this.loginUIService.loginBehaviorSubject.subscribe((loginEvent: LoginEvent) => {
       console.log("AppComponent.ngOnInit.loginService.loginBehaviorSubject.subscribe got", JSON.stringify(loginEvent));
       if (loginEvent.isLoggedIn) {
-        this.isLoggedIn = true;
+        this.authenticatable.setAuthCode(loginEvent.authToken);
         this.loggedInUserName = loginEvent.loggedinUser?.firstName || '';
+        this.isLoggedIn = true;
       } else {
+        this.authenticatable.resetAuthCode();
         this.isLoggedIn = false;
         this.loggedInUserName = '';
       }
@@ -63,11 +76,11 @@ export class TestHeaderComponent implements OnInit {
   }
 
   onLoginClicked() {
-    this.loginUIService.openLoginDialog();
+    this.loginUIService.onLoginInvokeAction();
   }
 
   onLogoutClicked(): void {
-    this.loginUIService.openLogoutDialog();
+    this.loginUIService.onLogoutInvokeAction();
   }
 
 
