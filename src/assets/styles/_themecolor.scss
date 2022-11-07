@@ -1,6 +1,11 @@
-@use './greentheme' as primarytheme;
+// https: //developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl
 
-$primaryColor: primarytheme.$primaryColor;
-$primaryColorDark: primarytheme.$primaryColorDark;
-$primaryColorLight: primarytheme.$primaryColorLight;
-$accentColor: primarytheme.$accentColor;
+@use './bluetheme' as primarytheme;
+
+$baseColor: primarytheme.$baseColor;
+
+// hsl(hue, saturation, lightness)
+$primaryColor: hsl(hue($baseColor),100%,85%); // regular with 85% lightness
+$primaryColorDark: hsl(hue($baseColor),100%,25%); // dark with 25% lightness
+$accentColor: hsl(hue($baseColor),100%,70%); // accent 70% lightness
+$primaryColorLight: hsl(hue($baseColor),100%,95%); // light 95% lightness

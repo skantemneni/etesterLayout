@@ -12,6 +12,15 @@
 
 // $color-config: mat.get-color-config($theme);
 
+@use 'assets/styles/themecolor' as themecolor;
+
+$primaryColor: themecolor.$primaryColor;
+$primaryColorDark: themecolor.$primaryColorDark;
+$primaryColorLight: themecolor.$primaryColorLight;
+$accentColor: themecolor.$accentColor;
+
+
+
 .panel-background-color-theme {
 //  @include angular-material-theme($color-config);
 
@@ -33,4 +42,20 @@
   padding-left: 20px;
   margin-left: 10px;
   border-style: solid;
+}
+
+.mat-toolbar.mat-primary {
+  background: $primaryColorLight;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.mat-icon-button {
+  background: $primaryColorLight;
+}
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color: $primaryColor;
+}
+
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  background-color: $accentColor;
 }

@@ -1,5 +1,6 @@
-// $primaryColorDark is teh same value used in the test-container-component scss
-$primaryColor: hsl(120,100%,75%); // light-green
-$primaryColorDark: hsl(120,100%,25%); // dark-green
-$primaryColorLight: hsl(120,100%,90%); //  light-green with 90%hue
-$accentColor: hsl(120,100%,70%); // green with 70% hue
+// hsl(hue, saturation, lightness)
+// 120=green
+$primaryColor: hsl(120,100%,85%); // green with 85% lightness
+$primaryColorDark: hsl(120,100%,25%); // dark with 25% lightness
+$accentColor: hsl(120,100%,70%); // accent 70% lightness
+$primaryColorLight: hsl(120,100%,95%); // light 95% lightness
