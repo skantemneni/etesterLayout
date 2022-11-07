@@ -5,6 +5,7 @@ import { LoginEvent } from '@auth/model/login-data';
 import { IAuthenticatable, ILoginUIService } from '@auth/model/auth.interface';
 import { ILoginUIServiceToken } from '@app/app.module';
 import { AuthenticatableDataServerToken } from '@app/app.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-header',
@@ -21,8 +22,9 @@ export class TestHeaderComponent implements OnInit {
    */
   constructor(
     @Inject(ILoginUIServiceToken) private loginUIService: ILoginUIService,
-    @Inject(AuthenticatableDataServerToken) private authenticatable: IAuthenticatable
-    ) { }
+    @Inject(AuthenticatableDataServerToken) private authenticatable: IAuthenticatable,
+    private router: Router
+  ) { }
 
 
 
@@ -36,18 +38,31 @@ export class TestHeaderComponent implements OnInit {
   ngOnInit(): void {
     // Call to retrieve data
     this.loginUIService.loginBehaviorSubject.subscribe((loginEvent: LoginEvent) => {
-      console.log("AppComponent.ngOnInit.loginService.loginBehaviorSubject.subscribe got", JSON.stringify(loginEvent));
+      console.log("TestHeaderComponent.ngOnInit.loginUIService.loginBehaviorSubject.subscribe got", JSON.stringify(loginEvent));
       if (loginEvent.isLoggedIn) {
         this.authenticatable.setAuthCode(loginEvent.authToken);
         this.loggedInUserName = loginEvent.loggedinUser?.firstName || '';
         this.isLoggedIn = true;
+        // If I receive a new "Event" from the "loginUIService" and I am logged in, I may want to simply refresh the page so the "login context" will have its efect on rendering.
+//        this.reloadCurrentRoute();
       } else {
         this.authenticatable.resetAuthCode();
         this.isLoggedIn = false;
         this.loggedInUserName = '';
+        // If I receive a new "Event" from the "loginUIService" and I am not logged in, if means I need to be on home page.
+        // TODO: Sesi.  Fix this soon.
+        // this.router.navigate(['']);
       }
     });
   }
+
+/*  reloadCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+*/
 
   onTestGradeClicked(event: any) {
     console.log(`Header: onTestGradeClicked: ${event}`);

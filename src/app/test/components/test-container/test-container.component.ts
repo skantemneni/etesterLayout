@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthenticatableDataServerToken } from '@app/app.module';
 import { Test, TestResponse, Testwithresponse } from '@app/models/etestermodel';
@@ -13,6 +13,44 @@ import { TestviewComponent } from '@test/components/testview/testview.component'
   styleUrls: ['./test-container.component.scss']
 })
 export class TestContainerComponent implements OnInit {
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
+  ) { }
+
+  ngOnInit(): void {
+    /*    this.route.params.subscribe((params: Params) => {
+          console.log(`TestContainerComponent.ngOnInit.routeParams: ${JSON.stringify(params)}`);
+          this.usertestId = params['usertestId'];
+          console.log(`TestContainerComponent.ngOnInit.this.usertestId: ${this.usertestId}`);
+          // Call to retrieve data.  Only call if there is a valid value for usertestId  Do not call if route parameter is undefined
+          */
+    if (this.usertestId) {
+      this.getData(this.usertestId);
+    }
+    //      this.changeDetectorRef.markForCheck();
+    //    });
+  }
+
+  /**
+   * The input parameter that tells us what userTest to render
+   */
+  //  @Input() usertestId: any = 0;
+  _usertestId: any = 0;
+  @Input()
+  get usertestId() {
+    return this._usertestId;
+  };
+  set usertestId(usertestId: string) {
+    this._usertestId = usertestId;
+    if (this._usertestId) {
+      this.getData(this._usertestId);
+    }
+
+  }
+
 
   @Output() testQuestionAnsweredEvent = new EventEmitter<TestQuestionAnsweredEvent>();
 
@@ -33,35 +71,12 @@ export class TestContainerComponent implements OnInit {
   testStatus: string = TestConstants.TEST_STATUS_ASSIGNED;
   testResponse?: TestResponse;
 
-  /**
-   * This is a router parameter that tells us what userTest to render
-   */
-  usertestId: string = '0';
-
   // View Children that allows to communicate-to/invoke-action-on children view elements as needed
   //  @ViewChildren('testviewRendering') testsegmentRenderings: QueryList<TestviewComponent> | undefined;
   // Special case view children to get around a defect.  Read the comments on ngAfterViewInit()
   //  @ViewChildren('shivatestsegment') spans!: QueryList<ElementRef>;
 
   @ViewChild('testviewRendering') testviewRendering: TestviewComponent | undefined;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
-//    , private etesterdbService: EtesterdbService
-  ) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      console.log(`TestContainerComponent.ngOnInit.routeParams: ${JSON.stringify(params)}`);
-      this.usertestId = params['usertestId'];
-      console.log(`TestContainerComponent.ngOnInit.this.usertestId: ${this.usertestId}`);
-      // Call to retrieve data
-      this.getData(this.usertestId);
-      //      this.changeDetectorRef.markForCheck();
-    });
-  }
 
   /**
    * This method takes the @Input usertestId and make the HTTP call to retrieve the data. And sets up the rest of the class variables to conduct business 

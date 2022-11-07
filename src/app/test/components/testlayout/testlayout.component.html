@@ -1,5 +1,20 @@
 <div class="test-layout">
   <app-test-header></app-test-header>
-  <app-test-container></app-test-container>
+  <ng-container *ngIf="usertestId; else blankTestScreen">
+    <app-test-container [usertestId]="usertestId"></app-test-container>
+  </ng-container>
   <app-test-footer></app-test-footer>
 </div>
+
+<ng-template #blankTestScreen>
+  <div class="test-layout">
+    <!--
+  <app-empty-component-with-message [heading]="'Missing Test'"
+                                    [message]="'Please select a Test from the Menu Bar.'">
+  </app-empty-component-with-message>
+    -->
+    <app-empty-component-with-message heading="Missing Test"
+                                      message="Please select a Test from the Menu Bar.">
+    </app-empty-component-with-message>
+  </div>
+</ng-template>

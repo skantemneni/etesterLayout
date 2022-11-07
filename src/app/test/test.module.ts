@@ -15,6 +15,7 @@ import { TestviewComponent } from './components/testview/testview.component';
 import { TestHeaderComponent } from './components/test-header/test-header.component';
 import { TestFooterComponent } from './components/test-footer/test-footer.component';
 import { InnerHtmlRendererComponent } from './util/components/inner-html-renderer/inner-html-renderer.component';
+import { EmptyComponentWithMessageComponent } from './util/components/empty-component-with-message/empty-component-with-message.component';
 
 import { TestRoutingModule } from './test-routing.module';
 
@@ -39,6 +40,7 @@ import { TestRoutingModule } from './test-routing.module';
     TestHeaderComponent,
     TestFooterComponent,
     InnerHtmlRendererComponent,
+    EmptyComponentWithMessageComponent,
  ],
   imports: [
     CommonModule,

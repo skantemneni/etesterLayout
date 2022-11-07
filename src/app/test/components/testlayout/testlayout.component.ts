@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-testlayout',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestlayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
+
 
   ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      console.log(`TestlayoutComponent.ngOnInit.routeParams: ${JSON.stringify(params)}`);
+      this.usertestId = params['usertestId'];
+      console.log(`TestlayoutComponent.ngOnInit.this.usertestId: ${this.usertestId}`);
+    });
   }
+
+  /**
+   * This is a router parameter that tells us what userTest to render
+   */
+  usertestId: string | undefined = undefined;
+
 
 }

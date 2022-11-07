@@ -44,6 +44,18 @@ $questionPanelColor: themecolor.$primaryColorLight;
   background-color: $primaryColorDark;
 }
 
+.empty-message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: $primaryColorLight;
+  border: 3px solid $primaryColorDark;
+}
+
+
 .test-container-main {
   display: flex;
   flex-wrap: nowrap;
