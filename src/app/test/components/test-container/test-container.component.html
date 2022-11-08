@@ -1,24 +1,25 @@
 <ng-container *ngIf="testwithresponse && testwithresponse.test; else blankTestScreen">
 
-<div class="test-container-main">
+  <div class="test-container-main">
 
-  <app-testsummary #testsummaryComponent
-                   [testwithresponse]="testwithresponse">
-  </app-testsummary>
+    <app-testsummary #testsummaryComponent
+                     [testwithresponse]="testwithresponse">
+    </app-testsummary>
 
 
-  <app-testview #testviewRendering
-                [testwithresponse]="testwithresponse"
-                (testResponseUpdater)="updateSummaryAndAnswerPanel($event)"
-                (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)">
-  </app-testview>
+    <app-testview #testviewRendering
+                  [testwithresponse]="testwithresponse"
+                  (testResponseUpdater)="testResponseUpdater.emit($event)"
+                  (testQuestionAnsweredEvent)="testQuestionAnsweredEvent.emit($event)">
+    </app-testview>
 
-  <app-test-answer-panel #testAnswerPanelComponent
-                         [testwithresponse]="testwithresponse"
-                         (answerPanelQuestionButtonClicked)="answerItemClicked($event)">
-  </app-test-answer-panel>
+    <app-test-answer-panel #testAnswerPanelComponent
+                           [testwithresponse]="testwithresponse"
+                           (answerPanelQuestionButtonClicked)="testviewRendering.renderQuestion($event)"
+                           >
+    </app-test-answer-panel>
 
-</div>
+  </div>
 </ng-container>
 
 

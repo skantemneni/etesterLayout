@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ResponseDetails, Test, TestResponse, TestsectionResponse, TestsegmentResponse, Testwithresponse } from '@app/models/etestermodel';
 import { StatsDisplayPanelComponent } from '@test/components/stats-display-panel/stats-display-panel.component';
+import * as TestConstants from '@app/models/TestConstants';
 
 @Component({
   selector: 'app-testsummary',
@@ -98,6 +99,29 @@ export class TestsummaryComponent implements OnInit {
       }
     }
     this.changeDetectorRef.markForCheck();
+  }
+
+
+
+
+
+
+
+
+
+  /**
+  * Perform any actions when invoked. Note that this functions is typically invoked as a result of some Menu Actions (Header -> App -> This)
+  * @param action
+  */
+  public performTestRelatedFunction(action: TestConstants.TestActions) {
+    console.log(`TestsummaryComponent.performTestRelatedFunction called with: ${action}`);
+    this.testStatsDisplayPanelRendering.performTestRelatedFunction(action);
+    this.sectionStatsDisplayPanelRenderings?.forEach((sectionStatsDisplayPanelRendering) => {
+      //      console.log(testsegmentRendering);
+      sectionStatsDisplayPanelRendering.performTestRelatedFunction(action);
+    });
+    this.changeDetectorRef.markForCheck();
+
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Question, QuestionResponse, Testsection, TestsectionResponse } from '@app/models/etestermodel';
 import { AnswerPanelQuestionButtonClickedEvent } from '@app/models/TestConstants';
 import * as TestConstants from '@app/models/TestConstants';
@@ -24,12 +24,12 @@ export class SectionAnswerPanelComponent implements OnInit {
   @Input() idTestsegment: string = "";
   @Input() idTest: string = "";
 
-//  questionResponseStatusArray?: QuestionResponse[];
+  //  questionResponseStatusArray?: QuestionResponse[];
 
   public setTestsectionResponse(testsectionResponse?: TestsectionResponse) {
-//    console.log(`BEFORE: ${JSON.stringify(this.testsectionResponse)}`)
+    //    console.log(`BEFORE: ${JSON.stringify(this.testsectionResponse)}`)
     this.testsectionResponse = testsectionResponse;
-//    console.log(`AFTER: ${JSON.stringify(this.testsectionResponse)}`)
+    //    console.log(`AFTER: ${JSON.stringify(this.testsectionResponse)}`)
 
 
     //***********************************************************************************
@@ -43,26 +43,26 @@ export class SectionAnswerPanelComponent implements OnInit {
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
   ngOnInit(): void {
   }
-/*  ngOnChanges(): void {
-    // initialize the this.questionResponseStatusArray first
-    if (this.testsection && this.testsection.section.questions) {
-      for (let iter_question of this.testsection.section.questions) {
-        this.questionResponseStatusArray?.push(new QuestionResponse(iter_question.idQuestion, '', TestConstants.QuestionStatus.NOT_ANSWERED));
-      }
-    }
-    // now overwrite with right status.
-    // NOte that I am not matching on idQuestion here.  Taking a short cut to match on size and sequence of responses
-    if (this.testsectionResponse && this.testsectionResponse.questionResponses.length) {
-      for (let index = 0; index < this.testsection.section.questions.length; index++) {
-        if (this.questionResponseStatusArray) {
-          this.questionResponseStatusArray[index] = this.testsectionResponse.questionResponses[index];
+  /*  ngOnChanges(): void {
+      // initialize the this.questionResponseStatusArray first
+      if (this.testsection && this.testsection.section.questions) {
+        for (let iter_question of this.testsection.section.questions) {
+          this.questionResponseStatusArray?.push(new QuestionResponse(iter_question.idQuestion, '', TestConstants.QuestionStatus.NOT_ANSWERED));
         }
       }
+      // now overwrite with right status.
+      // NOte that I am not matching on idQuestion here.  Taking a short cut to match on size and sequence of responses
+      if (this.testsectionResponse && this.testsectionResponse.questionResponses.length) {
+        for (let index = 0; index < this.testsection.section.questions.length; index++) {
+          if (this.questionResponseStatusArray) {
+            this.questionResponseStatusArray[index] = this.testsectionResponse.questionResponses[index];
+          }
+        }
+      }
+      // Now log them for kicks
+      console.log(`this.questionResponseStatusArray: ${this.questionResponseStatusArray}`)
     }
-    // Now log them for kicks
-    console.log(`this.questionResponseStatusArray: ${this.questionResponseStatusArray}`)
-  }
-*/
+  */
   answerItemClicked(event: any): void {
     console.log(`answerClicked: ${event}`)
     console.log(`answerClicked: ${JSON.stringify(event)}`)
@@ -88,7 +88,7 @@ export class SectionAnswerPanelComponent implements OnInit {
    */
   getQuestionStatusHighlightClass(index: number, idQuestion: string): string {
     if (this.testsectionResponse && this.testsectionResponse.questionResponses[index]) {
-        switch (this.testsectionResponse.questionResponses[index].questionStatus) {
+      switch (this.testsectionResponse.questionResponses[index].questionStatus) {
         case "CORRECT":
           return TestConstants.QuestionStatusHighlightClass.CORRECT;
         case "WRONG":
@@ -141,14 +141,49 @@ export class SectionAnswerPanelComponent implements OnInit {
    * On in my weird case, The question count rendered "when I previously graded/saved" was less than answer panel questionProxy count.
    */
   private buildTestsectionResponses(): void {
-  if (this.testsectionResponse && this.testsectionResponse.questionResponses) {
-    let responsesLength = this.testsectionResponse.questionResponses.length;
-    let questionsLength = this.testsection.section.questions.length;
-    for (let index = responsesLength; index < questionsLength; index++) {
-      let iter_question = this.testsection.section.questions[index];
-      this.testsectionResponse.questionResponses[index] = new QuestionResponse(iter_question.idQuestion, '', TestConstants.QuestionStatus.NOT_ANSWERED);
+    if (this.testsectionResponse && this.testsectionResponse.questionResponses) {
+      let responsesLength = this.testsectionResponse.questionResponses.length;
+      let questionsLength = this.testsection.section.questions.length;
+      for (let index = responsesLength; index < questionsLength; index++) {
+        let iter_question = this.testsection.section.questions[index];
+        this.testsectionResponse.questionResponses[index] = new QuestionResponse(iter_question.idQuestion, '', TestConstants.QuestionStatus.NOT_ANSWERED);
+      }
     }
   }
-}
+
+
+  /**
+   * Perform Test related function at thsi level
+   * @param action
+   */
+  public performTestRelatedFunction(action: TestConstants.TestActions) {
+    console.log(`SectionAnswerPanelComponent.performTestRelatedFunction called with: ${action}`);
+    switch (action) {
+      case TestConstants.TestActions.GRADE:
+//        this.gradeTest();
+        break;
+      case TestConstants.TestActions.UNGRADE:
+        this.resetTestsectionResponseWithStatus(TestConstants.QuestionStatus.ANSWERED);
+        break;
+      case TestConstants.TestActions.CONTINUE:
+//        this.continueTest();
+        break;
+      case TestConstants.TestActions.RESTART:
+        this.resetTestsectionResponseWithStatus(TestConstants.QuestionStatus.NOT_ANSWERED);
+        break;
+    }
+    this.changeDetectorRef.markForCheck();
+  }
+
+  private resetTestsectionResponseWithStatus(status: TestConstants.QuestionStatus) {
+    // Track down the right response on the testsectionResponse.questionResponses[] array and set its questionStatus appropriately
+    if (this.testsectionResponse && this.testsectionResponse.questionResponses) {
+      for (let index = 0; index < this.testsectionResponse.questionResponses.length; index++) {
+        this.testsectionResponse.questionResponses[index].questionStatus = status;
+      }
+      this.changeDetectorRef.markForCheck();
+    }
+  }
+
 }
 

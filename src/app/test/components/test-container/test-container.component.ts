@@ -6,6 +6,8 @@ import * as TestConstants from '@app/models/TestConstants';
 import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
 import { IDataServer } from '@app/services/data.interface';
 import { TestviewComponent } from '@test/components/testview/testview.component';
+import { TestAnswerPanelComponent } from '../test-answer-panel/test-answer-panel.component';
+import { TestsummaryComponent } from '../testsummary/testsummary.component';
 
 @Component({
   selector: 'app-test-container',
@@ -15,9 +17,7 @@ import { TestviewComponent } from '@test/components/testview/testview.component'
 export class TestContainerComponent implements OnInit {
 
   constructor(
-/*    private route: ActivatedRoute,
-    private router: Router,
-*/    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
+    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
   ) { }
 
   ngOnInit(): void { }
@@ -57,6 +57,8 @@ export class TestContainerComponent implements OnInit {
   //  @ViewChildren('shivatestsegment') spans!: QueryList<ElementRef>;
 
   @ViewChild('testviewRendering') testviewRendering: TestviewComponent | undefined;
+  @ViewChild('testAnswerPanelComponent') testAnswerPanelComponent: TestAnswerPanelComponent | undefined;
+  @ViewChild('testsummaryComponent') testsummaryComponent: TestsummaryComponent | undefined;
 
   /**
    * This method takes the @Input usertestId and make the HTTP call to retrieve the data. And sets up the rest of the class variables to conduct business 
@@ -86,56 +88,4 @@ export class TestContainerComponent implements OnInit {
       }
     );
   }
-
-  /**
-   * This method reacts to the testResponse updated event triggered by the TestView component
-   * 
-   * @param testResponse
-   */
-  updateSummaryAndAnswerPanel(newTestResponse: TestResponse) {
-    this.testResponseUpdater.emit(newTestResponse);
-    //    this.testsummaryComponent?.setTestResponse(newTestResponse);
-  }
-
-  /**
-  * Perform any actions when invoked. Note that this functions is typically invoked as a result of some Menu Actions (Header -> App -> This)
-  * @param action
-  */
-  performTestAction(action: TestConstants.TestActions) {
-    this.testviewRendering?.performTestRelatedFunction(action);
-  }
-
-  /**
-   * This does one of 2 things based on the test render mode:
-   * 1.) If the test renders one question at a time, we will simply render the particular question mentioned in the event
-   * 2.) If the test renders ALL questions at the same time, we will scroll the view port to the correct question number
-   * 
-   * @param answerPanelQuestionButtonClickedEvent
-   */
-  renderQuestion(answerPanelQuestionButtonClickedEvent: TestConstants.AnswerPanelQuestionButtonClickedEvent): void {
-    // reduce to the right testsegment
-    this.testviewRendering?.renderQuestion(answerPanelQuestionButtonClickedEvent);
-  }
-
-  /**
-   * Bubble up the TestQuestionAnsweredEvent.  
-   * @param event
-   */
-  testQuestionAnsweredClicked(event: TestQuestionAnsweredEvent): void {
-    // Emit the answer clicked event for a subscriber to consume
-    this.testQuestionAnsweredEvent.emit(event);
-  }
-
-
-
-  /**
-   * React to an event coming from Answer Panel
-   * @param answerPanelQuestionButtonClickedEvent
-   */
-  answerItemClicked(answerPanelQuestionButtonClickedEvent: TestConstants.AnswerPanelQuestionButtonClickedEvent): void {
-    this.renderQuestion(answerPanelQuestionButtonClickedEvent);
-  }
-
-
-
 }

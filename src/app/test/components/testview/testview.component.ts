@@ -312,13 +312,15 @@ export class TestviewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
+/*  *//**
    * Bubble up the TestQuestionAnsweredEvent.  
    * @param event
-   */
+   *//*
   testQuestionAnsweredClicked(event: TestQuestionAnsweredEvent): void {
     // Emit the answer clicked event for a subscriber to consume
     //    console.log(`TestView: TestQuestionAnsweredEvent.answerItemClicked: ${JSON.stringify(event)}`);
     this.testQuestionAnsweredEvent.emit(event);
   }
+*/
+
 }

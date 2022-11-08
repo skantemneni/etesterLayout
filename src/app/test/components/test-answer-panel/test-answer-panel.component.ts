@@ -3,6 +3,7 @@ import { Test, TestResponse, TestsectionResponse, Testsegment, TestsegmentRespon
 import { AnswerPanelQuestionButtonClickedEvent } from '@app/models/TestConstants';
 import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
 import { SectionAnswerPanelComponent } from '@test/components/section-answer-panel/section-answer-panel.component';
+import * as TestConstants from '@app/models/TestConstants';
 
 @Component({
   selector: 'app-test-answer-panel',
@@ -112,6 +113,34 @@ export class TestAnswerPanelComponent implements OnInit {
       console.log(`TestAnswerPanelComponent: Some Effed up. Count not find the Appropriate Section for: ${JSON.stringify(testQuestionAnsweredEvent)}`);
     }
     return;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /**
+ * Perform any actions when invoked. Note that this functions is typically invoked as a result of some Menu Actions (Header -> App -> This)
+ * @param action
+ */
+  performTestRelatedFunction(action: TestConstants.TestActions) {
+    console.log(`TestAnswerPanelComponent.performTestRelatedFunction called with: ${action}`);
+
+    this.testsectionAnswerPanelRenderings?.forEach((testsectionAnswerPanelRendering) => {
+      //      console.log(testsegmentRendering);
+      testsectionAnswerPanelRendering.performTestRelatedFunction(action);
+    });
+
   }
 
 

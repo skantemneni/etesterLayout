@@ -1,6 +1,11 @@
 <div class="test-layout">
 
-  <app-test-header (testAction)="testContainerComponent.performTestAction($event)">
+  <!-- Note the double template-reference-variable call here. -->
+  <!-- I am referring to a template variable called "testviewRendering" that is optionally available in test-container.component.html and then invoking a function on it. -->
+  <app-test-header (testAction)="testContainerComponent.testviewRendering?.performTestRelatedFunction($event);
+                   testContainerComponent.testAnswerPanelComponent?.performTestRelatedFunction($event);
+                   testContainerComponent.testsummaryComponent?.performTestRelatedFunction($event); "
+                   >
   </app-test-header>
 
   <!--

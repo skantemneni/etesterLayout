@@ -75,7 +75,7 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <app-testsegment #testsegmentRendering
-                             (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
+                             (testQuestionAnsweredEvent)="testQuestionAnsweredEvent.emit($event)"
                              [testsegment]="testsegment"
                              [testsegmentindex]="testsegmentindex"
                              [testsegmentResponse]="getInitialTestsegmentResponseForTestsegment(testsegment)"
