@@ -4,6 +4,7 @@ import { AnswerPanelQuestionButtonClickedEvent } from '@app/models/TestConstants
 import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
 import { SectionAnswerPanelComponent } from '@test/components/section-answer-panel/section-answer-panel.component';
 import * as TestConstants from '@app/models/TestConstants';
+import { ITestEventListener } from '../test-container/test-event-listener.interface';
 
 @Component({
   selector: 'app-test-answer-panel',
@@ -11,7 +12,7 @@ import * as TestConstants from '@app/models/TestConstants';
   styleUrls: ['./test-answer-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TestAnswerPanelComponent implements OnInit {
+export class TestAnswerPanelComponent implements ITestEventListener, OnInit {
 
   constructor() { }
 
@@ -27,24 +28,24 @@ export class TestAnswerPanelComponent implements OnInit {
   testResponse?: TestResponse | undefined = undefined;
   test?: Test | undefined = undefined;
 
-/*  private _test?: Test | undefined = undefined;
-  @Input()
-  public get test(): Test | undefined {
-    return this._test;
-  }
-  public set test(test: Test | undefined) {
-    this._test = test;
-  }
-
-  private _testResponse?: TestResponse | undefined = undefined;
-  @Input()
-  public get testResponse(): TestResponse | undefined {
-    return this._testResponse;
-  }
-  public set testResponse(testResponse: TestResponse | undefined) {
-    this._testResponse = testResponse;
-  }
-*/
+  /*  private _test?: Test | undefined = undefined;
+    @Input()
+    public get test(): Test | undefined {
+      return this._test;
+    }
+    public set test(test: Test | undefined) {
+      this._test = test;
+    }
+  
+    private _testResponse?: TestResponse | undefined = undefined;
+    @Input()
+    public get testResponse(): TestResponse | undefined {
+      return this._testResponse;
+    }
+    public set testResponse(testResponse: TestResponse | undefined) {
+      this._testResponse = testResponse;
+    }
+  */
 
   // Main input via setter and getter
   private _testwithresponse?: Testwithresponse | undefined = undefined;
@@ -61,18 +62,6 @@ export class TestAnswerPanelComponent implements OnInit {
     }
   }
 
-  public setTestResponse(testResponse: TestResponse) {
-    this.testResponse = testResponse;
-    // now propogate the section responses to chile components
-    for (let testsegmentResponse of testResponse.testsegmentResponses) {
-      for (let testsectionResponse of testsegmentResponse.testsectionResponses) {
-        let filterTestsectionAnswerPanelRenderings: SectionAnswerPanelComponent[] | undefined = this.testsectionAnswerPanelRenderings?.filter(x => x.idTestsegment == testsegmentResponse.idTestsegment && x.testsection.idTestsection == testsectionResponse.idTestsection);
-        if (filterTestsectionAnswerPanelRenderings && filterTestsectionAnswerPanelRenderings.length > 0) {
-          filterTestsectionAnswerPanelRenderings[0].setTestsectionResponse(testsectionResponse);
-        }
-      }
-    }
-  }
   answerItemClicked(event: AnswerPanelQuestionButtonClickedEvent): void {
     console.log(`TestAnswerPanelComponent.answerItemClicked: ${event}`)
     console.log(`TestAnswerPanelComponent.answerItemClicked: ${JSON.stringify(event)}`)
@@ -98,11 +87,16 @@ export class TestAnswerPanelComponent implements OnInit {
     }
   }
 
+
+  /**************************************************************************************************************************
+   * Interface methods that need to be implemented to react to Test Events
+   **************************************************************************************************************************/
+
   /**
    * Mark the questionProxy on the Test Answer Panel with question status.  First identify the Testsegment-section and the do the job.
    * @param testQuestionAnsweredEvent
    */
-  renderQuestionStatus(testQuestionAnsweredEvent: TestQuestionAnsweredEvent) {
+  onTestQuestionAnsweredEvent(testQuestionAnsweredEvent: TestQuestionAnsweredEvent) {
     // find the correct SectionAnswerPanelComponent and pass onteh message
     // reduce to the right testsection
     let filterResults: SectionAnswerPanelComponent[] | undefined = this.testsectionAnswerPanelRenderings?.filter(x => x.testsection?.idTestsection == testQuestionAnsweredEvent.idTestsection && x.idTestsegment == testQuestionAnsweredEvent.idTestsegment);
@@ -116,6 +110,31 @@ export class TestAnswerPanelComponent implements OnInit {
   }
 
 
+  /**
+   * This gets called when teh Test is Graded.  As art of teh grading process, a full testResponse is freshly created and published.
+   * That same response also get saved to persistant storage.
+   * @param testResponse - the new TestResponse
+   */
+  onTestResponseUpdatedEvent(newTestResponse: TestResponse) {
+    console.log(`TestAnswerPanelComponent.overwriteTestResponse called with ${JSON.stringify(newTestResponse)}`);
+    this.setTestResponse(newTestResponse);
+
+  }
+  private setTestResponse(newTestResponse: TestResponse) {
+    this.testResponse = newTestResponse;
+    // now propogate the section responses to chile components
+    for (let testsegmentResponse of newTestResponse.testsegmentResponses) {
+      for (let testsectionResponse of testsegmentResponse.testsectionResponses) {
+        let filterTestsectionAnswerPanelRenderings: SectionAnswerPanelComponent[] | undefined = this.testsectionAnswerPanelRenderings?.filter(x => x.idTestsegment == testsegmentResponse.idTestsegment && x.testsection.idTestsection == testsectionResponse.idTestsection);
+        if (filterTestsectionAnswerPanelRenderings && filterTestsectionAnswerPanelRenderings.length > 0) {
+          filterTestsectionAnswerPanelRenderings[0].setTestsectionResponse(testsectionResponse);
+        }
+      }
+    }
+  }
+  /**************************************************************************************************************************
+   * Interface methods that need to be implemented to react to Test Events
+   **************************************************************************************************************************/
 
 
 
@@ -129,10 +148,10 @@ export class TestAnswerPanelComponent implements OnInit {
 
 
 
- /**
- * Perform any actions when invoked. Note that this functions is typically invoked as a result of some Menu Actions (Header -> App -> This)
- * @param action
- */
+  /**
+  * Perform any actions when invoked. Note that this functions is typically invoked as a result of some Menu Actions (Header -> App -> This)
+  * @param action
+  */
   performTestRelatedFunction(action: TestConstants.TestActions) {
     console.log(`TestAnswerPanelComponent.performTestRelatedFunction called with: ${action}`);
 

@@ -163,7 +163,7 @@ export class SectionAnswerPanelComponent implements OnInit {
 //        this.gradeTest();
         break;
       case TestConstants.TestActions.UNGRADE:
-        this.resetTestsectionResponseWithStatus(TestConstants.QuestionStatus.ANSWERED);
+        this.ungradeTestsectionResponseWithStatus();
         break;
       case TestConstants.TestActions.CONTINUE:
 //        this.continueTest();
@@ -181,7 +181,17 @@ export class SectionAnswerPanelComponent implements OnInit {
       for (let index = 0; index < this.testsectionResponse.questionResponses.length; index++) {
         this.testsectionResponse.questionResponses[index].questionStatus = status;
       }
-      this.changeDetectorRef.markForCheck();
+    }
+  }
+
+  private ungradeTestsectionResponseWithStatus() {
+    // Track down the right response on the testsectionResponse.questionResponses[] array and set its questionStatus appropriately
+    if (this.testsectionResponse && this.testsectionResponse.questionResponses) {
+      for (let index = 0; index < this.testsectionResponse.questionResponses.length; index++) {
+        if (this.testsectionResponse.questionResponses[index].questionStatus != TestConstants.QuestionStatus.NOT_ANSWERED) {
+          this.testsectionResponse.questionResponses[index].questionStatus = TestConstants.QuestionStatus.ANSWERED;
+        }
+      }
     }
   }
 

@@ -37,23 +37,28 @@
 
 .question-not-answered {
   transition: background 0.5s ease;
-  background-image: none;
   background-color: none;
   border-color: black;
 }
 .question-answered {
   background-color: #10b8f61c;
   border-color: blue;
+  background-color: hsl(240, 100%, 60%);
+  color: white;
   transition: background-color 0.3s ease-in;
 }
 .question-answered-correct {
   background-color: #dbebc266;
   border-color: green;
+  background-color: hsl(120, 100%, 37%);
+  color: white;
   transition: background-color 0.3s ease-in;
 }
 .question-answered-wrong {
   background-color: #ed77843d;
   border-color: darkorange;
+  background-color: hsl(360, 100%, 75%);
+  color: white;
   transition: background-color 0.3s ease-in;
 }
 .question-extra-yellow {

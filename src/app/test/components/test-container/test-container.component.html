@@ -9,8 +9,8 @@
 
     <app-testview #testviewRendering
                   [testwithresponse]="testwithresponse"
-                  (testResponseUpdater)="testResponseUpdater.emit($event)"
-                  (testQuestionAnsweredEvent)="testQuestionAnsweredEvent.emit($event)">
+                  (testResponseUpdater)="testAnswerPanelComponent.onTestResponseUpdatedEvent($event); testsummaryComponent.onTestResponseUpdatedEvent($event);"
+                  (testQuestionAnsweredEvent)="testAnswerPanelComponent.onTestQuestionAnsweredEvent($event);">
     </app-testview>
 
     <app-test-answer-panel #testAnswerPanelComponent

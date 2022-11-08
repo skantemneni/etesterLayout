@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Q
 import { ResponseDetails, Test, TestResponse, TestsectionResponse, TestsegmentResponse, Testwithresponse } from '@app/models/etestermodel';
 import { StatsDisplayPanelComponent } from '@test/components/stats-display-panel/stats-display-panel.component';
 import * as TestConstants from '@app/models/TestConstants';
+import { ITestEventListener } from '../test-container/test-event-listener.interface';
 
 @Component({
   selector: 'app-testsummary',
@@ -9,7 +10,7 @@ import * as TestConstants from '@app/models/TestConstants';
   styleUrls: ['./testsummary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TestsummaryComponent implements OnInit {
+export class TestsummaryComponent implements ITestEventListener, OnInit {
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -32,7 +33,7 @@ export class TestsummaryComponent implements OnInit {
   @ViewChild('testStatsDisplayPanel') testStatsDisplayPanelRendering!: StatsDisplayPanelComponent;
   @ViewChildren('sectionStatsDisplayPanel') sectionStatsDisplayPanelRenderings: QueryList<StatsDisplayPanelComponent> | undefined;
 
- // testResponseStats: ResponseDetails | undefined = undefined;
+  // testResponseStats: ResponseDetails | undefined = undefined;
 
 
   testResponse?: TestResponse | undefined = undefined;
@@ -82,15 +83,49 @@ export class TestsummaryComponent implements OnInit {
     return (segmentindex + 1) + "." + (sectionindex + 1) + ".) " + testsegmentName + " - " + testsectionName;
 
   }
-  public setTestResponse(testResponse: TestResponse) {
-    this.testResponse = testResponse;
-    // propogate the test Response Details 
+
+
+  /**************************************************************************************************************************
+    * Interface methods that need to be implemented to react to Test Events
+    **************************************************************************************************************************/
+
+  /**
+   * Mark the questionProxy on the Test Answer Panel with question status.  First identify the Testsegment-section and the do the job.
+   * @param testQuestionAnsweredEvent
+   */
+  onTestQuestionAnsweredEvent(testQuestionAnsweredEvent: TestConstants.TestQuestionAnsweredEvent) {
+/*    // find the correct SectionAnswerPanelComponent and pass onteh message
+    // reduce to the right testsection
+    let filterResults: SectionAnswerPanelComponent[] | undefined = this.testsectionAnswerPanelRenderings?.filter(x => x.testsection?.idTestsection == testQuestionAnsweredEvent.idTestsection && x.idTestsegment == testQuestionAnsweredEvent.idTestsegment);
+    if (filterResults && filterResults.length > 0) {
+      console.log(`TestAnswerPanelComponent: renderQuestionStatus: ${JSON.stringify(testQuestionAnsweredEvent)}`);
+      filterResults[0].renderQuestionStatus(testQuestionAnsweredEvent);
+    } else {
+      console.log(`TestAnswerPanelComponent: Some Effed up. Count not find the Appropriate Section for: ${JSON.stringify(testQuestionAnsweredEvent)}`);
+    }
+*/    return;
+  }
+
+
+  /**
+   * This gets called when teh Test is Graded.  As art of teh grading process, a full testResponse is freshly created and published.
+   * That same response also get saved to persistant storage.
+   * @param testResponse - the new TestResponse
+   */
+  onTestResponseUpdatedEvent(newTestResponse: TestResponse) {
+    console.log(`TestAnswerPanelComponent.overwriteTestResponse called with ${JSON.stringify(newTestResponse)}`);
+    this.setTestResponse(newTestResponse);
+
+  }
+  public setTestResponse(newTestResponse: TestResponse) {
+    this.testResponse = newTestResponse;
+    // propogate the test Response Details
     if (this.testResponse && this.testResponse.testResponseDetails) {
       this.testStatsDisplayPanelRendering.responseDetails = this.testResponse.testResponseDetails;
     }
     // now propogate the section Response Details to each section
 
-    for (let testsegmentResponse of testResponse.testsegmentResponses) {
+    for (let testsegmentResponse of newTestResponse.testsegmentResponses) {
       for (let testsectionResponse of testsegmentResponse.testsectionResponses) {
         let filterSectionStatsDisplayPanelRenderings: StatsDisplayPanelComponent[] | undefined = this.sectionStatsDisplayPanelRenderings?.filter(x => x.idTestsegment == testsegmentResponse.idTestsegment && x.idTestsection == testsectionResponse.idTestsection);
         if (filterSectionStatsDisplayPanelRenderings && filterSectionStatsDisplayPanelRenderings.length > 0) {
@@ -101,6 +136,9 @@ export class TestsummaryComponent implements OnInit {
     this.changeDetectorRef.markForCheck();
   }
 
+  /**************************************************************************************************************************
+   * Interface methods that need to be implemented to react to Test Events
+   **************************************************************************************************************************/
 
 
 

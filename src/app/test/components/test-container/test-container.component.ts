@@ -39,12 +39,10 @@ export class TestContainerComponent implements OnInit {
 
   }
 
-  @Output() testQuestionAnsweredEvent = new EventEmitter<TestQuestionAnsweredEvent>();
-
   /**
    * The output parameter that publishes updates to Test Response and Test Stats
    */
-  @Output() testResponseUpdater = new EventEmitter<TestResponse>();
+//  @Output() testResponseUpdater = new EventEmitter<TestResponse>();
 
   // Data Variables that are generally loaded via HTTP calls
   testwithresponse: Testwithresponse = {} as Testwithresponse;
