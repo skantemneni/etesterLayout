@@ -1,20 +1,16 @@
 <div class="test-layout">
-  <app-test-header></app-test-header>
-  <ng-container *ngIf="usertestId; else blankTestScreen">
-    <app-test-container [usertestId]="usertestId"></app-test-container>
-  </ng-container>
+
+  <app-test-header (testAction)="testContainerComponent.performTestAction($event)">
+  </app-test-header>
+
+  <!--
+    <app-test-header (testAction)="performTestAction(testContainerComponent, $event)">
+    </app-test-header>
+  -->
+  <app-test-container #testContainerComponent [usertestId]="usertestId">
+  </app-test-container>
+
   <app-test-footer></app-test-footer>
+
 </div>
 
-<ng-template #blankTestScreen>
-  <div class="test-layout">
-    <!--
-  <app-empty-component-with-message [heading]="'Missing Test'"
-                                    [message]="'Please select a Test from the Menu Bar.'">
-  </app-empty-component-with-message>
-    -->
-    <app-empty-component-with-message heading="Missing Test"
-                                      message="Please select a Test from the Menu Bar.">
-    </app-empty-component-with-message>
-  </div>
-</ng-template>

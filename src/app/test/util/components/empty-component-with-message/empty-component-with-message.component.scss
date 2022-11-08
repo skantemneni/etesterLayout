@@ -26,6 +26,7 @@ $accentColor: themecolor.$accentColor;
   border-color: $primaryColor;
   background-image: url("/assets/logoETESTER.svg");
   background-repeat: no-repeat;
+  background-size: clamp(100px, 10%, 150px) auto;
   //  background-attachment: fixed;
   background-position: bottom right;
   //  background-size: contain;

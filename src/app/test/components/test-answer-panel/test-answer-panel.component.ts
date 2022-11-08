@@ -12,6 +12,11 @@ import { SectionAnswerPanelComponent } from '@test/components/section-answer-pan
 })
 export class TestAnswerPanelComponent implements OnInit {
 
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
   @Output() answerPanelQuestionButtonClicked = new EventEmitter<AnswerPanelQuestionButtonClickedEvent>();
 
   // View Children that allows to communicate-to/invoke-action-on children view elements as needed
@@ -39,6 +44,8 @@ export class TestAnswerPanelComponent implements OnInit {
     this._testResponse = testResponse;
   }
 */
+
+  // Main input via setter and getter
   private _testwithresponse?: Testwithresponse | undefined = undefined;
   @Input()
   public get testwithresponse(): Testwithresponse | undefined {
@@ -65,11 +72,6 @@ export class TestAnswerPanelComponent implements OnInit {
       }
     }
   }
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
   answerItemClicked(event: AnswerPanelQuestionButtonClickedEvent): void {
     console.log(`TestAnswerPanelComponent.answerItemClicked: ${event}`)
     console.log(`TestAnswerPanelComponent.answerItemClicked: ${JSON.stringify(event)}`)

@@ -15,42 +15,29 @@ import { TestviewComponent } from '@test/components/testview/testview.component'
 export class TestContainerComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
+/*    private route: ActivatedRoute,
     private router: Router,
-    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
+*/    @Inject(AuthenticatableDataServerToken) private dataServer: IDataServer
   ) { }
 
-  ngOnInit(): void {
-    /*    this.route.params.subscribe((params: Params) => {
-          console.log(`TestContainerComponent.ngOnInit.routeParams: ${JSON.stringify(params)}`);
-          this.usertestId = params['usertestId'];
-          console.log(`TestContainerComponent.ngOnInit.this.usertestId: ${this.usertestId}`);
-          // Call to retrieve data.  Only call if there is a valid value for usertestId  Do not call if route parameter is undefined
-          */
-    if (this.usertestId) {
-      this.getData(this.usertestId);
-    }
-    //      this.changeDetectorRef.markForCheck();
-    //    });
-  }
+  ngOnInit(): void { }
 
   /**
    * The input parameter that tells us what userTest to render
    */
   //  @Input() usertestId: any = 0;
-  _usertestId: any = 0;
+  _usertestId: any = undefined;
   @Input()
   get usertestId() {
     return this._usertestId;
   };
-  set usertestId(usertestId: string) {
+  set usertestId(usertestId: string | undefined) {
     this._usertestId = usertestId;
     if (this._usertestId) {
       this.getData(this._usertestId);
     }
 
   }
-
 
   @Output() testQuestionAnsweredEvent = new EventEmitter<TestQuestionAnsweredEvent>();
 
@@ -59,15 +46,8 @@ export class TestContainerComponent implements OnInit {
    */
   @Output() testResponseUpdater = new EventEmitter<TestResponse>();
 
-  /**
-   * The output parameter that publishes updates to Test Response and Test Stats
-   */
-  @Output() testwithresponseUpdater = new EventEmitter<Testwithresponse>();
-
-
   // Data Variables that are generally loaded via HTTP calls
   testwithresponse: Testwithresponse = {} as Testwithresponse;
-  test?: Test;
   testStatus: string = TestConstants.TEST_STATUS_ASSIGNED;
   testResponse?: TestResponse;
 
@@ -86,18 +66,13 @@ export class TestContainerComponent implements OnInit {
     // Using a service here to get to the data from the etester database
     this.dataServer.getUserTestData(usertestId).subscribe(
       (testwithresponse: Testwithresponse) => {
-        this.testwithresponse = testwithresponse;
-        this.test = this.testwithresponse.test;
-        this.testwithresponseUpdater.emit(testwithresponse);
+        // Log the test response if its empty...
+        if (testwithresponse.idTest === "-1") {
+          console.log(`TestContainerComponent.getData for: ${usertestId} returns: ${JSON.stringify(testwithresponse)}`);
+        }
 
-        if (this.testwithresponse != null) {
-          this.testviewRendering?.setTestWithResponse(this.testwithresponse);
-        }
-        // parse the serialized response object string if one is available
-        if (this.testwithresponse.testResponse != null) {
-          this.testResponse = JSON.parse(testwithresponse.testResponse);
-        }
-        //        this.changeDetectorRef.markForCheck();
+        // This next statement will already kick off all 3 sub-panels that constitute the Test Cantainer.  Namely, TestAnswerPanel, TestSummaryPanel and the TestView Panel
+        this.testwithresponse = testwithresponse;
       },
       (error) => {
         if (error["status"] == 403) {

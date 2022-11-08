@@ -23,12 +23,46 @@ import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 })
 export class TestviewComponent implements OnInit, AfterViewInit {
 
+  /**
+   * Constructor that is initialized with the HTTP client that can access the DataBase.
+   * @param etesterdbService
+   */
+  constructor(private etesterdbService: EtesterdbService, private changeDetectorRef: ChangeDetectorRef) {
+  }
+
+  /**
+   * The only thing to do is get Data.  That is an async HTTP call and so is not available in teh constructor at Build time.
+   */
+  ngOnInit(): void {
+  }
+
+  // Main input via setter and getter
+  private _testwithresponse?: Testwithresponse | undefined = undefined;
+  @Input()
+  public get testwithresponse(): Testwithresponse | undefined {
+    return this._testwithresponse;
+  }
+  public set testwithresponse(testwithresponse: Testwithresponse | undefined) {
+    console.log(`TestviewComponent.set testwithresponse: ${testwithresponse}`)
+    this._testwithresponse = testwithresponse;
+    this.test = this._testwithresponse?.test;
+    if (this.test) {
+      this.testsegments = this.test.testsegments;
+    }
+    this.testStatus = this.testwithresponse && this.testwithresponse.testStatus ? this.testwithresponse.testStatus : TestConstants.TEST_STATUS_ASSIGNED;
+    if (this._testwithresponse?.testResponse) {
+      this.initialTestResponse = JSON.parse(this._testwithresponse.testResponse);
+      this.initialTestsegmentResponseArray = this.initialTestResponse?.testsegmentResponses;
+    }
+
+  }
+
   @Output() testQuestionAnsweredEvent = new EventEmitter<TestQuestionAnsweredEvent>();
 
   // Data Variables that are generally loaded via HTTP calls
-  test: Test;
-  testwithresponse: Testwithresponse;
-  testsegments: Testsegment[];
+  test?: Test;
+//  testwithresponse: Testwithresponse;
+  testsegments?: Testsegment[];
   initialTestResponse?: TestResponse;
   initialTestsegmentResponseArray?: TestsegmentResponse[];
   testStatus: string = TestConstants.TEST_STATUS_ASSIGNED;
@@ -52,40 +86,23 @@ export class TestviewComponent implements OnInit, AfterViewInit {
    */
   @Output() testResponseUpdater = new EventEmitter<TestResponse>();
 
-  /**
-   * Constructor that is initialized with the HTTP client that can access the DataBase.
-   * @param etesterdbService
-   */
-  constructor(private etesterdbService: EtesterdbService, private changeDetectorRef: ChangeDetectorRef) {
-    // Initialize variables as needed
-    this.test = {} as Test;
-    this.testwithresponse = {} as Testwithresponse;
-    this.testsegments = new Array();
-  }
 
-  setTestWithResponse(testwithresponse: Testwithresponse) {
-    this.testwithresponse = testwithresponse;
-    this.test = this.testwithresponse.test;
-    this.testsegments = this.test.testsegments;
-    this.testStatus = this.testwithresponse && this.testwithresponse.testStatus ? this.testwithresponse.testStatus : TestConstants.TEST_STATUS_ASSIGNED;
-    if (this.testwithresponse.testResponse != null) {
-      this.initialTestResponse = JSON.parse(this.testwithresponse.testResponse);
-      this.initialTestsegmentResponseArray = this.initialTestResponse?.testsegmentResponses;
+/*  setTestAndResponse(test: Test, testStatus: string, testResponse?: TestResponse) {
+    this.test = test;
+    if (this.test) {
+      this.testsegments = this.test.testsegments;
     }
-/*    if (this.testsegmentRenderings) {
+    this.testStatus = testStatus;
+    this.initialTestResponse = testResponse;
+    this.initialTestsegmentResponseArray = this.initialTestResponse?.testsegmentResponses;
+*//*    if (this.testsegmentRenderings) {
       console.log(`TestviewComponent.this.testsegmentRenderings.length: ${this.testsegmentRenderings.length}`)
     } else {
       console.log(`TestviewComponent.this.testsegmentRenderings.length: 0`)
     }
-*/    this.changeDetectorRef.markForCheck();
+*//*    this.changeDetectorRef.markForCheck();
   }
-
-  /**
-   * The only thing to do is get Data.  That is an async HTTP call and so is not available in teh constructor at Build time.
-   */
-  ngOnInit(): void {
-  }
-
+*/
   /**
    * Perform any actions when invoked. Note that this functions is typically invoked as a result of some Menu Actions (Header -> App -> This)
    * @param action

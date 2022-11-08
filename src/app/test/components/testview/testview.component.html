@@ -1,87 +1,93 @@
-<main>
-  <div class="scroll">
+<!-- Make sure we have a valid Test object. -->
+<ng-container *ngIf="test">
 
-    <div class="test-metadata-container">
 
-      <div class="test-metadata-heading" [attr.idTest]="test.idTest">{{test.name}}</div>
+  <main>
+    <div class="scroll">
 
-      <div class="test-metadata-details-container">
-        <div class="test-metadata">
-          <div class="label">Provider:</div>
-          <div class="value">{{test.idProvider}}</div>
+      <div class="test-metadata-container">
+
+        <div class="test-metadata-heading" [attr.idTest]="test.idTest">{{test.name}}</div>
+
+        <div class="test-metadata-details-container">
+          <div class="test-metadata">
+            <div class="label">Provider:</div>
+            <div class="value">{{test.idProvider}}</div>
+          </div>
+          <div class="test-metadata">
+            <div class="label">Channel:</div>
+            <div class="value">{{test.idChannel}}</div>
+          </div>
+          <div class="test-metadata">
+            <div class="label">Exam Track:</div>
+            <div class="value">{{test.examtrack}}</div>
+          </div>
         </div>
-        <div class="test-metadata">
-          <div class="label">Channel:</div>
-          <div class="value">{{test.idChannel}}</div>
+
+        <div class="test-metadata-details-container">
+          <div class="test-metadata">
+            <div class="label">Description:</div>
+            <div class="value">{{test.description}}</div>
+          </div>
         </div>
-        <div class="test-metadata">
-          <div class="label">Exam Track:</div>
-          <div class="value">{{test.examtrack}}</div>
+
+        <div class="test-metadata-status-panel">
+          <div [class.selected]="testStatus == 'assigned'">Assigned</div>
+          <div [class.selected]="testStatus == 'started'">Started</div>
+          <div [class.selected]="testStatus == 'submitted'">Submitted</div>
+          <div [class.selected]="testStatus == 'corrections'">Scored/Corrections</div>
+          <div [class.selected]="testStatus == 'completed'">Finished</div>
+          <div [class.selected]="testStatus == 'archived'">Archived</div>
         </div>
+
       </div>
 
-      <div class="test-metadata-details-container">
-        <div class="test-metadata">
-          <div class="label">Description:</div>
-          <div class="value">{{test.description}}</div>
+      <hr class="assign-meaningful-class-here" />
+
+
+      <div class="test-segments-header">Test Subjects</div>
+
+      <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
+      <div *ngIf="testsegments">
+        <div *ngFor="let testsegment of testsegments; let shivaindex = index;">
+          <span style="display: none;" #shivatestsegment>{{testsegment.idTestsegment}}</span>
         </div>
       </div>
-
-      <div class="test-metadata-status-panel">
-        <div [class.selected]="testwithresponse.testStatus == 'assigned'">Assigned</div>
-        <div [class.selected]="testwithresponse.testStatus == 'started'">Started</div>
-        <div [class.selected]="testwithresponse.testStatus == 'submitted'">Submitted</div>
-        <div [class.selected]="testwithresponse.testStatus == 'corrections'">Scored/Corrections</div>
-        <div [class.selected]="testwithresponse.testStatus == 'completed'">Finished</div>
-        <div [class.selected]="testwithresponse.testStatus == 'archived'">Archived</div>
-      </div>
-
-    </div>
-
-    <hr class="assign-meaningful-class-here"/>
-
-
-    <div class="test-segments-header">Test Subjects</div>
-
-    <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
-    <div *ngIf="testsegments">
-      <div *ngFor="let testsegment of testsegments; let shivaindex = index;">
-        <span style="display: none;" #shivatestsegment>{{testsegment.idTestsegment}}</span>
-      </div>
-    </div>
-    <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
-    <!-- Do this If you don't want to wrap each section into an accordian panel  -->
-    <!--
-    <div *ngFor="let testsegment of testsegments; let testsegmentindex = index;">
-        <app-testsegment #testsegmentRendering [testsegment]="testsegment" [testsegmentindex]="testsegmentindex" [instantGradeMode]="false"></app-testsegment>
-    </div>
-      -->
-    <!-- Wrapping in mat-accordion ensures only one Test segment is open at any given time.  May not be what I want. -->
-    <!--
-    -->
-    <mat-accordion #matAccordion multi>
+      <!--  Required poison.  Perhaps only ion DEV mode.  Read teh comment in teh TS file under the ngAfterViewInit() method-->
+      <!-- Do this If you don't want to wrap each section into an accordian panel  -->
+      <!--
       <div *ngFor="let testsegment of testsegments; let testsegmentindex = index;">
-
-        <mat-expansion-panel class="expansion-panel" expanded="true" #expansionPanel [attr.idtestsegment]="testsegment.idTestsegment">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <span class="expansion-panel-header-title">{{testsegmentindex + 1}}.) {{testsegment.name}}</span>
-            </mat-panel-title>
-            <mat-panel-description>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <app-testsegment #testsegmentRendering
-                           (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
-                           [testsegment]="testsegment"
-                           [testsegmentindex]="testsegmentindex"
-                           [testsegmentResponse]="getInitialTestsegmentResponseForTestsegment(testsegment)"
-                           [testStatus]="testStatus"
-                           [instantGradeMode]="false">
-          </app-testsegment>
-        </mat-expansion-panel>
-
+          <app-testsegment #testsegmentRendering [testsegment]="testsegment" [testsegmentindex]="testsegmentindex" [instantGradeMode]="false"></app-testsegment>
       </div>
-    </mat-accordion>
+        -->
+      <!-- Wrapping in mat-accordion ensures only one Test segment is open at any given time.  May not be what I want. -->
+      <!--
+      -->
+      <mat-accordion #matAccordion multi>
+        <div *ngFor="let testsegment of testsegments; let testsegmentindex = index;">
 
-  </div>
-</main>
+          <mat-expansion-panel class="expansion-panel" expanded="true" #expansionPanel [attr.idtestsegment]="testsegment.idTestsegment">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="expansion-panel-header-title">{{testsegmentindex + 1}}.) {{testsegment.name}}</span>
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-testsegment #testsegmentRendering
+                             (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
+                             [testsegment]="testsegment"
+                             [testsegmentindex]="testsegmentindex"
+                             [testsegmentResponse]="getInitialTestsegmentResponseForTestsegment(testsegment)"
+                             [testStatus]="testStatus"
+                             [instantGradeMode]="false">
+            </app-testsegment>
+          </mat-expansion-panel>
+
+        </div>
+      </mat-accordion>
+
+    </div>
+  </main>
+
+</ng-container>

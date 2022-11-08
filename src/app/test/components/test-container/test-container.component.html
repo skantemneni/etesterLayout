@@ -1,3 +1,5 @@
+<ng-container *ngIf="testwithresponse && testwithresponse.test; else blankTestScreen">
+
 <div class="test-container-main">
 
   <app-testsummary #testsummaryComponent
@@ -5,9 +7,10 @@
   </app-testsummary>
 
 
-  <app-testview (testResponseUpdater)="updateSummaryAndAnswerPanel($event)"
-                (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)"
-                #testviewRendering>
+  <app-testview #testviewRendering
+                [testwithresponse]="testwithresponse"
+                (testResponseUpdater)="updateSummaryAndAnswerPanel($event)"
+                (testQuestionAnsweredEvent)="testQuestionAnsweredClicked($event)">
   </app-testview>
 
   <app-test-answer-panel #testAnswerPanelComponent
@@ -16,3 +19,19 @@
   </app-test-answer-panel>
 
 </div>
+</ng-container>
+
+
+<!-- This shows when there is no usertestId -->
+<ng-template #blankTestScreen>
+  <div class="test-container-main">
+    <!--
+    <app-empty-component-with-message [heading]="'Missing Test'"
+                                      [message]="'Please select a Test from the Menu Bar.'">
+    </app-empty-component-with-message>
+      -->
+    <app-empty-component-with-message heading="Missing Test"
+                                      message="Please select a Test from the Menu Bar.">
+    </app-empty-component-with-message>
+  </div>
+</ng-template>
