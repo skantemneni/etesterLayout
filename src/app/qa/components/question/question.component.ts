@@ -396,6 +396,13 @@ export class QuestionComponent implements ITestActions, IQuestion, OnInit, OnCha
     }
     //    console.log(`Answer clicked: ${event.target.innerHTML}`);
 
+    // Used to indicate progress on the question.  It will take one of 3 values:
+    // * ----This should carry a 0 value by default - if this feature is not implemented.
+    // * ----If a question goes from NOT_ANSWERED to ANSWERED / CORRECT / WRONG, we get a + 1,
+    // * ----If a question goes from ANSWERED / CORRECT / WRONG to NOT_ANSWERED, we get a - 1,
+    // * ----If a question goes from "One choice" to Another, but remains ANSWERED / CORRECT / WRONG, we get a 0.
+    let answeredDeltaCount = 0;
+
     // 1.) First, check if the item allows for multiple "correct answers".  This is viaually depicted with as follows:
     //     a.) if "multiple-answer is true, each answer choice toggles between select and unselect
     //     b.) If multiple-answers is false, each click on a "new" response "unselects" any other selection.  Each click on a "selected" item still toggles it.
@@ -424,7 +431,13 @@ export class QuestionComponent implements ITestActions, IQuestion, OnInit, OnCha
         this.SelectedAnswerIndex = QuestionComponent.DEFAULT_UNANSWERED_ANSWER_INDEX;
         this.questionStatus = TestConstants.QuestionStatus.NOT_ANSWERED;;
         this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.NOT_ANSWERED;
+        answeredDeltaCount = -1;
       } else {
+        if (this.SelectedAnswerIndex == QuestionComponent.DEFAULT_UNANSWERED_ANSWER_INDEX) {
+          answeredDeltaCount = 1;
+        } else {
+          answeredDeltaCount = 0;
+        }
         this.SelectedAnswerIndex = clickedquestionanswerindex;
         this.questionStatus = TestConstants.QuestionStatus.ANSWERED;
         this.questionStatusHighlightClass = TestConstants.QuestionStatusHighlightClass.ANSWERED;
@@ -446,7 +459,9 @@ export class QuestionComponent implements ITestActions, IQuestion, OnInit, OnCha
       idTestsegment: '',
       idTestsection: '',
       idQuestion: this.question ? this.question.idQuestion : '',
-      questionStatus: this.questionStatus
+      questionStatus: this.questionStatus,
+      answeredDeltaCount: answeredDeltaCount,
+      answeredDeltaPoints: answeredDeltaCount * this.pointsPerQuestion,
     };
     console.log(`Question:  Emitting TestQuestionAnsweredEvent: ${JSON.stringify(testQuestionAnsweredEvent)}`);
     this.testQuestionAnsweredEvent.emit(testQuestionAnsweredEvent);

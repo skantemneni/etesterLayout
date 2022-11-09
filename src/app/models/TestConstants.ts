@@ -54,11 +54,25 @@ export interface AnswerPanelQuestionButtonClickedEvent {
   idQuestion: string;
 }
 
+/**
+ * This interface defines a structure that will be emitted when a "question" get answered in teh eTester Testing Administration ecosystem
+ * Members idTestsegment, idTestsection and idQuestion represent the "address" markers of the question.
+ * questionStatus - This value represents the the current state of the question - as indicated in the QuestionStatus enumeration.
+ * answeredDeltaCount - This is a tricky detail.  This tells the delta caused by the "Question Answerin Event" (click for MultipleChoice).  And hers is the logic it follows:
+ *  ---- This should carry a 0 value by default - if this feature is not implemented.
+ *  ---- If a question goes from NOT_ANSWERED to ANSWERED/CORRECT/WRONG, we get a +1,
+ *  ---- If a question goes from ANSWERED/CORRECT/WRONG to NOT_ANSWERED, we get a -1,
+ *  ---- If a question goes from "One choice" to Another, but remains ANSWERED/CORRECT/WRONG, we get a 0.
+ *
+ * answeredDeltaPoints - This follows the same logic answeredDeltaCount - except it has to do with "PointsPerQuestion" value.  But same calculations for +, - and 0.
+ */
 export interface TestQuestionAnsweredEvent {
   idTestsegment: string;
   idTestsection: string;
   idQuestion: string;
   questionStatus: QuestionStatus;
+  answeredDeltaCount: number;
+  answeredDeltaPoints: number;
 }
 
 

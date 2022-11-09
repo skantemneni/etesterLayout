@@ -193,14 +193,8 @@ export class TestsectionComponent implements OnInit {
    * @param event
    */
   testQuestionAnsweredClicked(event: TestQuestionAnsweredEvent): void {
-    // Emit the answer clicked event for a subscriber to consume
-    let testQuestionAnsweredEvent: TestQuestionAnsweredEvent = {
-      idTestsegment: '',
-      idTestsection: this.testsection ? this.testsection.idTestsection : '',
-      idQuestion: event.idQuestion,
-      questionStatus: event.questionStatus
-    };
-    console.log(`TestSection: TestQuestionAnsweredEvent.answerItemClicked: ${JSON.stringify(testQuestionAnsweredEvent)}`);
+    // Decorate with Testsection ID and re-Emit the answer clicked event for a subscriber to consume 
+    let testQuestionAnsweredEvent = { ...event, idTestsection: this.testsection ? this.testsection.idTestsection: ''};
     this.testQuestionAnsweredEvent.emit(testQuestionAnsweredEvent);
   }
 

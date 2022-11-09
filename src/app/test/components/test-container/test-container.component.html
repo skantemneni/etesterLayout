@@ -10,7 +10,7 @@
     <app-testview #testviewRendering
                   [testwithresponse]="testwithresponse"
                   (testResponseUpdater)="testAnswerPanelComponent.onTestResponseUpdatedEvent($event); testsummaryComponent.onTestResponseUpdatedEvent($event);"
-                  (testQuestionAnsweredEvent)="testAnswerPanelComponent.onTestQuestionAnsweredEvent($event);">
+                  (testQuestionAnsweredEvent)="testAnswerPanelComponent.onTestQuestionAnsweredEvent($event); testsummaryComponent.onTestQuestionAnsweredEvent($event);">
     </app-testview>
 
     <app-test-answer-panel #testAnswerPanelComponent

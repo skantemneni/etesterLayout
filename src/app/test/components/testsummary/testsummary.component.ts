@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ResponseDetails, Test, TestResponse, TestsectionResponse, TestsegmentResponse, Testwithresponse } from '@app/models/etestermodel';
+import { IResponseDetails, ResponseDetails, Test, TestResponse, TestsectionResponse, TestsegmentResponse, Testwithresponse } from '@app/models/etestermodel';
 import { StatsDisplayPanelComponent } from '@test/components/stats-display-panel/stats-display-panel.component';
 import * as TestConstants from '@app/models/TestConstants';
 import { ITestEventListener } from '../test-container/test-event-listener.interface';
@@ -36,7 +36,7 @@ export class TestsummaryComponent implements ITestEventListener, OnInit {
   // testResponseStats: ResponseDetails | undefined = undefined;
 
 
-  testResponse?: TestResponse | undefined = undefined;
+//  testResponse?: TestResponse | undefined = undefined;
   test?: Test | undefined = undefined;
   private _testwithresponse?: Testwithresponse | undefined = undefined;
   @Input()
@@ -49,11 +49,20 @@ export class TestsummaryComponent implements ITestEventListener, OnInit {
     this.test = this._testwithresponse?.test;
     if (this._testwithresponse?.testResponse != null) {
       this.testResponse = JSON.parse(this._testwithresponse.testResponse);
-      this.responseDetails = this.testResponse?.testResponseDetails;
+//      this.responseDetails = this.testResponse?.testResponseDetails;
     }
     this.displayableTestName = this.test?.name || "Test";
     this.totalQuestionCount = this.test?.questionCount || 0;
     this.totalPointCount = this.test?.pointCount || 0;
+  }
+
+  private _testResponse?: TestResponse | undefined = undefined;
+  public get testResponse(): TestResponse | undefined {
+    return this._testResponse;
+  }
+  public set testResponse(testResponse: TestResponse | undefined) {
+    this._testResponse = testResponse;
+    this.responseDetails = this.testResponse?.testResponseDetails;
   }
 
   /**
@@ -90,20 +99,52 @@ export class TestsummaryComponent implements ITestEventListener, OnInit {
     **************************************************************************************************************************/
 
   /**
-   * Mark the questionProxy on the Test Answer Panel with question status.  First identify the Testsegment-section and the do the job.
-   * @param testQuestionAnsweredEvent
+   * Any class that implements should override this methid to react to "a" question being answered in the test-taking process.
+   * In this case the event comes generally from somewhere in teh "TestView" and is published.  Mark the questionProxy on the Test Answer Panel with question status.  First identify the Testsegment-section and the do the job.
+   * @param testQuestionAnsweredEvent - TestQuestionAnsweredEvent contains the full set of address parameters to identify teh question and of course, the status and deltas.
    */
   onTestQuestionAnsweredEvent(testQuestionAnsweredEvent: TestConstants.TestQuestionAnsweredEvent) {
-/*    // find the correct SectionAnswerPanelComponent and pass onteh message
-    // reduce to the right testsection
-    let filterResults: SectionAnswerPanelComponent[] | undefined = this.testsectionAnswerPanelRenderings?.filter(x => x.testsection?.idTestsection == testQuestionAnsweredEvent.idTestsection && x.idTestsegment == testQuestionAnsweredEvent.idTestsegment);
+    // console.log(`TestsummaryComponent.onTestQuestionAnsweredEvent.1: testQuestionAnsweredEvent = ${JSON.stringify(testQuestionAnsweredEvent)}`)
+
+    // Add-delete at the test level stats
+    if (testQuestionAnsweredEvent.answeredDeltaCount != 0) {
+//      console.log(`TestsummaryComponent.onTestQuestionAnsweredEvent.2:`)
+
+      // Set the value at the Test Level using the corresponding StatsDisplayPanelComponent and do the processing
+      let newTestResponseDetails: ResponseDetails;
+      if (this.testStatsDisplayPanelRendering) {
+        let oldTestResponseDetails = this.testStatsDisplayPanelRendering.responseDetails;
+        if (oldTestResponseDetails) {
+          newTestResponseDetails = {
+            ...oldTestResponseDetails,
+            answeredCount: oldTestResponseDetails.answeredCount + testQuestionAnsweredEvent.answeredDeltaCount,
+            answeredPoints: oldTestResponseDetails.answeredPoints + testQuestionAnsweredEvent.answeredDeltaPoints,
+          };
+        } else {
+          newTestResponseDetails = { answeredCount: 0, answeredPoints: 0, correctCount: 0, correctPoints: 0 };
+        }
+        this.testStatsDisplayPanelRendering.responseDetails = newTestResponseDetails;
+      }
+      this.changeDetectorRef.markForCheck();
+    }
+
+    // find the correct StatsDisplayPanelComponent and do the processing
+    let newSectionResponseDetails: ResponseDetails;
+    let filterResults: StatsDisplayPanelComponent[] | undefined = this.sectionStatsDisplayPanelRenderings?.filter(x => x.idTestsection == testQuestionAnsweredEvent.idTestsection && x.idTestsegment == testQuestionAnsweredEvent.idTestsegment);
     if (filterResults && filterResults.length > 0) {
-      console.log(`TestAnswerPanelComponent: renderQuestionStatus: ${JSON.stringify(testQuestionAnsweredEvent)}`);
-      filterResults[0].renderQuestionStatus(testQuestionAnsweredEvent);
+//      console.log(`TestsummaryComponent: onTestQuestionAnsweredEvent: ${JSON.stringify(testQuestionAnsweredEvent)}`);
+      let oldSectionResponseDetails = filterResults[0].responseDetails;
+      if (oldSectionResponseDetails) {
+        newSectionResponseDetails = {
+          ...oldSectionResponseDetails,
+          answeredCount: oldSectionResponseDetails.answeredCount + testQuestionAnsweredEvent.answeredDeltaCount,
+          answeredPoints: oldSectionResponseDetails.answeredPoints + testQuestionAnsweredEvent.answeredDeltaPoints,
+        };
+        filterResults[0].responseDetails = newSectionResponseDetails;
+      }
     } else {
       console.log(`TestAnswerPanelComponent: Some Effed up. Count not find the Appropriate Section for: ${JSON.stringify(testQuestionAnsweredEvent)}`);
-    }
-*/    return;
+    } 
   }
 
 
@@ -113,7 +154,7 @@ export class TestsummaryComponent implements ITestEventListener, OnInit {
    * @param testResponse - the new TestResponse
    */
   onTestResponseUpdatedEvent(newTestResponse: TestResponse) {
-    console.log(`TestAnswerPanelComponent.overwriteTestResponse called with ${JSON.stringify(newTestResponse)}`);
+    console.log(`TestsummaryComponent.overwriteTestResponse called with ${JSON.stringify(newTestResponse)}`);
     this.setTestResponse(newTestResponse);
 
   }
