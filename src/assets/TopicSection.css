@@ -16,7 +16,7 @@
     color: blue;
 }
 
-.MathJax .merror: {
+.MathJax .merror {
     background-color: #FFFF88;
     color:   #CC0000;
     border:  1px solid #CC0000;
