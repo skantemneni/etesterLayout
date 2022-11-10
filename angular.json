@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-css-grid": {
+    "etester-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-css-grid",
+            "outputPath": "dist/etester-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,7 +31,7 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
               "src/theme-etester.scss",
-              "src/assets/TopicSection.css",
+              "src/assets/TopicSection.css"
             ],
             "scripts": []
           },
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-css-grid:build:production"
+              "browserTarget": "etester-app:build:production"
             },
             "development": {
-              "browserTarget": "angular-css-grid:build:development"
+              "browserTarget": "etester-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-css-grid:build"
+            "browserTarget": "etester-app:build"
           }
         },
         "test": {

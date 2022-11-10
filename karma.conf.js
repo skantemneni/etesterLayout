@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/angular-css-grid'),
+      dir: require('path').join(__dirname, './coverage/etester-app'),
       subdir: '.',
       reporters: [
         { type: 'html' },
