@@ -8,9 +8,9 @@ import { ILoginService } from '@auth/model/auth.interface';
 const etesterdbBaseUrl: string = 'http://localhost:8081/';
 
 // Login & Register URL's (EtesterLoginController)
-const etesterdbLoginControllerBaseUrl: string = etesterdbBaseUrl + 'logincontroller/';
-const etesterdbLoginUrl: string = etesterdbLoginControllerBaseUrl + 'login';
-const userDetailsUrl: string = etesterdbLoginControllerBaseUrl + 'currentuserdetails';
+const etesterdbRegisterUrl: string = etesterdbBaseUrl + 'api/auth/signup';
+const etesterdbLoginUrl: string = etesterdbBaseUrl + 'api/auth/signin';
+const userDetailsUrl: string = etesterdbBaseUrl + 'api/data/user/currentuserdetails';
 
 
 @Injectable({
@@ -34,7 +34,8 @@ export class LoginService implements ILoginService {
   }
 
   loginSyncAndGetToken(username: string, password: string) {
-    const completeLoginUrl: string = etesterdbLoginUrl + '?username=' + username.trim() + '&password=' + password.trim();
+//    const completeLoginUrl: string = etesterdbLoginUrl + '?username=' + username.trim() + '&password=' + password.trim();
+    const completeLoginUrl: string = etesterdbLoginUrl;
     let authCode: string | null = null;
     return this.httpClient.post<any>(completeLoginUrl, { username: username, password: password }, { observe: 'response' });
   }

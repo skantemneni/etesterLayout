@@ -1,3 +1,13 @@
+export interface Usertestwithresponse {
+  idTest: string;
+  idUsertest: string;
+  idUsertestresponse: string;
+  testStatus: string;
+  testResponse: string;
+  dateSaved: string;
+  completed: boolean;
+}
+
 export interface Testwithresponse {
   idTest: string;
   test: Test;

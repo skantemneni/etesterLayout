@@ -44,12 +44,15 @@ export class TestsummaryComponent implements ITestEventListener, OnInit {
     return this._testwithresponse;
   }
   public set testwithresponse(testwithresponse: Testwithresponse | undefined) {
-    console.log(`TestsummaryComponent.setTestwithresponse: ${testwithresponse}`)
     this._testwithresponse = testwithresponse;
     this.test = this._testwithresponse?.test;
     if (this._testwithresponse?.testResponse != null) {
-      this.testResponse = JSON.parse(this._testwithresponse.testResponse);
-//      this.responseDetails = this.testResponse?.testResponseDetails;
+      // Note that testResponse may be unparsable if its in the old format. simply ignore it of thats teh case.
+      try {
+        this.testResponse = JSON.parse(this._testwithresponse.testResponse);
+      } catch (e) {
+        console.log(`SHIVA:  TestsummaryComponent.set testwithresponse this._testwithresponse.testResponse: ${this._testwithresponse.testResponse}`);
+      }
     }
     this.displayableTestName = this.test?.name || "Test";
     this.totalQuestionCount = this.test?.questionCount || 0;

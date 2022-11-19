@@ -58,7 +58,11 @@ export class TestAnswerPanelComponent implements ITestEventListener, OnInit {
     this._testwithresponse = testwithresponse;
     this.test = this._testwithresponse?.test;
     if (this._testwithresponse?.testResponse != null) {
-      this.testResponse = JSON.parse(this._testwithresponse.testResponse);
+      // Note that testResponse may be unparsable if its in the old format. simply ignore it of thats teh case.
+      try {
+        this.testResponse = JSON.parse(this._testwithresponse.testResponse);
+      } catch (e) {
+      }
     }
   }
 

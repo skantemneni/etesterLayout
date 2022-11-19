@@ -51,7 +51,11 @@ export class TestviewComponent implements OnInit, AfterViewInit {
     }
     this.testStatus = this.testwithresponse && this.testwithresponse.testStatus ? this.testwithresponse.testStatus : TestConstants.TEST_STATUS_ASSIGNED;
     if (this._testwithresponse?.testResponse) {
-      this.initialTestResponse = JSON.parse(this._testwithresponse.testResponse);
+      // Note that testResponse may be unparsable if its in the old format. simply ignore it of thats teh case.
+      try {
+        this.initialTestResponse = JSON.parse(this._testwithresponse.testResponse);
+      } catch (e) {
+      }
       this.initialTestsegmentResponseArray = this.initialTestResponse?.testsegmentResponses;
     }
 

@@ -1,3 +1,5 @@
+import { Usertest } from "../../models/etestermodel.usertest";
+
 export interface LoggedinUser {
   idUser: number;
   username: string;
@@ -14,7 +16,7 @@ export interface LoggedinUser {
   fullName: string;
   permissions: string[];
 
-  tests?: string[];
+  tests?: Usertest[];
   profiles?: string[];
   webuser?: string; /* containing extended user attributes - used in programmatically loading users through SoapUI */
 

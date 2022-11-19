@@ -2,14 +2,27 @@
   <mat-toolbar color="primary">
     <img routerLink="/" class="logo" src="assets/logoETESTER.svg">
     <span class="header-spacer"></span>
-    <button routerLink="/test/5108" mat-raised-button color="primary">
+
+
+    <div>
+      <button mat-raised-button color="primary" [matMenuTriggerFor]="myTestsMainMenu">
+        <mat-icon>cloud_download</mat-icon>
+        &nbsp;Tests
+      </button>
+    </div>
+
+
+
+
+<!--    <button routerLink="/test/5108" mat-raised-button color="primary">
       <mat-icon>cloud_download</mat-icon>
       &nbsp;Fetch 5108
     </button>
-    <button routerLink="/test/5109" mat-raised-button color="primary">
+    <button routerLink="/test/3010" mat-raised-button color="primary">
       <mat-icon>cloud_download</mat-icon>
-      &nbsp;fetch 5109
+      &nbsp;fetch 3010
     </button>
+-->
     <span class="header-spacer"></span>
     <button mat-raised-button color="primary" (click)="onTestGradeClicked($event)">
       <mat-icon>score</mat-icon>&nbsp;
@@ -37,7 +50,7 @@
 
     <span class="header-spacer"></span>
 
-    <button *ngIf="isLoggedIn" mat-icon-button color="white" (click)="onLogoutClicked()">
+    <button mat-icon-button color="white" (click)="onLogoutClicked()">
       <span>{{loggedInUserName}}&nbsp;</span>
       <mat-icon>logout</mat-icon>
     </button>
@@ -47,3 +60,10 @@
 
   </mat-toolbar>
 </header>
+
+<mat-menu #myTestsMainMenu="matMenu">
+  <button *ngFor="let usertest of usertests; let usertestindex = index;" mat-menu-item color="primary" [routerLink]="['/test/', usertest.idUsertest]">
+      {{usertest.name}}
+  </button>
+</mat-menu>
+

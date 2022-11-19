@@ -6,6 +6,7 @@ import * as TestConstants from '@app/models/TestConstants';
 import { TestQuestionAnsweredEvent } from '@app/models/TestConstants';
 import { IDataServer } from '@app/services/data.interface';
 import { TestviewComponent } from '@test/components/testview/testview.component';
+import { IBasicErrorMessageTemplate } from '@app/models/ApplicationConstants';
 import { TestAnswerPanelComponent } from '../test-answer-panel/test-answer-panel.component';
 import { TestsummaryComponent } from '../testsummary/testsummary.component';
 
@@ -21,6 +22,8 @@ export class TestContainerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void { }
+
+  error: IBasicErrorMessageTemplate = { heading: "Missing Test", message: "Please select a Test from the Menu Bar." };
 
   /**
    * The input parameter that tells us what userTest to render
@@ -65,7 +68,9 @@ export class TestContainerComponent implements OnInit {
   getData(usertestId: string) {
     // Using a service here to get to the data from the etester database
     this.dataServer.getUserTestData(usertestId).subscribe(
+      // Valid content.  Reset andy previous error messages
       (testwithresponse: Testwithresponse) => {
+        this.error = { heading: "", message: "" };
         // Log the test response if its empty...
         if (testwithresponse.idTest === "-1") {
           console.log(`TestContainerComponent.getData for: ${usertestId} returns: ${JSON.stringify(testwithresponse)}`);
@@ -75,14 +80,27 @@ export class TestContainerComponent implements OnInit {
         this.testwithresponse = testwithresponse;
       },
       (error) => {
-        if (error["status"] == 403) {
+        console.log(`HTTP Error: ${JSON.stringify(error)}`);
+        if (error["status"] == 401) {
+          this.error = { heading: "Please Login", message: "Sign-In Credentials Expired.  Please Sign In to the Application to View this Content" };
           // indicates login token expiry
           console.error('Request failed Token Expired error');
           //          this.etesterdbService.loginAndGetToken(ServiceConstants.username, ServiceConstants.password);
-        } else {
+        } else if (error["status"] == 403) {
+          this.error = { heading: "Forbidden", message: "Content not accessible." };
+          // indicates forbidden content
+          console.error('Requested Content Not Accessible');
+          //          this.etesterdbService.loginAndGetToken(ServiceConstants.username, ServiceConstants.password);
+        } else if (error["status"] == 404) {
+          this.error = { heading: "Invalid User Test", message: "Invalid User Test Assignment: '" + usertestId + "'.  Please search for a Valid Assigned Test." };
+            // indicates login token expiry
+          console.error('Invalid User Test.  Please search for a Valid Assigned Test.');
+            //          this.etesterdbService.loginAndGetToken(ServiceConstants.username, ServiceConstants.password);
+          } else {
           console.error('Request failed with error')
           alert(JSON.stringify(error));
         }
+        this.testwithresponse = {} as Testwithresponse;
       }
     );
   }

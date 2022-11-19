@@ -6,3 +6,14 @@ export enum LoginEventKeys {
   USER_LOGIN_FAILED = "user_login_failed",
   USER_LOGOUT_EVENT = "user_logout_successful",
 }
+
+export interface IBasicErrorMessageTemplate {
+  heading: string;
+  message: string;
+}
+
+export interface IExtendedErrorMessageTemplate extends IBasicErrorMessageTemplate{
+  code: number,
+  details: string;
+}
+

@@ -6,6 +6,7 @@ import { IAuthenticatable, ILoginUIService } from '@auth/model/auth.interface';
 import { ILoginUIServiceToken } from '@app/app.module';
 import { AuthenticatableDataServerToken } from '@app/app.module';
 import { Router } from '@angular/router';
+import { Usertest } from '../../../models/etestermodel.usertest';
 
 @Component({
   selector: 'app-test-header',
@@ -34,6 +35,8 @@ export class TestHeaderComponent implements OnInit {
   /* local variables */
   loggedInUserName: string = "";
   isLoggedIn: boolean = false;
+  usertests?: Usertest[] = [];
+
 
   ngOnInit(): void {
     // Call to retrieve data
@@ -43,6 +46,7 @@ export class TestHeaderComponent implements OnInit {
         this.authenticatable.setAuthCode(loginEvent.authToken);
         this.loggedInUserName = loginEvent.loggedinUser?.firstName || '';
         this.isLoggedIn = true;
+        this.usertests = loginEvent.loggedinUser?.tests;
         // If I receive a new "Event" from the "loginUIService" and I am logged in, I may want to simply refresh the page so the "login context" will have its efect on rendering.
 //        this.reloadCurrentRoute();
       } else {
@@ -55,6 +59,16 @@ export class TestHeaderComponent implements OnInit {
       }
     });
   }
+
+/*  getUsertests() {
+    if (this.loginService.loggedinUser && this.loginService.loggedinUser.subscriptions && this.loginService.loggedinUser.subscriptions.length > 0) {
+      return this.loginService.loggedinUser.subscriptions;
+    }
+    return [] as Channel[];
+  }
+*/
+
+
 
 /*  reloadCurrentRoute() {
     const currentUrl = this.router.url;
@@ -97,5 +111,43 @@ export class TestHeaderComponent implements OnInit {
     this.loginUIService.onLogoutInvokeAction();
   }
 
+
+/*  // Methods that drive Menu display
+  isRegularUser(): boolean {
+    return this.hasRole("ROLE_USER");
+  }
+  isAdminUser(): boolean {
+    return this.hasRole("ROLE_ADMIN");
+  }
+  isProviderUser(): boolean {
+    return this.hasRole("ROLE_PROVIDER");
+  }
+  isSystemUser(): boolean {
+    return this.hasRole("ROLE_SYSTEM");
+  }
+
+  private hasRole(role: string): boolean {
+    if (this.loginService.loggedinUser && this.loginService.loggedinUser.authorities && this.loginService.loggedinUser.authorities.length > 0) {
+      for (let authority of this.loginService.loggedinUser.authorities) {
+        if (authority.authority == role) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  // Methods that drive Menu display
+  private hasPermission(permission: string): boolean {
+    if (this.loginService.loggedinUser && this.loginService.loggedinUser.permissions && this.loginService.loggedinUser.permissions.length > 0) {
+      for (let userpermission of this.loginService.loggedinUser.permissions) {
+        if (permission == userpermission) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+*/
 
 }

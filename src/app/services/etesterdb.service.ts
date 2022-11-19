@@ -13,16 +13,11 @@ import { IDataServer } from './data.interface';
 // Core eTester URL (base path)
 const etesterdbBaseUrl: string = 'http://localhost:8081/';
 
-// Login & Register URL's (EtesterLoginController)
-const etesterdbLoginControllerBaseUrl: string = etesterdbBaseUrl + 'logincontroller/';
-// const etesterdbLoginUrl: string = etesterdbLoginControllerBaseUrl + 'login';
-// const userDetailsUrl: string = etesterdbLoginControllerBaseUrl + 'currentuserdetails';
-
 // Usertest (EtesterUsertestController)
-const etesterdbUsertestControllerBaseUrl: string = etesterdbBaseUrl + 'data/usertest/';
-const getAllUsertestsPath: string = etesterdbUsertestControllerBaseUrl + 'allforcurrentuser';
-const usertestPathLoad: string = etesterdbUsertestControllerBaseUrl + 'usertestresponse/get/';
-const usertestPathSave: string = etesterdbUsertestControllerBaseUrl + 'usertestresponse/save';
+const etesterdbTestControllerBaseUrl: string = etesterdbBaseUrl + 'api/data/test/';
+const getAllUsertestsPath: string = etesterdbTestControllerBaseUrl + 'get/alltestsforcurrentuser';
+const usertestPathLoad: string = etesterdbTestControllerBaseUrl + 'get/testwithresponse/';
+const usertestPathSave: string = etesterdbTestControllerBaseUrl + 'save/response';
 
 
 
@@ -33,7 +28,7 @@ export class EtesterdbService implements IAuthenticatable, IDataServer {
 
 /*  username: string = "sesi2";
   password: string = "test";
-*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZXNpMiIsImV4cCI6MTY2Nzk5NzUyNX0.cZtKh16n5ftp7b4VJ5J5AxDYSgLqua_qLN9eIv8YsAXscnGnP6Pa3uCGdSHTd-o2pnU0lIbT2mKl1KaTP38qOw';
+*/  default_authToken: string = 'Bearer ';
   authToken: string = this.default_authToken;
 
   private HTTP_OPTIONS = {};

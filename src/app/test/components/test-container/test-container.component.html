@@ -31,8 +31,8 @@
                                       [message]="'Please select a Test from the Menu Bar.'">
     </app-empty-component-with-message>
       -->
-    <app-empty-component-with-message heading="Missing Test"
-                                      message="Please select a Test from the Menu Bar.">
+    <app-empty-component-with-message [heading]="error.heading"
+                                      [message]="error.message">
     </app-empty-component-with-message>
   </div>
 </ng-template>
