@@ -32,6 +32,9 @@ $primaryColorLight: themecolor.$primaryColorLight;
 $accentColor: themecolor.$accentColor;
 
 
+
+
+
 .test-layout {
   /* just to visualize the box better */
   /* border: 3px solid red; */
@@ -39,10 +42,16 @@ $accentColor: themecolor.$accentColor;
   background-color: $primaryColorDark;
   flex-direction: column;
   flex-wrap: nowrap;
-  row-gap: 1%;
+  row-gap: 6px;
   /* not 100vh cause the border below will make create a overflow scroll bar effect.  if so subtract (top-border height and bottom-border-height) */
-  height: calc(100vh - 0px);
+  height: calc(100vh);
+  /* border: 5px solid red; */
+  overflow: hidden;
 }
+
+
+
+
 
 .test-layout > app-test-header {
   color: white;
@@ -56,14 +65,21 @@ $accentColor: themecolor.$accentColor;
   border-color: $primaryColor;
 }
 
+
+/*
 .test-layout > app-test-footer {
   background-color: $primaryColorLight;
   color: $primaryColorDark;
   text-align: center;
   padding: 3px 10px;
+*/
+
+
   /* For some reason fixed size on footer is not working.  May be because, out of teh 3 flex items (header, footer and container-main-class) container-main-class has a padding...? */
   /* so, defaulting to auto */
   /* flex: 0 0 65px; */
+
+/*
   flex: 0 0 auto;
   border-radius: 10px 10px 0px 0px;
   margin-left: 1em;
@@ -72,3 +88,4 @@ $accentColor: themecolor.$accentColor;
   border-style: ridge;
   border-color: $primaryColor;
 }
+*/

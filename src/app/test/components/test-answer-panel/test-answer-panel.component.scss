@@ -1,7 +1,15 @@
+@media (min-width: 768px) {
+  .answer-panel-scroll {
+    max-height: calc(100vh - 124px);
+    overflow-y: auto;
+  }
+}
+
+
 .answer-panel {
   padding: 8px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 15px;
 }

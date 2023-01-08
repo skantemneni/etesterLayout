@@ -1,0 +1,20 @@
+@use 'assets/styles/themecolor' as themecolor;
+
+$primaryColor: themecolor.$primaryColor;
+$primaryColorDark: themecolor.$primaryColorDark;
+$primaryColorLight: themecolor.$primaryColorLight;
+$accentColor: themecolor.$accentColor;
+
+.footer-style {
+  background-color: $primaryColorLight;
+  color: $primaryColorDark;
+  text-align: center;
+  padding: 3px 10px;
+  flex: 0 0 auto;
+  border-radius: 10px 10px 0px 0px;
+  margin-left: 1em;
+  margin-right: 1em;
+  border-width: 4px 4px 0px 4px;
+  border-style: ridge;
+  border-color: $primaryColor;
+}

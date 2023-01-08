@@ -59,12 +59,13 @@ $questionPanelColor: themecolor.$primaryColorLight;
 .test-container-main {
   display: flex;
   flex-wrap: nowrap;
-  column-gap: 0.5%;
+  column-gap: 6px;
   flex-direction: row;
-  height: 100%;
+  /* setting the height to 100vh - what ever is teh height of the header and footer */
+  height: calc(100vh - 118px);
   width: 100%;
+  /* border: 5px solid green;*/
 }
-
 .test-container-main > app-testsummary {
   flex: 0 0 200px;
   background-color: $summaryPanelColor;
