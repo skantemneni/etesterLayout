@@ -46,7 +46,7 @@ $accentColor: themecolor.$accentColor;
   /* not 100vh cause the border below will make create a overflow scroll bar effect.  if so subtract (top-border height and bottom-border-height) */
   height: calc(100vh);
   /* border: 5px solid red; */
-  overflow: hidden;
+  overflow: auto;
 }
 
 

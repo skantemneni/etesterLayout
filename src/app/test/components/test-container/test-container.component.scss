@@ -58,16 +58,17 @@ $questionPanelColor: themecolor.$primaryColorLight;
 
 .test-container-main {
   display: flex;
-  flex-wrap: nowrap;
+  /*  flex-wrap: wrap; */
   column-gap: 6px;
-  flex-direction: row;
+  row-gap: 6px;
+  flex-direction: column;
   /* setting the height to 100vh - what ever is teh height of the header and footer */
   height: calc(100vh - 118px);
   width: 100%;
   /* border: 5px solid green;*/
 }
 .test-container-main > app-testsummary {
-  flex: 0 0 200px;
+  flex: 0 0 auto;
   background-color: $summaryPanelColor;
   margin-left: 0.2rem;
   border-radius: 0 10px 5px 0;
@@ -78,7 +79,7 @@ $questionPanelColor: themecolor.$primaryColorLight;
 
 
 .test-container-main > app-test-answer-panel {
-  flex: 0 0 200px;
+  flex: 0 0 auto;
   background-color: $questionIndexPanelColor;
   margin-right: 0.2rem;
   border-radius: 10px 0 0 5px;
@@ -99,18 +100,20 @@ $questionPanelColor: themecolor.$primaryColorLight;
 
 
 
-@media (max-width: 768px) {
+
+@media (min-width: 768px) {
   .test-container-main {
-    flex-direction: column;
-    row-gap:6px;
+    flex-direction: row;
+    
     flex: 1;
-    flex-wrap: wrap;
+    /*    flex-wrap: wrap;*/
     align-items: stretch;
   }
 
+  /* 12em is the width of the columns */
   .test-container-main > app-testsummary,
   .test-container-main > app-test-answer-panel {
-    /* 12em is the width of the columns */
-    flex: 0 0 auto;
+    flex: 0 0 200px;
   }
 }
+

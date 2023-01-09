@@ -26,6 +26,9 @@ $accentColor: themecolor.$accentColor;
 
 }
 
+mat-toolbar {
+    flex-wrap: wrap;
+}
 
 .logo {
   height: 100%
