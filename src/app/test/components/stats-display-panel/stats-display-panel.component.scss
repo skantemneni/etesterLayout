@@ -1,5 +1,5 @@
 .stats-display-panel {
-  width: 180px;
+  width: 150px;
 }
 
 
@@ -13,9 +13,10 @@ th.header-row {
   color: white;
 }
 
-@media (max-width: 768px) {
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
   .stats-display-panel {
-    width: 150px;
+    width: 180px;
   }
 }
 

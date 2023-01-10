@@ -1,38 +1,37 @@
-@media (min-width: 768px) {
-  .answer-panel-scroll {
-    max-height: calc(100vh - 124px);
-    overflow-y: auto;
+/* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .answer-panel-scroll {
+      max-height: calc(100vh - 124px);
+      overflow-y: auto;
+    }
+
+    .answer-panel > .test-section-answer-panel > div {
+      flex-direction: column;
+    }
+  }
+
+
+  .answer-panel {
+    padding: 8px;
+  }
+
+  .answer-panel-header {
+    border: 0;
+    font: inherit;
+    font-size: smaller;
+    font-weight: bolder;
+    display: block;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+  }
+
+  .answer-panel-section {
   }
 
   .answer-panel > .test-section-answer-panel > div {
-    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    /*  justify-content: space-between;*/
   }
-
-}
-
-
-.answer-panel {
-  padding: 8px;
-}
-
-.answer-panel-header {
-  border: 0;
-  font: inherit;
-  font-size: smaller;
-  font-weight: bolder;
-  display: block;
-  margin: 0;
-  padding: 0;
-  vertical-align: baseline;
-}
-
-.answer-panel-section {
-
-}
-
-.answer-panel > .test-section-answer-panel > div {
-  display: flex;
-  gap: 10px;
-  flex-wrap:wrap;
-  /*  justify-content: space-between;*/
-}

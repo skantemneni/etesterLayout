@@ -86,6 +86,9 @@ $questionPanelColor: themecolor.$primaryColorLight;
   border-width: 4px;
   border-style: ridge;
   border-color: $questionIndexPanelColor;
+  /* temporary fix for showing the footer without overlapping content */
+  padding-bottom: 50px;
+  order: 2;
 }
 
 
@@ -96,18 +99,25 @@ $questionPanelColor: themecolor.$primaryColorLight;
   border-width: 4px;
   border-style: ridge;
   border-color: $questionPanelColor;
+  /* temporary fix for showing the footer without overlapping content */
+  padding-bottom: 50px;
 }
 
 
 
 
-@media (min-width: 768px) {
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
   .test-container-main {
     flex-direction: row;
-    
     flex: 1;
     /*    flex-wrap: wrap;*/
     align-items: stretch;
+  }
+
+  .test-container-main > app-testview {
+      /* This may ot be necessary since we now have a min media break poiont of 992px (large devices vs what we had before...768px for mediuum devices */
+    min-width: 500px;
   }
 
   /* 12em is the width of the columns */
@@ -115,5 +125,6 @@ $questionPanelColor: themecolor.$primaryColorLight;
   .test-container-main > app-test-answer-panel {
     flex: 0 0 200px;
   }
+
 }
 

@@ -28,7 +28,7 @@ export class EtesterdbService implements IAuthenticatable, IDataServer {
 
 /*  username: string = "sesi2";
   password: string = "test";
-*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ5IiwiaWF0IjoxNjczMjQ5MjEwLCJleHAiOjE2NzMzMzU2MTB9.wGzqpkGcmlZPqYlEiMxN8odmrlswgJVlAR3Bdk4LmCWvQXSyzUmFs2J1tEUhhURcQTSgGU68krvdA0qhj8cwFw';
+*/  default_authToken: string = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ5IiwiaWF0IjoxNjczMzQ3MTQ1LCJleHAiOjE2NzM0MzM1NDV9.Jebulhzsz9W65h8QKIQMY3w_7Vu5o3eO5f_WfYkH8hYkfZy8EdzkfOk3edkekMG9e9yp5SVEGLkVBIyXEPN7RQ';
   authToken: string = this.default_authToken;
 
   private HTTP_OPTIONS = {};

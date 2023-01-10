@@ -1,4 +1,5 @@
-@media (min-width: 768px) {
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
   .test-summary-scroll {
     max-height: calc(100vh - 124px);
     overflow-y: auto;
@@ -11,29 +12,20 @@
   }
 
   .section-stats-display-panel > div {
-      /* Not sure why I need !important.  However, i cannot get ot to work otherwise. */
+    /* Not sure why I need !important.  However, i cannot get it to work otherwise. */
     flex-direction: column !important;
   }
-/*
-  .section-stats-display-panel > div > div {
+}
+
+
+  .test-summary {
+    padding: 8px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    /*    justify-content: space-between; */
   }
-*/
-
-
-}
-
-
-.test-summary {
-  padding: 8px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 15px;
-  /*    justify-content: space-between; */
-}
 
   .test-summary-total,
   .test-summary-details {
@@ -53,11 +45,10 @@
     vertical-align: baseline;
   }
 
- 
-.section-stats-display-panel > div {
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 
+  .section-stats-display-panel > div {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
